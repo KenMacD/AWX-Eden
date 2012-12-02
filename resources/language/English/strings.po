@@ -177,6 +177,14 @@ msgctxt "Popup message"
 msgid "No unwatched episodes!"
 msgstr ""
 
+msgctxt "Popup message"
+msgid "No unwatched seasons!"
+msgstr ""
+
+msgctxt "Popup message"
+msgid "No seasons found!"
+msgstr ""
+
 msgid "XBMC has quit. You can close this window."
 msgstr ""
 

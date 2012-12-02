@@ -954,7 +954,7 @@ var mkf = {};
               var langFiles = [];
               
               //Love async...
-              for (i=0; i < langs.files.length; i++) {
+              for (var i=0; i < langs.files.length; i++) {
                 //Build list of lang files.
                 if (langs.files[i].file.split('.').pop() == 'json') {
                   langFiles.push(langs.files[i].label);
@@ -962,7 +962,7 @@ var mkf = {};
                 //Finsihed building list, parse.
                 if (i == langs.files.length-1) {
                   var count = 0;
-                  for (n=0; n < langFiles.length; n++) {
+                  for (var n=0; n < langFiles.length; n++) {
                     $.getJSON('lang/' + langFiles[n], function(data) {
                       //Add short lang code for cookie etc.
                       count++;

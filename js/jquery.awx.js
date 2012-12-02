@@ -695,12 +695,13 @@
         //Artists
         '<fieldset>' +
         '<legend>' + mkf.lang.get('Artists', 'Settings label') + '</legend>' +
-        '<select id="artists" name="artistsView"><option value="cover" ' + (artistsView=='cover'? 'selected' : '') + '>' + mkf.lang.get('Covers', 'Settings option') +
-        '</option><option value="list" ' + (artistsView=='list'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') +
-        '</option><option value="logo" ' + (artistsView=='logo'? 'selected' : '') + '>' + mkf.lang.get('Logos', 'Settings option') + '</option>' +
+        '<select id="artists" name="artistsView"><option value="cover" ' + (artistsView=='cover'? 'selected' : '') + '>' + mkf.lang.get('Covers', 'Settings option') + '</option>' +
+        '<option value="list" ' + (artistsView=='list'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') + '</option>' +
+        '<option value="banner" ' + (artistsView=='banner'? 'selected' : '') + '>' + mkf.lang.get('Banners', 'Settings option') + '</option>' +
+        '<option value="logo" ' + (artistsView=='logo'? 'selected' : '') + '>' + mkf.lang.get('Logos', 'Settings option') + '</option>' +
         '<option value="logosingle"' + (artistsView=='logosingle'? 'selected' : '') + '>' + mkf.lang.get('Single Logos', 'Settings option') + '</option>' +
         '</select>' +
-        '<input type="text" name="artists_path" id="artists_path" style="display: ' + (artistsView == 'logo' || artistsView == 'logosingle'? 'block' : 'none') + ';" />' +
+        '<input type="text" name="artists_path" id="artists_path" style="display: ' + (artistsView == 'banner' || artistsView == 'logo' || artistsView == 'logosingle'? 'block' : 'none') + ';" />' +
         '</fieldset>' +
         
         '<fieldset class="ui_views">' +
@@ -797,7 +798,7 @@
       });
       
       $('#artists').change(function() {
-        $('#artists_path').css('display', ($(this).val() == 'logo' || $(this).val() == 'logosingle') ? 'block' : 'none');
+        $('#artists_path').css('display', ($(this).val() == 'logo' || $(this).val() == 'logosingle' || $(this).val() == 'banner') ? 'block' : 'none');
       });
       
       
@@ -815,7 +816,7 @@
         //Check artistsPath ends with a /
         if (document.settingsViewsMusic.artists_path.value.lastIndexOf("/") + 1 != document.settingsViewsMusic.artists_path.value.length) { document.settingsViewsMusic.artists_path.value += '/'; };
         // Checks require artist logo location as skins.
-        if (document.settingsViewsMusic.artistsView.value == 'logo' && !document.settingsViewsMusic.artists_path.value || document.settingsViewsMusic.artistsView.value == 'logosingle' && !document.settingsViewsMusic.artists_path.value) {
+        if (document.settingsViewsMusic.artistsView.value == 'banner' && !document.settingsViewsMusic.artists_path.value || document.settingsViewsMusic.artistsView.value == 'logo' && !document.settingsViewsMusic.artists_path.value || document.settingsViewsMusic.artistsView.value == 'logosingle' && !document.settingsViewsMusic.artists_path.value) {
           alert(mkf.lang.get('Please enter the artists path!', 'Alert'));
           return false;
         }
@@ -1005,6 +1006,10 @@
           'usefanart',
           document.settingsForm.usefanart.checked? 'yes' : 'no'
         );
+        if (awxUI.settings.useFanart && !document.settingsForm.usefanart.checked? true : false) {
+          //Change in fan art, may need to remove current.
+          xbmc.clearBackground();
+        }
         awxUI.settings.useFanart = document.settingsForm.usefanart.checked? true : false;
         
         mkf.cookieSettings.add(
@@ -1131,8 +1136,6 @@
   $.fn.defaultArtistsTitleViewer = function(artistResult, parentPage) {
 
     if (!artistResult || !artistResult.limits.total > 0) { return };
-    //Hack until single logo is redone with proper limiting
-    if (view =='logosingle') { artistResult.isFilter = true };
     
     var onPageShow = '';
     if (parentPage.className == 'artistsTitle') { onPageShow = 'onArtistsTitleShow' }
@@ -1150,6 +1153,8 @@
     
     var useLazyLoad = awxUI.settings.lazyload;
     var view = awxUI.settings.artistsView;
+    //Use own next and prev for single view.
+    if (view =='logosingle') { artistResult.isFilter = true };
     var $artistsViewerElement = $(this);
 
     switch (view) {
@@ -1158,6 +1163,9 @@
         break;
       case 'cover':
         uiviews.ArtistViewThumbnails(artistResult, parentPage).appendTo($artistsViewerElement);
+        break;
+      case 'banner':
+        uiviews.ArtistViewBanners(artistResult, parentPage).appendTo($artistsViewerElement);
         break;
       case 'logo':
         uiviews.ArtistViewLogos(artistResult, parentPage).appendTo($artistsViewerElement);
@@ -1172,8 +1180,8 @@
         $artistsViewerElement.find('img.thumb').lazyload(
           {
             queuedLoad: true,
-            container: $('#content'),  // TODO remove fixed #main
-            errorImage: 'images/thumb.png'
+            container: $('#content'),
+            //errorImage: 'images/thumb.png'
           }
         );
       };
@@ -1181,7 +1189,7 @@
     }
     
     if (!artistResult.isFilter) {
-      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + lastArtistCountStart + '/' + artistResult.limits.total + '</span></div></div>').prependTo($artistsViewerElement);
+      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastArtistCountStart+1) + '/' + artistResult.limits.total + '</span></div></div>').prependTo($artistsViewerElement);
       $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastArtistCount > artistResult.limits.total? artistResult.limits.total : lastArtistCount) + '/' + artistResult.limits.total + '</span></div></div>').appendTo($artistsViewerElement);
       $artistsViewerElement.find('a.nextPage').on('click', { Page: 'next'}, awxUI[onPageShow]);
       $artistsViewerElement.find('a.prevPage').on('click', { Page: 'prev'}, awxUI[onPageShow]);
@@ -1564,29 +1572,33 @@
         return
       };
     };
-    var useLazyLoad = awxUI.settings.lazyload;
+    var settings = {};
+    settings.useLazyLoad = awxUI.settings.lazyload;
+    settings.filterWatched = awxUI.settings.watched;
+    settings.filterShowWatched = awxUI.settings.hideWatchedMark;
+    settings.hoverOrClick = awxUI.settings.hoverOrClick;
     var view = awxUI.settings.albumsView;
     
     var $albumViewerElement = $(this);
     
     switch (view) {
       case 'list':
-        uiviews.AlbumsViewList(albumResult, parentPage).appendTo($albumViewerElement);        
+        uiviews.AlbumsViewList(albumResult, parentPage, settings).appendTo($albumViewerElement);        
         break;
       case 'cover':
-        uiviews.AlbumsViewThumbnails(albumResult, parentPage).appendTo($albumViewerElement);
+        uiviews.AlbumsViewThumbnails(albumResult, parentPage, settings).appendTo($albumViewerElement);
         break;
       case 'listin':
-        uiviews.AlbumsViewListInline(albumResult).appendTo($albumViewerElement);
+        uiviews.AlbumsViewListInline(albumResult, parentPage, settings).appendTo($albumViewerElement);
         break;
     };
 
-    if (useLazyLoad) {
+    if (settings.useLazyLoad) {
       function loadThumbs(i) {
         $albumViewerElement.find('img.thumb').lazyload(
           {
             queuedLoad: true,
-            container: ($('#main').length? $('#main'): $('#content')),  // TODO remove fixed #main
+            container: ($('#content')),
             errorImage: 'images/thumb.png'
           }
         );
@@ -1595,7 +1607,7 @@
     }
     
     if (!albumResult.isFilter) {
-      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + lastAlbumCountStart + '/' + albumResult.limits.total + '</span></div></div>').prependTo($albumViewerElement);
+      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastAlbumCountStart+1) + '/' + albumResult.limits.total + '</span></div></div>').prependTo($albumViewerElement);
       $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastAlbumCount > albumResult.limits.total? albumResult.limits.total : lastAlbumCount) + '/' + albumResult.limits.total + '</span></div></div>').appendTo($albumViewerElement);
       $albumViewerElement.find('a.nextPage').on('click', { Page: 'next'}, awxUI.onAlbumsTitleShow);
       $albumViewerElement.find('a.prevPage').on('click', { Page: 'prev'}, awxUI.onAlbumsTitleShow);
@@ -1655,7 +1667,7 @@
     uiviews.SongViewList(songResult, parentPage).appendTo($(this));
     
     if (!songResult.isFilter) {
-      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + lastSongsCountStart + '/' + songResult.limits.total + '</span></div></div>').prependTo($(this));
+      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastSongsCountStart+1) + '/' + songResult.limits.total + '</span></div></div>').prependTo($(this));
       $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastSongsCount > songResult.limits.total? songResult.limits.total : lastSongsCount) + '/' + songResult.limits.total + '</span></div></div>').appendTo($(this));
       $(this).find('a.nextPage').on('click', { Page: 'next'}, awxUI.onSongsTitleShow);
       $(this).find('a.prevPage').on('click', { Page: 'prev'}, awxUI.onSongsTitleShow);
@@ -1695,24 +1707,28 @@
 
     if (!albumResult.limits.total > 0) { return };
     
-    var useLazyLoad = awxUI.settings.lazyload;
+    var settings = {};
+    settings.useLazyLoad = awxUI.settings.lazyload;
+    settings.filterWatched = awxUI.settings.watched;
+    settings.filterShowWatched = awxUI.settings.hideWatchedMark;
+    settings.hoverOrClick = awxUI.settings.hoverOrClick;
     var view = awxUI.settings.albumsViewRec;
     
     var $albumViewerElement = $(this);
     
     switch (view) {
       case 'list':
-        uiviews.AlbumsViewList(albumResult, parentPage).appendTo($albumViewerElement);
+        uiviews.AlbumsViewList(albumResult, parentPage, settings).appendTo($albumViewerElement);
         break;
       case 'cover':
-        uiviews.AlbumsViewThumbnails(albumResult, parentPage).appendTo($albumViewerElement);
+        uiviews.AlbumsViewThumbnails(albumResult, parentPage, settings).appendTo($albumViewerElement);
         break;
       case 'listin':
-        uiviews.AlbumsViewListInline(albumResult, parentPage).appendTo($albumViewerElement);
+        uiviews.AlbumsViewListInline(albumResult, parentPage, settings).appendTo($albumViewerElement);
         break;
     };
 
-    if (useLazyLoad) {
+    if (settings.useLazyLoad) {
       function loadThumbs(i) {
         $albumViewerElement.find('img.thumb').lazyload(
           {
@@ -1889,7 +1905,6 @@
   \* ########################### */
   $.fn.defaultMovieTitleViewer = function(movieResult, parentPage, options) {
     if (!movieResult.limits.total > 0) { return };
-
     var settings = {};
     //Allow refresh/non-filter (next/prev) subpages
     var onPageShow = '';
@@ -1916,7 +1931,6 @@
     
     //Overwrite settings for filtered views etc. Make a setting option?
     $.extend(settings, options);
-    
     var $movieContainer = $(this);
 
     switch (view) {
@@ -1957,7 +1971,7 @@
     //NFC why the || doesn't work below but it doesn't?!
     if (view == 'singlePoster') { movieResult.isFilter = true };
     if (!movieResult.isFilter) {
-      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + lastMovieCountStart + '/' + movieResult.limits.total + '</span></div></div>').prependTo($movieContainer);
+      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastMovieCountStart+1) + '/' + movieResult.limits.total + '</span></div></div>').prependTo($movieContainer);
       $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastMovieCount > movieResult.limits.total? movieResult.limits.total : lastMovieCount)+ '/' + movieResult.limits.total + '</span></div></div>').appendTo($movieContainer);
       $movieContainer.find('a.nextPage').on('click', { Page: 'next'}, awxUI[onPageShow]);
       $movieContainer.find('a.prevPage').on('click', { Page: 'prev'}, awxUI[onPageShow]);
@@ -1971,7 +1985,7 @@
    |
    |  @param movieResult  Result of VideoLibrary.GetMovieSets.
   \* ########################### */
-  $.fn.defaultMovieSetsViewer = function(movieResult, parentPage) {
+  $.fn.defaultMovieSetTitleViewer = function(movieResult, parentPage) {
 
     if (!movieResult.limits.total > 0) { return };
     
@@ -1997,8 +2011,8 @@
         $movieContainer.find('img.thumb').lazyload(
           {
             queuedLoad: true,
-            container: ($('#main').length? $('#main'): $('#content')),  // TODO remove fixed #main
-            errorImage: 'images/thumb' + xbmc.getMovieThumbType() + '.png'
+            container: ($('#content')),
+            //errorImage: 'images/thumb' + xbmc.getMovieThumbType() + '.png'
             //errorImage: 'images/thumbBanner.png'
           }
         );
@@ -2148,7 +2162,7 @@
     }
 
     if (!tvShowResult.isFilter) {
-      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + lastTVCountStart + '/' + totalTVCount + '</span></div></div>').prependTo($tvshowContainer);
+      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastTVCountStart+1) + '/' + totalTVCount + '</span></div></div>').prependTo($tvshowContainer);
       $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastTVCount > totalTVCount? totalTVCount : lastTVCount) + '/' + totalTVCount + '</span></div></div>').appendTo($tvshowContainer);
       $tvshowContainer.find('a.nextPage').on('click', { Page: 'next'}, awxUI.onTvShowsTitleShow);
       $tvshowContainer.find('a.prevPage').on('click', { Page: 'prev'}, awxUI.onTvShowsTitleShow);
@@ -3313,15 +3327,22 @@
           }
         }
         
-        thumbElement.attr('src', 'images/thumbPoster.png');
-        if (currentFile.thumbnail) {
-          thumbElement.attr('src', xbmc.getThumbUrl(currentFile.thumbnail));
+        //thumbElement.attr('src', 'images/thumbPoster.png');
+        var thumb = new Image();
+        //if (currentFile.thumbnail != '') { thumb.src = xbmc.getThumbUrl(currentFile.thumbnail) };
+        
+        //if (currentFile.thumbnail != '') {
+          //thumbElement.attr('src', xbmc.getThumbUrl(currentFile.thumbnail));
           if (currentFile.type == 'episode') {
             //if ($('#displayoverlay').css('width') != '656px') { $('#displayoverlay').css('width','656px') };
+            thumbElement.attr('src', 'images/empty_thumb_tv.png');
+            if (currentFile.thumbnail != '') { thumb.src = xbmc.getThumbUrl(currentFile.thumbnail) };
+            thumb.onload = function() { thumbElement.attr('src', thumb.src) };
             thumbElement.css('margin-top', '120px');
             thumbElement.css('margin-left', '5px');
             thumbElement.css('width', '255px');
             thumbElement.css('height', '163px');
+            
             /*xbmc.getLogo({path: currentFile.file, type: 'logo'}, function(logo) {
               console.log(currentFile);
               thumbDiscElement.attr('src', logo);
@@ -3331,6 +3352,9 @@
             });*/
           } else if (currentFile.xbmcMediaType == 'audio') {
             //if ($('#displayoverlay').css('width') != '510px') { $('#displayoverlay').css('width','510px') };
+            thumbElement.attr('src', 'images/empty_cover_musicO.png');
+            if (currentFile.thumbnail != '') { thumb.src = xbmc.getThumbUrl(currentFile.thumbnail) };
+            thumb.onload = function() { thumbElement.attr('src', thumb.src) };
             thumbElement.css('margin-top', '57px');
             thumbElement.css('margin-left', '35px');
             thumbElement.css('height', '225px');
@@ -3338,21 +3362,21 @@
             if (thumbDiscElement.css('width') != '225px') { thumbDiscElement.css('width','225px'); thumbDiscElement.css('height','225px'); };
               
             xbmc.getLogo({path: currentFile.file, type: 'cdart'}, function(cdart) {
-              if (cdart == '') { cdart = 'images/blank_cdart.png' };
-              thumbDiscElement.css('margin-left','35px');
-              thumbDiscElement.attr('src', cdart);
-              thumbDiscElement.show();
-              
-              if (rotateCDart) {
-                var angle = 0;
-                spinCDArt = setInterval(function(){
-                angle+=3;
-                  thumbDiscElement.rotate(angle);
-                },75);
-              }
-
+              if (cdart == '') {
+                thumbDiscElement.hide();
+              } else {thumbDiscElement.css('margin-left','35px');
+                thumbDiscElement.attr('src', cdart);
+                thumbDiscElement.show();
+                
+                if (rotateCDart) {
+                  var angle = 0;
+                  spinCDArt = setInterval(function(){
+                  angle+=3;
+                    thumbDiscElement.rotate(angle);
+                  },75);
+                };
+              };
             });
-              
           } else if (currentFile.type == 'channel') {
             thumbElement.css('margin-top', '57px');
             thumbElement.css('margin-left', '35px');
@@ -3360,6 +3384,10 @@
             thumbElement.css('width', '225px');
             
           } else if (currentFile.type == 'movie') {
+            thumbElement.attr('src', 'images/empty_poster_film.png');
+            if (currentFile.thumbnail != '') { thumb.src = xbmc.getThumbUrl(currentFile.thumbnail) };
+            thumb.onload = function() { thumbElement.attr('src', thumb.src) };
+            
             thumbElement.css('margin-top', '0px');
             thumbElement.css('margin-left', '70px');
             thumbElement.css('height', '280px');
@@ -3387,13 +3415,16 @@
             });
             
           } else if (currentFile.type == 'musicvideo') {
+            thumbElement.attr('src', 'images/empty_cover_musicvideo.png');
+            if (currentFile.thumbnail != '') { thumb.src = xbmc.getThumbUrl(currentFile.thumbnail) };
+            thumb.onload = function() { thumbElement.attr('src', thumb.src) };
             thumbElement.css('margin-top', '57px');
             thumbElement.css('margin-left', '35px');
             thumbElement.css('height', '225px');
             thumbElement.css('width', '225px');
           };
 
-        }
+        //}
       });
       
       xbmc.periodicUpdater.addNextPlayingChangedListener(function(nextFile) {

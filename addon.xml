@@ -6,7 +6,7 @@
   provider-name="MKay, Mizaki et al">
   <requires>
   <import addon="xbmc.gui" version="4.00"/>
-  <import addon="xbmc.json" version="5.00"/>
+  <import addon="xbmc.json" version="6.00"/>
   </requires>
   <extension
   point="xbmc.gui.webinterface"/>

@@ -262,6 +262,7 @@ var xbmc = {};
       var settings = {
         path: '',
         type: '', //logo, cdart, disc, clearart, characterart, seasonTV, banner, poster
+        format: '.png',
         onSuccess: null,
         onError: null
       };
@@ -272,7 +273,7 @@ var xbmc = {};
       }
       var path = settings.path.replace(/\\/g, "/").substring(0, settings.path.lastIndexOf("/"));
 
-      path += '/' + settings.type + '.png';
+      path += '/' + settings.type + settings.format;
       
       var image = xbmc.getPrepDownload({
           path: path,
@@ -285,6 +286,15 @@ var xbmc = {};
 
           },
         });
+    },
+    
+    clearBackground: function() {
+      xbmc.$backgroundFanart = '';
+      xbmc.$backgroundFanart2nd = '';
+
+      $('#firstBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
+      $('#secondBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
+      $('#firstBG').removeClass('transparent');
     },
     
     getExtraArt: function(options, callbackMain) {
@@ -1272,17 +1282,10 @@ var xbmc = {};
       settings.order = awxUI.settings.adesc;
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { ' + (settings.item == ''? (settings.filter != ''? settings.filter + ', ' : '') : '"filter": { "' + settings.item + '": ' + (settings.itemId !== -1? settings.itemId : '"' + settings.itemStr + '"') + '}, ') + '"limits": { "start" : ' + settings.start + ', "end": ' + settings.end + ' }, "properties": ["artist", "genre", "rating", "thumbnail", "year", "mood", "style"], "sort": { "order": "' + settings.order + '", "method": "' + settings.sortby + '", "ignorearticle": true } }, "id": "libAlbums"}',
+        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { ' + (settings.item == ''? (settings.filter != ''? settings.filter + ', ' : '') : '"filter": { "' + settings.item + '": ' + (settings.itemId !== -1? settings.itemId : '"' + settings.itemStr + '"') + '}, ') + '"limits": { "start" : ' + settings.start + ', "end": ' + settings.end + ' }, "properties": ["playcount", "artist", "genre", "rating", "thumbnail", "year", "mood", "style"], "sort": { "order": "' + settings.order + '", "method": "' + settings.sortby + '", "ignorearticle": true } }, "id": "libAlbums"}',
 
         function(response) {
-          /*if (settings.order == 'descending' && settings.sortby == 'none') {
-          var aresult = $.makeArray(response.result.albums).reverse();
-          delete response.result.albums;
-          response.result.albums = aresult;
           settings.onSuccess(response.result);
-          } else {*/
-          settings.onSuccess(response.result);
-          //}
         },
 
         settings.onError
@@ -1298,7 +1301,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": { "albumid" : ' + settings.albumid + ', "properties" : ["rating", "artist", "thumbnail", "description", "title", "genre", "theme", "mood", "style", "type", "albumlabel", "year", "musicbrainzalbumid", "musicbrainzalbumartistid", "fanart" ] }, "id": "libAlbumDets"}',
+        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbumDetails", "params": { "albumid" : ' + settings.albumid + ', "properties" : ["playcount", "rating", "artist", "thumbnail", "description", "title", "genre", "theme", "mood", "style", "type", "albumlabel", "year", "musicbrainzalbumid", "musicbrainzalbumartistid", "fanart" ] }, "id": "libAlbumDets"}',
 
         function(response) {
           settings.onSuccess(response.result.albumdetails);
@@ -2010,7 +2013,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": { "movieid": ' + settings.movieid + ', "properties": ["genre", "director", "plot", "title", "originaltitle", "runtime", "year", "rating", "thumbnail", "playcount", "trailer", "cast", "resume", "file", "tagline", "set", "setid", "lastplayed", "studio", "mpaa", "votes", "streamdetails", "writer", "fanart", "imdbnumber"] },  "id": 2}',
+        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": { "movieid": ' + settings.movieid + ', "properties": ["art", "genre", "director", "plot", "title", "originaltitle", "runtime", "year", "rating", "thumbnail", "playcount", "trailer", "cast", "resume", "file", "tagline", "set", "setid", "lastplayed", "studio", "mpaa", "votes", "streamdetails", "writer", "fanart", "imdbnumber"] },  "id": 2}',
         function(response) {
           settings.onSuccess(response.result.moviedetails);
         },
@@ -2031,7 +2034,7 @@ var xbmc = {};
       //settings.order = awxUI.settings.mdesc;
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieSets", "params": {"properties": [ "fanart", "playcount", "thumbnail"], "sort": { "order": "ascending", "method": "label", "ignorearticle": true } },"id": 1 }',
+        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieSets", "params": {"properties": [ "art", "fanart", "playcount", "thumbnail"], "sort": { "order": "ascending", "method": "label", "ignorearticle": true } },"id": "libMovieSets" }',
         function(response) {
             settings.onSuccess(response.result);
         },
@@ -2050,7 +2053,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieSetDetails", "params": {"setid": ' + settings.setid + ', "properties": [ "fanart", "playcount", "thumbnail" ], "movies": { "properties": [ "rating", "thumbnail", "playcount", "file" ], "sort": { "order": "ascending", "method": "sorttitle" }} },"id": 1 } },"id": 1 }',
+        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieSetDetails", "params": {"setid": ' + settings.setid + ', "properties": [ "art", "fanart", "playcount", "thumbnail" ], "movies": { "properties": [ "art", "rating", "thumbnail", "playcount", "file" ], "sort": { "order": "ascending", "method": "sorttitle" }} },"id": 1 } },"id": 1 }',
         function(response) {
             settings.onSuccess(response.result);
         },
@@ -2110,7 +2113,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": { "tvshowid": ' + settings.tvshowid + ', "properties": ["season", "playcount"], "sort": { "method": "label" } }, "id": 1}',
+        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params": { "tvshowid": ' + settings.tvshowid + ', "properties": ["art", "season", "playcount"], "sort": { "method": "label" } }, "id": "libSeasons"}',
         function(response) {
           settings.onSuccess(response.result);
         },
@@ -2120,20 +2123,24 @@ var xbmc = {};
 
     getEpisodes: function(options) {
       var settings = {
+        item: '',
+        itemId: -1,
+        filter: '',
+        start: 0,
+        end: 99999,
         tvshowid: 0,
-        season: 0,
-        sortby: 'episode',
-        order: 'ascending',
+        season: -1,
         onSuccess: null,
         onError: null
       };
-      $.extend(settings, options);
-
       settings.sortby = awxUI.settings.epSort;
       settings.order = awxUI.settings.epdesc;
       
+      //Overide global settings if required.
+      $.extend(settings, options);
+      
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": ' + settings.tvshowid + ', "season" : ' + settings.season + ', "properties": ["episode", "playcount", "fanart", "plot", "season", "showtitle", "thumbnail", "rating"], "sort": { "order": "' + settings.order + '", "method": "' + settings.sortby + '" } }, "id": 1}',
+        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { ' + (settings.item == ''? (settings.filter != ''? settings.filter : '') : (settings.filter != ''? settings.filter + ', ' : '') + '"' + settings.item + '": ' + (settings.itemId != -1? (settings.season != -1? settings.itemId + ', "season": ' + settings.season : settings.itemId) : (settings.season != -1? '"season": ' + settings.season + ', ' + '"' + settings.itemStr + '"' : '"' + settings.itemStr + '"') ) ) + ', "limits": { "start" : ' + settings.start + ', "end": ' + settings.end + ' }, "properties": ["episode", "playcount", "fanart", "plot", "season", "showtitle", "thumbnail", "rating"], "sort": { "order": "' + settings.order + '", "method": "' + settings.sortby + '" } }, "id": "libEps"}',
         function(response) {
           settings.onSuccess(response.result);
         },
@@ -2286,7 +2293,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc":"2.0","id":2,"method":"VideoLibrary.GetRecentlyAddedMovies","params":{ "limits": {"end": 25},"properties":["title","originaltitle","runtime","thumbnail","file","year","plot","tagline","playcount","rating","genre","director"]}}',
+        '{ "jsonrpc": "2.0", "id": 2, "method": "VideoLibrary.GetRecentlyAddedMovies", "params": { "limits": {"end": 25}, "properties": [ "art", "title", "originaltitle", "runtime", "thumbnail", "file", "year", "plot", "tagline", "playcount", "rating", "genre", "director" ] } }',
 
         function(response) {
           settings.onSuccess(response.result);
@@ -2624,10 +2631,8 @@ var xbmc = {};
           xbmc.periodicUpdater.subsenabled = false;
         }
         
-        var useFanart = mkf.cookieSettings.get('usefanart', 'no')=='yes'? true : false;
-        xbmc.useXtraFanart = mkf.cookieSettings.get('usextrafanart', 'no')=='yes'? true : false;
-        var showInfoTags = mkf.cookieSettings.get('showTags', 'no')=='yes'? true : false;
-        var ui = mkf.cookieSettings.get('ui');
+        var useFanart = awxUI.settings.useFanart;
+        var showInfoTags = awxUI.settings.showTags;
         
         // ---------------------------------
         // ---      Volume Changes       ---
@@ -2710,10 +2715,7 @@ var xbmc = {};
           if ( xbmc.periodicUpdater.playerStatus != 'stopped' && xbmc.activePlayer == 'none') {
             xbmc.periodicUpdater.playerStatus = 'stopped';
             if ( xbmc.$backgroundFanart != '' && useFanart ) {
-              xbmc.$backgroundFanart = '';
-              xbmc.$backgroundFanart2nd = '';
-              $('#firstBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
-              $('#secondBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
+              xbmc.clearBackground();
             };
 
             $('#streamdets .vFormat').removeClass().addClass('vFormat');
@@ -2857,11 +2859,11 @@ var xbmc = {};
                 //PVR reports no file attrib. Copy title to file
                 if (currentItem.type == 'channel') { currentItem.file = currentItem.title };
                 
-                if ( currentItem.fanart != '' && xbmc.$backgroundFanart != xbmc.getThumbUrl(currentItem.fanart) && useFanart && !xbmc.useXtraFanart) {
+                if ( currentItem.fanart != '' && xbmc.$backgroundFanart != xbmc.getThumbUrl(currentItem.fanart) && useFanart && !awxUI.settings.useXtraFanart) {
                   xbmc.$backgroundFanart = xbmc.getThumbUrl(currentItem.fanart);
                   $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
                                       //TODO add check if same album don't re-query extra.
-                } else if (currentItem.fanart != '' && xbmc.useXtraFanart) {
+                } else if (currentItem.fanart != '' && awxUI.settings.useXtraFanart) {
                   if (xbmc.$backgroundFanart == '') {
                     xbmc.$backgroundFanart = xbmc.getThumbUrl(currentItem.fanart);
                     $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
@@ -2964,7 +2966,7 @@ var xbmc = {};
 
       ++xbmc.periodicUpdater.loopCount;
       
-      if ((xbmc.periodicUpdater.progress % 15) == 0 && xbmc.useXtraFanart && xbmc.xart.length > 0) {
+      if ((xbmc.periodicUpdater.loopCount % 15) == 0 && xbmc.periodicUpdater.loopCount > 14 && awxUI.settings.useXtraFanart && xbmc.xart.length > 0) {
         xbmc.switchFanart();
       }
       //Initial time grab and checking for time slip every 10%.
@@ -3089,10 +3091,8 @@ var xbmc = {};
           xbmc.xart = [];
         }
         
-        xbmc.useXtraFanart = mkf.cookieSettings.get('usextrafanart', 'no')=='yes'? true : false;
         var useFanart = mkf.cookieSettings.get('usefanart', 'no')=='yes'? true : false;
-        var showInfoTags = mkf.cookieSettings.get('showTags', 'no')=='yes'? true : false;
-        var ui = mkf.cookieSettings.get('ui');
+        var showInfoTags = awxUI.settings.showTags;
         
         var wsConn = 'ws://' + location.hostname + ':9090/jsonrpc?awxi';
         ws = new WebSocket(wsConn);
@@ -3402,18 +3402,34 @@ var xbmc = {};
                   //PVR reports no file attrib. Copy title to file
                   if (currentItem.type == 'channel') { currentItem.file = currentItem.title };
                   
-                  if (xbmc.xart < 1) { xbmc.getExtraArt({path: currentItem.file, type: 'extrafanart', library: currentItem.type, tvid: currentItem.tvshowid}, function(xart) { xbmc.xart = xart; } ) };
-                  
-                  if ( currentItem.fanart != '' && xbmc.$backgroundFanart != xbmc.getThumbUrl(currentItem.fanart) && useFanart && !xbmc.useXtraFanart) {
+                  if ( currentItem.fanart != '' && xbmc.$backgroundFanart != xbmc.getThumbUrl(currentItem.fanart) && useFanart && !awxUI.settings.useXtraFanart) {
                     xbmc.$backgroundFanart = xbmc.getThumbUrl(currentItem.fanart);
+                    $('#firstBG').removeClass('transparent');
                     $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
                                         //TODO add check if same album don't re-query extra.
-                  } else if (currentItem.fanart != '' && xbmc.useXtraFanart) {
-                    if (xbmc.$backgroundFanart == '') {
-                      xbmc.$backgroundFanart = xbmc.getThumbUrl(currentItem.fanart);
-                      $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
-                    };
-                    xbmc.getExtraArt({path: currentItem.file, type: 'extrafanart', tvid: currentItem.tvshowid, library: currentItem.type}, function(xart) { xbmc.xart = xart; } );
+                  } else if (awxUI.settings.useXtraFanart) {
+                    xbmc.getExtraArt({path: currentItem.file, type: 'extrafanart', tvid: currentItem.tvshowid, library: currentItem.type}, function(xart) {
+                      if (xart) {
+                        xbmc.xart = xart;
+                        $('#firstBG').removeClass('transparent');
+                        $('#firstBG').css('background-image', 'url(' + xart[0] + ')');
+                        //xbmc.switchFanart();
+                      } else {
+                        //No fan xtra art found.
+                        xbmc.xart = [];
+                        if (currentItem.fanart != '') {
+                          //Use normal fanart
+                          $('#firstBG').removeClass('transparent');
+                          xbmc.$backgroundFanart = xbmc.getThumbUrl(currentItem.fanart);
+                          $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
+                        } else {
+                          //No fan art at all, set a 1x1px transparent base64 gif.
+                          $('#firstBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
+                          $('#secondBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
+                          $('#firstBG').removeClass('transparent');
+                        }
+                      }
+                    });
                   };
                   
                   if (xbmc.periodicUpdater.currentlyPlayingFile != currentItem.file) {
@@ -3550,15 +3566,8 @@ var xbmc = {};
             xbmc.activePlayerid = -1
             xbmc.activePlayer = 'none';
             
-            if ( xbmc.$backgroundFanart != '' && useFanart ) {
-              xbmc.$backgroundFanart = '';
-              xbmc.$backgroundFanart2nd = '';
+            xbmc.clearBackground();
 
-              $('#firstBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
-              $('#secondBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
-              $('#firstBG').removeClass('transparent');
-
-            };
             $('#streamdets .vFormat').removeClass().addClass('vFormat');
             $('#streamdets .aspect').removeClass().addClass('aspect');
             $('#streamdets .channels').removeClass().addClass('channels');

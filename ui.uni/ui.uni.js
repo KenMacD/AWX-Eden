@@ -1471,23 +1471,35 @@
     buildUI: function() {
 
       $('body').append('<div id="preload" style="display: none">' +
-                '<img src="images/loading_thumb.gif" alt="Preload 1/17" />' +
-                '<img src="images/loading_thumbBanner.gif" alt="Preload 2/17" />' +
-                '<img src="images/loading_thumbPoster.gif" alt="Preload 3/17" />' +
-                '<img src="images/thumbBanner.png" alt="Preload 4/17" />' +
-                '<img src="images/thumbPoster.png" alt="Preload 5/17" />' +
-                '<img src="images/thumb.png" alt="Preload 6/17" />' +
-                '<img src="ui.uni/images/messagelog.png" alt="Preload 7/17" />' +
-                '<img src="ui.uni/images/loading.gif" alt="Preload 8/17" />' +
-                '<img src="ui.uni/images/big_buttons.png" alt="Preload 9/17" />' +
-                '<img src="ui.uni/images/buttons.png" alt="Preload 10/17" />' +
-                '<img src="ui.uni/images/context_buttons.png" alt="Preload 11/17" />' +
-                '<img src="ui.uni/images/mini_buttons.png" alt="Preload 12/17" />' +
-                '<img src="ui.uni/images/controls_big.png" alt="Preload 13/17" />' +
-                '<img src="ui.uni/images/controls_big_player.png" alt="Preload 14/17" />' +
-                '<img src="ui.uni/images/flagging/aCodecs.png" alt="Preload 15/17" />' +
-                '<img src="ui.uni/images/flagging/vCodecs.png" alt="Preload 16/17" />' +
-                '<img src="ui.uni/images/flagging/channels.png" alt="Preload 17/17" />' +
+                '<img src="images/loading_thumb.gif" alt="Preload 1" />' +
+                '<img src="images/loading_thumbBanner.gif" alt="Preload 2" />' +
+                '<img src="images/loading_thumbPoster.gif" alt="Preload 3" />' +
+                '<img src="images/thumbBanner.png" alt="Preload 4" />' +
+                '<img src="images/thumbPoster.png" alt="Preload 5" />' +
+                '<img src="images/thumb.png" alt="Preload 6" />' +
+                '<img src="ui.uni/images/messagelog.png" alt="Preload 7" />' +
+                '<img src="ui.uni/images/loading.gif" alt="Preload 8" />' +
+                '<img src="ui.uni/images/big_buttons.png" alt="Preload 9" />' +
+                '<img src="ui.uni/images/buttons.png" alt="Preload 10" />' +
+                '<img src="ui.uni/images/context_buttons.png" alt="Preload 11" />' +
+                '<img src="ui.uni/images/mini_buttons.png" alt="Preload 12" />' +
+                '<img src="ui.uni/images/controls_big.png" alt="Preload 13" />' +
+                '<img src="ui.uni/images/controls_big_player.png" alt="Preload 14" />' +
+                '<img src="ui.uni/images/flagging/aCodecs.png" alt="Preload 15" />' +
+                '<img src="ui.uni/images/flagging/vCodecs.png" alt="Preload 16" />' +
+                '<img src="ui.uni/images/flagging/channels.png" alt="Preload 17" />' +
+                '<img src="ui.uni/images/quick_controls.png" alt="Preload 18" />' +
+                '<img src="images/empty_cover_music.png" alt="Preload 19" />' +
+                '<img src="images/empty_cover_musicvideo.png" alt="Preload 20" />' +
+                '<img src="images/empty_cover_artist.png" alt="Preload 21" />' +
+                '<img src="images/empty_poster_film.png" alt="Preload 22" />' +
+                '<img src="images/empty_poster_filmset.png" alt="Preload 23" />' +
+                '<img src="images/empty_poster_tv.png" alt="Preload 24" />' +
+                '<img src="images/empty_banner_artist.png" alt="Preload 25" />' +
+                '<img src="images/empty_banner_film.png" alt="Preload 26" />' +
+                '<img src="images/empty_banner_tv.png" alt="Preload 27" />' +
+                '<img src="images/empty_thumb_tv.png" alt="Preload 28" />' +
+
               '</div>' +
               '<div id="secondBG"></div>' +
               '<div id="firstBG"></div>' +
@@ -1646,7 +1658,7 @@
     onArtistsTitleShow: function(e) {
       var artistsTitlePage = awxUI.artistsTitlePage;
       awxUI.$artistsTitleContent.empty();
-        if (typeof lastArtistCount === 'undefined') { lastArtistCount = awxUI.settings.limitArtists };
+        if (typeof lastArtistCount === 'undefined') { (awxUI.settings.artistsView == 'logosingle'? lastArtistCount = 1 : lastArtistCount = awxUI.settings.limitArtists) };
         if (typeof lastArtistCountStart === 'undefined') { lastArtistCountStart = 0 };
         if (typeof e != 'undefined') {
           if (e.data.Page == 'next') {
@@ -2318,7 +2330,7 @@
     onMoviesTitleShow: function(e) {
       //Always refresh, mainly for limited item views
         awxUI.$moviesTitleContent.empty();
-        if (typeof lastMovieCount === 'undefined') { lastMovieCount = awxUI.settings.limitMovies };
+        if (typeof lastMovieCount === 'undefined') { (awxUI.settings.filmView == 'singlePoster'? lastMovieCount = 1 : lastMovieCount = awxUI.settings.limitMovies) };
         if (typeof lastMovieCountStart === 'undefined') { lastMovieCountStart = 0 };
         if (typeof e != 'undefined') {
           if (e.data.Page == 'next') {
@@ -2358,7 +2370,7 @@
             $contentBox.removeClass('loading');
           }
         });
-      //}
+        
       return false
     },
   
@@ -2366,7 +2378,6 @@
      * Called when Movie sets-Page is shown.          *
      *********************************************/
     onMovieSetsShow: function() {
-
       if (this.$movieSetsContent.html() == '') {
         var movieSetsPage = this.movieSetsPage;
         var $contentBox = this.$movieSetsContent;
@@ -2379,11 +2390,13 @@
           },
 
           onSuccess: function(result) {
-            $contentBox.defaultMovieSetsViewer(result, movieSetsPage);
+            $contentBox.defaultMovieSetTitleViewer(result, movieSetsPage);
             $contentBox.removeClass('loading');
           }
         });
-      }
+      };
+      
+      return false;
     },
 
     /*********************************************
