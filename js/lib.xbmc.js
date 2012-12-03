@@ -2558,7 +2558,7 @@ var xbmc = {};
             '{"jsonrpc": "2.0", "method": "JSONRPC.Version",  "id": 1}',
 
             function (response) {
-              if (response.result.version >= 5 && navigator.appVersion.indexOf("MSIE") == -1) {
+              if (navigator.appVersion.indexOf("MSIE") == -1) {
                 if ("WebSocket" in window) {
                   xbmc.wsListener();
                 }
