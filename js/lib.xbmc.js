@@ -1318,7 +1318,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc":"2.0","id":2,"method":"AudioLibrary.GetRecentlyAddedAlbums","params":{ "limits": {"end": 25},"properties":["thumbnail","genre","artist","rating"]}}',
+        '{"jsonrpc":"2.0","id":2,"method":"AudioLibrary.GetRecentlyAddedAlbums","params":{ "properties":["thumbnail","genre","artist","rating"]}}',
 
         function(response) {
           settings.onSuccess(response.result);
@@ -1336,7 +1336,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc":"2.0","id":2,"method":"AudioLibrary.GetRecentlyPlayedAlbums","params":{ "limits": {"end": 25},"properties":["thumbnail","genre","artist","rating"]}}',
+        '{"jsonrpc":"2.0","id":2,"method":"AudioLibrary.GetRecentlyPlayedAlbums","params":{ "properties":["thumbnail","genre","artist","rating"]}}',
 
         function(response) {
           settings.onSuccess(response.result);
@@ -1398,7 +1398,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetRecentlyAddedSongs", "params": { "limits": { "start": 0, "end": 50 }, "properties": [ "artist", "album", "duration", "track" ] }, "id": "libRecentSongs"}',
+        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetRecentlyAddedSongs", "params": { "properties": [ "artist", "album", "duration", "track" ] }, "id": "libRecentSongs"}',
 
         function(response) {
           settings.onSuccess(response.result);
@@ -1416,7 +1416,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetRecentlyPlayedSongs", "params": { "limits": { "start": 0, "end": 50 }, "sort": { "method": "lastplayed", "order": "descending" }, "properties": [ "artist", "album", "duration", "track", "lastplayed" ] }, "id": "libRecentSongs"}',
+        '{"jsonrpc": "2.0", "method": "AudioLibrary.GetRecentlyPlayedSongs", "params": { "sort": { "method": "lastplayed", "order": "descending" }, "properties": [ "artist", "album", "duration", "track", "lastplayed" ] }, "id": "libRecentSongs"}',
 
         function(response) {
           settings.onSuccess(response.result);
@@ -1462,7 +1462,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc":"2.0", "id": "libRecentMVs", "method": "VideoLibrary.GetRecentlyAddedMusicVideos","params": { "limits": { "end": 25}, "properties": [ "title", "thumbnail", "artist", "album", "genre", "lastplayed", "year", "runtime", "fanart", "file", "streamdetails" ] } }',
+        '{"jsonrpc":"2.0", "id": "libRecentMVs", "method": "VideoLibrary.GetRecentlyAddedMusicVideos","params": { "properties": [ "title", "thumbnail", "artist", "album", "genre", "lastplayed", "year", "runtime", "fanart", "file", "streamdetails" ] } }',
 
         function(response) {
           settings.onSuccess(response.result);
@@ -2247,7 +2247,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc":"2.0","id":2,"method":"VideoLibrary.GetRecentlyAddedEpisodes","params":{ "limits": {"end": 25},"properties":["title","runtime","season","episode","showtitle","thumbnail","file","plot","playcount","tvshowid"]}} ',
+        '{"jsonrpc":"2.0","id":2,"method":"VideoLibrary.GetRecentlyAddedEpisodes","params":{ "properties":["title","runtime","season","episode","showtitle","thumbnail","file","plot","playcount","tvshowid"]}} ',
 
         function(response) {
           settings.onSuccess(response.result);
@@ -2293,7 +2293,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{ "jsonrpc": "2.0", "id": 2, "method": "VideoLibrary.GetRecentlyAddedMovies", "params": { "limits": {"end": 25}, "properties": [ "art", "title", "originaltitle", "runtime", "thumbnail", "file", "year", "plot", "tagline", "playcount", "rating", "genre", "director" ] } }',
+        '{ "jsonrpc": "2.0", "id": 2, "method": "VideoLibrary.GetRecentlyAddedMovies", "params": { "properties": [ "art", "title", "originaltitle", "runtime", "thumbnail", "file", "year", "plot", "tagline", "playcount", "rating", "genre", "director" ] } }',
 
         function(response) {
           settings.onSuccess(response.result);
