@@ -448,10 +448,10 @@
           xbmc.control({type: 'stop'}); return false;
         });
         $('.bigNext').click(function() {
-          xbmc.control({type: 'next'}); return false;
+          xbmc.playerGoTo({to: 'next'}); return false;
         });
         $('.bigPrev').click(function() {
-          xbmc.control({type: 'prev'}); return false;
+          xbmc.playerGoTo({to: 'previous'}); return false;
         });
         $('.bigRW').click(function() {
           xbmc.controlSpeed({type: 'decrement'}); return false;
