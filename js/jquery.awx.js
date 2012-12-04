@@ -3197,7 +3197,7 @@
           async: false
         });
 
-        var manualMediaDir = 'addons://sources/' + media;
+        var manualMediaDir = 'addons://sources/' + (media == 'music'? 'audio' : media);
         // TODO support Windows/OSX-Folders
         // /media - Folder may exist (access to usb-sticks etc.)
         xbmc.getDirectory({
@@ -3258,7 +3258,7 @@
       var nextElement = $footerNowBox.find('span.nextTitle');
       var timeCurRemain = $footerStatusBox.find('span.timeRemain');
       var timeCurRemainTotal = $footerStatusBox.find('span.timeRemainTotal');
-      var sliderElement = $('#content #displayoverlay .playingSlider');
+      var sliderElement = $('.playingSliderWrapper .playingSlider');
       
       sliderElement.slider({
         range: 'min',
