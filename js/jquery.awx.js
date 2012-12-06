@@ -3809,7 +3809,7 @@
           thumbDiscElement.hide();
           thumbElement.css('height', '280px');
           thumbElement.css('width', '187px');
-          thumbElement.attr('src', 'images/thumbPoster.png');
+          thumbElement.attr('src', 'images/empty_poster_overlay.png');
           thumbElement.css('margin-top', '0px');
           thumbElement.css('margin-right','0px');
           thumbElement.css('margin-left','70px');

@@ -2518,7 +2518,7 @@ var uiviews = {};
     var $moviesList = $('<div class="singleMoviePosterView"></div>');
     
     getSingleMovie(function(movie) {
-      var thumb = (movie.art.poster? xbmc.getThumbUrl(movie.art.poster) : 'images/thumbPoster.png');
+      var thumb = (movie.art.poster? xbmc.getThumbUrl(movie.art.poster) : 'images/empty_poster_film.png');
       
       var $movie = $('<div class="singleMovie">' +
         '<div style="display: table; margin: 3px auto;"><div class="prev" /><img src="' + thumb + '" alt="' + movie.label + '" class="imgPoster"><div class="next" /></div>' +
@@ -2547,7 +2547,7 @@ var uiviews = {};
         getSingleMovie(function(movie) {
           $movie.find('div.rating').removeClass('smallRating*');
           $movie.find('img.watched').remove();
-          if (movie.art.poster) { $movie.find('img.imgPoster').attr('src', xbmc.getThumbUrl(movie.art.poster)) } else { $movie.find('img.imgPoster').attr('src', 'images/thumbPoster.png') };
+          if (movie.art.poster) { $movie.find('img.imgPoster').attr('src', xbmc.getThumbUrl(movie.art.poster)) } else { $movie.find('img.imgPoster').attr('src', 'images/empty_poster_film.png') };
           $movie.find('img.imgPoster').attr('alt', movie.label);
           $movie.find('span.label').text(movie.label);
           if (movie.playcount > 0 && !awxUI.settings.hideWatchedMark) $movie.find('span.label').append('<img class="watched" style="vertical-align: middle" src="images/OverlayWatched_Small.png" />');
@@ -2568,7 +2568,7 @@ var uiviews = {};
         getSingleMovie(function(movie) {
           $movie.find('div.rating').removeClass('smallRating*');
           $movie.find('img.watched').remove();
-          if (movie.art.poster) { $movie.find('img.imgPoster').attr('src', xbmc.getThumbUrl(movie.art.poster)) } else { $movie.find('img.imgPoster').attr('src', 'images/thumbPoster.png') };
+          if (movie.art.poster) { $movie.find('img.imgPoster').attr('src', xbmc.getThumbUrl(movie.art.poster)) } else { $movie.find('img.imgPoster').attr('src', 'images/empty_poster_film.png') };
           $movie.find('img.imgPoster').attr('alt', movie.label);
           $movie.find('span.label').text(movie.label);
           if (movie.playcount > 0 && !awxUI.settings.hideWatchedMark) $movie.find('span.label').append('<img style="vertical-align: middle" src="images/OverlayWatched_Small.png" />');
