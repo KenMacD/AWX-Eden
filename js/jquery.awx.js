@@ -324,8 +324,328 @@
     });
   }; // END defaultControls
 
+  $.fn.controlsInput24 = function() {
+    var failed = function() {
+      mkf.messageLog.show(mkf.lang.get('Failed to send command!', 'Popup message'), mkf.messageLog.status.error, 5000);
+    };
+    
+    if (awxUI.settings.input) {
+      $inputcontrols = $(
+      '<div id="inputcontrols24">' +
+      '<a class="button home" href="" title="' + mkf.lang.get('Home', 'Tool tip') + '"></a><a class="button up" href="" title="' + mkf.lang.get('Up', 'Tool tip') + '"></a><a class="button back" href="" title="' + mkf.lang.get('Back', 'Tool tip') + '"></a>' +
+      '<a class="button left" href="" title="' + mkf.lang.get('Left', 'Tool tip') + '"></a><a class="button select" href="" title="' + mkf.lang.get('Select', 'Tool tip') + '"></a><a class="button right" href="" title="' + mkf.lang.get('Right', 'Tool tip') + '"></a>' +
+      '<a class="button info" href="" title="' + mkf.lang.get('Information', 'Tool tip') + '"></a><a class="button down" href="" title="' + mkf.lang.get('Down', 'Tool tip') + '"></a><a class="button contextMenu" href="" title="' + mkf.lang.get('Context Menu', 'Tool tip') + '"></a>' +
+      //'</div>' +
+      /*'<div id="audiocontrols" style="display: none">' +
+      '<div><a href="" class="bigAudioPrev" title="' + mkf.lang.get('Previous Audio Stream', 'Tool tip') + '"></a>' +
+      '<a href="" class="bigAudioNext" title="' + mkf.lang.get('Next Audio Stream', 'Tool tip') + '"></a></div>' +
+      '</div>' +
+      '<div id="subcontrols" style="display: none">' +
+      '<div><a href="" class="bigSubPrev" title="' + mkf.lang.get('Previous Subtitles', 'Tool tip') + '"></a>' +
+      '<a href="" class="bigSubOnOff" title="' + mkf.lang.get('Subtitles On/Off', 'Tool tip') + '"></a>' +
+      '<a href="" class="bigSubNext" title="' + mkf.lang.get('Next Subtitles', 'Tool tip') + '"></a></div>' +*/
+      '</div>');
 
+      /*$inputcontrols.find('.audio').click(function() {
+        $('#inputcontrols').hide();
+        $('#subcontrols').hide();
+        $('#audiocontrols').toggle();
+        return false;
+      });
+      $inputcontrols.find('.subs').click(function() {
+        $('#audiocontrols').hide();
+        $('#inputcontrols').hide();
+        $('#subcontrols').toggle();
+        return false;
+      });
+      $inputcontrols.find('.input').click(function() {
+        $('#audiocontrols').hide();
+        $('#subcontrols').hide();
+        $('#inputcontrols').toggle();
+        return false;
+      });*/
+      $inputcontrols.find('.left').click(function() {
+        xbmc.input({type: 'Left', onError: failed}); return false;
+      });
+      $inputcontrols.find('.right').click(function() {
+        xbmc.input({type: 'Right', onError: failed}); return false;
+      });
+      $inputcontrols.find('.up').click(function() {
+        xbmc.input({type: 'Up', onError: failed}); return false;
+      });
+      $inputcontrols.find('.down').click(function() {
+        xbmc.input({type: 'Down', onError: failed}); return false;
+      });
+      $inputcontrols.find('.back').click(function() {
+        xbmc.input({type: 'Back', onError: failed}); return false;
+      });
+      $inputcontrols.find('.home').click(function() {
+        xbmc.input({type: 'Home', onError: failed}); return false;
+      });
+      $inputcontrols.find('.select').click(function() {
+        xbmc.input({type: 'Select', onError: failed}); return false;
+      });
+      $inputcontrols.find('.contextMenu').click(function() {
+        xbmc.input({type: 'ContextMenu', onError: failed}); return false;
+      });
+      $inputcontrols.find('.info').click(function() {
+        xbmc.input({type: 'Info', onError: failed}); return false;
+      });
+      
+      /*$inputcontrols.find('.bigAudioNext').click(function() {
+        xbmc.setAudioStream({command: 'next', onError: failed}); return false;
+      });
+      $inputcontrols.find('.bigAudioPrev').click(function() {
+        xbmc.setAudioStream({command: 'previous', onError: failed}); return false;
+      });
+      
+      $('.bigSubOnOff').click(function() {
+      xbmc.setSubtitles({command: (xbmc.periodicUpdater.subsenabled? 'off' : 'on'), onError: failed}); return false;
+      });      
+      $('.bigSubNext').click(function() {
+        xbmc.setSubtitles({command: 'next', onError: failed}); return false;
+      });
+      $('.bigSubPrev').click(function() {
+        xbmc.setSubtitles({command: 'previous', onError: failed}); return false;
+      });
+      */
+      this.each (function() {
+        $(this).append($inputcontrols.clone(true));
+      });
+    
+    };
+  };
+  
+  $.fn.controlsInput32 = function() {
+    var failed = function() {
+      mkf.messageLog.show(mkf.lang.get('Failed to send command!', 'Popup message'), mkf.messageLog.status.error, 5000);
+    };
+    
+    if (awxUI.settings.input) {
+      $inputcontrols = $(
+      '<div id="inputcontrols32">' +
+      '<a class="button home" href="" title="' + mkf.lang.get('Home', 'Tool tip') + '"></a><a class="button back" href="" title="' + mkf.lang.get('Back', 'Tool tip') + '"></a><a class="button up" href="" title="' + mkf.lang.get('Up', 'Tool tip') + '"></a>' +
+      '<a class="button left" href="" title="' + mkf.lang.get('Left', 'Tool tip') + '"></a><a class="button select" href="" title="' + mkf.lang.get('Select', 'Tool tip') + '"></a><a class="button right" href="" title="' + mkf.lang.get('Right', 'Tool tip') + '"></a>' +
+      '<a class="button down" href="" title="' + mkf.lang.get('Down', 'Tool tip') + '"></a><a class="button info" href="" title="' + mkf.lang.get('Information', 'Tool tip') + '"></a><a class="button contextMenu" href="" title="' + mkf.lang.get('Context Menu', 'Tool tip') + '"></a>' +
+      '</div>');
+      
+      $inputcontrols.find('.left').click(function() {
+        xbmc.input({type: 'Left', onError: failed}); return false;
+      });
+      $inputcontrols.find('.right').click(function() {
+        xbmc.input({type: 'Right', onError: failed}); return false;
+      });
+      $inputcontrols.find('.up').click(function() {
+        xbmc.input({type: 'Up', onError: failed}); return false;
+      });
+      $inputcontrols.find('.down').click(function() {
+        xbmc.input({type: 'Down', onError: failed}); return false;
+      });
+      $inputcontrols.find('.back').click(function() {
+        xbmc.input({type: 'Back', onError: failed}); return false;
+      });
+      $inputcontrols.find('.home').click(function() {
+        xbmc.input({type: 'Home', onError: failed}); return false;
+      });
+      $inputcontrols.find('.select').click(function() {
+        xbmc.input({type: 'Select', onError: failed}); return false;
+      });
+      $inputcontrols.find('.contextMenu').click(function() {
+        xbmc.input({type: 'ContextMenu', onError: failed}); return false;
+      });
+      $inputcontrols.find('.info').click(function() {
+        xbmc.input({type: 'Info', onError: failed}); return false;
+      });
+      
+      this.each (function() {
+        $(this).append($inputcontrols.clone(true));
+      });
+    
+    };
+  };
+  
+  $.fn.controlsPlayer24 = function() {
+    if (awxUI.settings.player || awxUI.settings.volume) {
+      $controls = $('<div id="playercontrols24">' +
+      (awxUI.settings.player? '<a class="button prev" href=""></a><a class="button rewind" href=""></a><a class="button fastforward" href=""></a><a class="button next" href=""></a><a class="button shuffle" href="" title="' + mkf.lang.get('Shuffle', 'Tool tip') + '"></a><a class="button repeat" href="" title="' + mkf.lang.get('Repeat All', 'Tool tip') + '"></a>' : '') +
+      (awxUI.settings.volume? '<a class="button voldown" href="" title="' + mkf.lang.get('Decrease Volume', 'Tool tip') + '"></a><a class="button volup" href="" title="' + mkf.lang.get('Increase Volume', 'Tool tip') + '"></a><a class="button mute" href="" title="' + mkf.lang.get('Mute On/Off', 'Tool tip') + '"></a>' : '') +
+      '</div>');
+      
+      $controls.find('.play').click(function() {
+        xbmc.control({type: 'play'}); return false;
+      });
+      $controls.find('.stop').click(function() {
+        xbmc.control({type: 'stop'}); return false;
+      });
+      $controls.find('.next').click(function() {
+        xbmc.playerGoTo({to: 'next'}); return false;
+      });
+      $controls.find('.prev').click(function() {
+        xbmc.playerGoTo({to: 'previous'}); return false;
+      });
+      $controls.find('.rewind').click(function() {
+        xbmc.controlSpeed({type: 'decrement'}); return false;
+      });
+      $controls.find('.fastforward').click(function() {
+        xbmc.controlSpeed({type: 'increment'}); return false;
+      });
+      $controls.find('.mute').click(function() {
+        xbmc.setMute(); return false;
+      });  
+      $controls.find('.volup').click(function() {
+        xbmc.setVolumeInc({volume: 'increment'}); return false;
+      });
+      $controls.find('.voldown').click(function() {
+        xbmc.setVolumeInc({volume: 'decrement'}); return false;
+      });
+      var shuffle = function() {
+        xbmc.playerSet({type: 'shuffle', value: 'toggle'}); return false;
+      };
 
+      $controls.find('.shuffle').on('click', shuffle);
+
+      var repeat = function() {
+        xbmc.playerSet({type: 'repeat', value: 'cycle'});
+        return false;
+      };
+      
+      $controls.find('.repeat').on('click', repeat);
+      
+      xbmc.periodicUpdater.addPlayerStatusChangedListener(function(status) {
+        var $shuffleBtn = $('.button.shuffle');
+        if (status == 'shuffleOn') {
+          $shuffleBtn.unbind('click');
+          $shuffleBtn.bind('click', shuffle);
+          $shuffleBtn.addClass('unshuffle');
+          $shuffleBtn.attr('title', mkf.lang.get('Shuffle', 'Tool tip'));
+
+        } else if (status == 'shuffleOff') {
+          $shuffleBtn.unbind('click');
+          $shuffleBtn.bind('click', shuffle);
+          $shuffleBtn.removeClass('unshuffle');
+          $shuffleBtn.attr('title', mkf.lang.get('Unshuffle', 'Tool tip'));
+        }
+      });
+
+      xbmc.periodicUpdater.addPlayerStatusChangedListener(function(status) {
+        var $repeatBtn = $('.button.repeat');
+        if (status == 'off') {
+          $repeatBtn.unbind('click');
+          $repeatBtn.bind('click', {"repeat": 'all'}, repeat);
+          $repeatBtn.removeClass('repeatOff');
+          $repeatBtn.addClass('repeat');
+          $repeatBtn.attr('title', mkf.lang.get('Repeat All', 'Tool tip'));
+        } else if (status == 'all') {
+          $repeatBtn.unbind('click');
+          $repeatBtn.bind('click', {"repeat": 'one'}, repeat);
+          $repeatBtn.addClass('repeat1');
+          $repeatBtn.attr('title', mkf.lang.get('Repeat One', 'Tool tip'));
+        } else if (status == 'one') {
+          $repeatBtn.unbind('click');
+          $repeatBtn.removeClass('repeat1');
+          $repeatBtn.bind('click', {"repeat": 'off'}, repeat);      
+          $repeatBtn.addClass('repeatOff');
+          $repeatBtn.attr('title', mkf.lang.get('Repeat Off', 'Tool tip'));
+        }
+      });
+      
+      this.each (function() {
+        $(this).append($controls.clone(true));
+      });
+    };
+  }; // END input24
+
+  $.fn.controlsPlayer32 = function() {
+    if (awxUI.settings.player || awxUI.settings.volume) {
+      $controls = $('<div id="playercontrols32">' +
+      (awxUI.settings.player? '<a class="button prev" href=""></a><a class="button rewind" href=""></a><a class="button fastforward" href=""></a><a class="button next" href=""></a><a class="button shuffle" href="" title="' + mkf.lang.get('Shuffle', 'Tool tip') + '"></a><a class="button repeat" href="" title="' + mkf.lang.get('Repeat All', 'Tool tip') + '"></a>' : '') +
+      //(awxUI.settings.volume? '<a class="button voldown" href="" title="' + mkf.lang.get('Decrease Volume', 'Tool tip') + '"></a><a class="button volup" href="" title="' + mkf.lang.get('Increase Volume', 'Tool tip') + '"></a><a class="button mute" href="" title="' + mkf.lang.get('Mute On/Off', 'Tool tip') + '"></a>' : '') +
+      '</div>');
+      
+      $controls.find('.play').click(function() {
+        xbmc.control({type: 'play'}); return false;
+      });
+      $controls.find('.stop').click(function() {
+        xbmc.control({type: 'stop'}); return false;
+      });
+      $controls.find('.next').click(function() {
+        xbmc.playerGoTo({to: 'next'}); return false;
+      });
+      $controls.find('.prev').click(function() {
+        xbmc.playerGoTo({to: 'previous'}); return false;
+      });
+      $controls.find('.rewind').click(function() {
+        xbmc.controlSpeed({type: 'decrement'}); return false;
+      });
+      $controls.find('.fastforward').click(function() {
+        xbmc.controlSpeed({type: 'increment'}); return false;
+      });
+      $controls.find('.mute').click(function() {
+        xbmc.setMute(); return false;
+      });  
+      $controls.find('.volup').click(function() {
+        xbmc.setVolumeInc({volume: 'increment'}); return false;
+      });
+      $controls.find('.voldown').click(function() {
+        xbmc.setVolumeInc({volume: 'decrement'}); return false;
+      });
+      var shuffle = function() {
+        xbmc.playerSet({type: 'shuffle', value: 'toggle'}); return false;
+      };
+
+      $controls.find('.shuffle').on('click', shuffle);
+
+      var repeat = function() {
+        xbmc.playerSet({type: 'repeat', value: 'cycle'});
+        return false;
+      };
+      
+      $controls.find('.repeat').on('click', repeat);
+      
+      xbmc.periodicUpdater.addPlayerStatusChangedListener(function(status) {
+        var $shuffleBtn = $('.button.shuffle');
+        if (status == 'shuffleOn') {
+          $shuffleBtn.unbind('click');
+          $shuffleBtn.bind('click', shuffle);
+          $shuffleBtn.addClass('unshuffle');
+          $shuffleBtn.attr('title', mkf.lang.get('Shuffle', 'Tool tip'));
+
+        } else if (status == 'shuffleOff') {
+          $shuffleBtn.unbind('click');
+          $shuffleBtn.bind('click', shuffle);
+          $shuffleBtn.removeClass('unshuffle');
+          $shuffleBtn.attr('title', mkf.lang.get('Unshuffle', 'Tool tip'));
+        }
+      });
+
+      xbmc.periodicUpdater.addPlayerStatusChangedListener(function(status) {
+        var $repeatBtn = $('.button.repeat');
+        if (status == 'off') {
+          $repeatBtn.unbind('click');
+          $repeatBtn.bind('click', {"repeat": 'all'}, repeat);
+          $repeatBtn.removeClass('repeatOff');
+          $repeatBtn.addClass('repeat');
+          $repeatBtn.attr('title', mkf.lang.get('Repeat All', 'Tool tip'));
+        } else if (status == 'all') {
+          $repeatBtn.unbind('click');
+          $repeatBtn.bind('click', {"repeat": 'one'}, repeat);
+          $repeatBtn.addClass('repeat1');
+          $repeatBtn.attr('title', mkf.lang.get('Repeat One', 'Tool tip'));
+        } else if (status == 'one') {
+          $repeatBtn.unbind('click');
+          $repeatBtn.removeClass('repeat1');
+          $repeatBtn.bind('click', {"repeat": 'off'}, repeat);      
+          $repeatBtn.addClass('repeatOff');
+          $repeatBtn.attr('title', mkf.lang.get('Repeat Off', 'Tool tip'));
+        }
+      });
+      
+      this.each (function() {
+        $(this).append($controls.clone(true));
+      });
+    };
+  }; // END player32
+  
   /* ########################### *\
    |  System-Buttons
   \* ########################### */
@@ -1080,7 +1400,7 @@
    |  Volume Control
   \* ########################### */
   $.fn.defaultVolumeControl = function(options) {
-      this.append('<img style="z-index: 5; position: absolute; bottom: 2px" src="ui.uni/images/volume.png">');
+      this.append('<img style="z-index: 5; position: absolute; bottom: 0px" src="ui.uni/images/volume.png">');
       this.each (function() {
         var $sliderElement = $(this);
 
@@ -2886,7 +3206,7 @@
         var resume = e.data.resume;
         var file = e.data.file;
       };
-      var messageHandle = mkf.messageLog.show(mkf.lang.get('Playing...', 'Popup message'));
+      var messageHandle = mkf.messageLog.show(mkf.lang.get('Playing...', 'Popup message with addition'));
 
       var fn = 'playVideoFile';
       if (media == 'music') {
@@ -3184,11 +3504,11 @@
               return;
             }
             $.each(result.sources, function(i, share)  {
-              //if (!share.file.startsWith('addons://')) {
+              if (!share.file.startsWith('addons://')) {
                 var $file = $('<li' + (globalI%2==0? ' class="even"': '') + '><a href="" class="file' + i + '"> [SRC] ' + share.label + '</a></li>').appendTo($filelist);
                 $file.find('a').bind('click', {folder: {name: '[SRC] ' + share.label, path: share.file}}, onFolderClick);
                 ++globalI;
-              //}
+              }
             });
           },
           onError: function() {
@@ -3197,7 +3517,7 @@
           async: false
         });
 
-        var manualMediaDir = 'addons://sources/' + (media == 'music'? 'audio' : media);
+        var manualMediaDir = '/mnt/itsuka/music/1/';
         // TODO support Windows/OSX-Folders
         // /media - Folder may exist (access to usb-sticks etc.)
         xbmc.getDirectory({
@@ -3205,8 +3525,23 @@
           directory: manualMediaDir,
 
           onSuccess: function(result) {
+            var $file = $('<li' + (globalI%2==0? ' class="even"': '') + '><a href="" class="fileMedia">' + mkf.lang.get('Manual', 'Label') + '</a></li>').appendTo($filelist);
+            $file.bind('click', {folder: {name: mkf.lang.get('Manual', 'Label'), path:manualMediaDir}}, onFolderClick);
+          },
+
+          async: false
+        });
+        
+        var addonDir = 'addons://sources/' + (media == 'music'? 'audio' : media);
+        // TODO support Windows/OSX-Folders
+        // /media - Folder may exist (access to usb-sticks etc.)
+        xbmc.getDirectory({
+          //directory: '/media',
+          directory: addonDir,
+
+          onSuccess: function(result) {
             var $file = $('<li' + (globalI%2==0? ' class="even"': '') + '><a href="" class="fileMedia">' + mkf.lang.get('Addons (unsupported feature)', 'Label') + '</a></li>').appendTo($filelist);
-            $file.bind('click', {folder: {name: mkf.lang.get('Addons (unsupported feature)', 'Label'), path:manualMediaDir}}, onFolderClick);
+            $file.bind('click', {folder: {name: mkf.lang.get('Addons (unsupported feature)', 'Label'), path:addonDir}}, onFolderClick);
           },
 
           async: false
@@ -3249,8 +3584,8 @@
       var seasonElement = '';
       var episodeElement = '';
       
-      var thumbElement = $('#content #displayoverlay #artwork .artThumb');
-      var thumbDiscElement = $('#content #displayoverlay #artwork .discThumb');
+      var thumbElement = $('#artwork .artThumb');
+      var thumbDiscElement = $('#artwork .discThumb');
       
       var nowLabelElement = $footerNowBox.find('span.label');
       var nowArtistElement = $footerNowBox.find('span.nowArtist');

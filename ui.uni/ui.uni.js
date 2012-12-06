@@ -1504,25 +1504,32 @@
               '<div id="secondBG"></div>' +
               '<div id="firstBG"></div>' +
               '<div id="background">' +
-              '<div id="header">' +
-              '<div id="navigation"></div>'+
-              '<div id="statusLine"><div id="location"></div><div id="contextMenu"></div></div>' +
+                '<div id="header">' +
+                '<div id="navigation"></div>'+
+                '<div id="statusLine"><div id="location"></div><div id="contextMenu"></div></div>' +
               '</div>' + 
-              '<div id="content">' +
-              '<div id="displayoverlay">' +
               '<div id="displayoverlaytop"><div class="playingSliderWrapper"><div class="playingSlider"></div></div></div>' +
-              '<div style="position: fixed; bottom: 100px; left: 5px; z-index: 50; height: 100%;"><div id="volumeSlider"></div></div>' +
-              '<div id="displayoverlaybot">' +
-              '<div id="artwork"><img class="discThumb" src="images/blank_cdart.png" style="display: none; width: 194px; height: 194px; position: absolute; z-index: -1;"><img class="artThumb" src="images/thumbPoster.png"></div>' +
-              '<div id="controls"></div><div class="menucon" style="height: 50px; width: 330px"></div></div>' +//<div class="playingSliderWrapper"><div class="playingSlider"></div></div></div>' +
-              '</div></div>' +
+              '<div id="displayoverlayleft"><div id="volumeSlider"></div></div>' +
+              '<div id="content">' +
+                //'<div id="displayoverlay">' +
+                //'<div id="displayoverlaytop"><div class="playingSliderWrapper"><div class="playingSlider"></div></div></div>' +
+                //'<div style="position: fixed; bottom: 100px; left: 5px; z-index: 50; height: 100%;"><div id="volumeSlider"></div></div>' +
+                /*'<div id="displayoverlaybot">' +
+                '<div id="artwork"><img class="discThumb" src="images/blank_cdart.png" style="display: none; width: 194px; height: 194px; position: absolute; z-index: -1;"><img class="artThumb" src="images/thumbPoster.png"></div>' +
+                '<div id="controls"></div><div class="menucon" style="height: 50px; width: 330px"></div>' +
+                '</div>' +*///<div class="playingSliderWrapper"><div class="playingSlider"></div></div></div>' +
+                //'</div>' +
+              '</div>' +
+              '<div id="displayoverlaybot"><div id="controlsPlayer32"></div><div id="controlsInput32"></div>' +
+                '<div id="artwork"><a href="" class="artclose"></a><img class="discThumb" src="images/blank_cdart.png" style="display: none; width: 194px; height: 194px; position: absolute; z-index: -1;"><img class="artThumb" src="images/empty_poster_overlay.png"></div>' +
+              '</div>' +
               '<div id="footer">' +
-              '<div id="simple_controls"></div><div id="infoContainer"></div>' +
-              '<div id="statPlayerContainer"><div id="streamdets"><div class="vFormat" /><div class="aspect" /><div class="vCodec" /><div class="aCodec" /><div class="channels" /><div class="vSubtitles" style="display: none" /></div>' +
-              '<div id="statusPlayer"><div id="statusPlayerRow"><div id="paused"></div><div id="shuffled"></div></div><div id="statusPlayerRow"><div id="repeating"></div><div id="muted"></div></div></div>' +
-              '<div id="remainPlayer"><div id="remaining">' + mkf.lang.get('Remaining:', 'Footer label') + ' <span class="timeRemain">00:00</span></div><div id="plTotal">' + mkf.lang.get('Total:', 'Footer label') + ' <span class="timeRemainTotal">00:00</span></div></div>' +
+                '<div id="simple_controls"></div><div id="infoContainer"></div>' +
+                '<div id="statPlayerContainer"><div id="streamdets"><div class="vFormat" /><div class="aspect" /><div class="vCodec" /><div class="aCodec" /><div class="channels" /><div class="vSubtitles" style="display: none" /></div>' +
+                '<div id="statusPlayer"><div id="statusPlayerRow"><div id="paused"></div><div id="shuffled"></div></div><div id="statusPlayerRow"><div id="repeating"></div><div id="muted"></div></div></div>' +
+                '<div id="remainPlayer"><div id="remaining">' + mkf.lang.get('Remaining:', 'Footer label') + ' <span class="timeRemain">00:00</span></div><div id="plTotal">' + mkf.lang.get('Total:', 'Footer label') + ' <span class="timeRemainTotal">00:00</span></div></div>' +
               //'<div id="statPlayerContainer"><div id="statusPlayer"><div id="statusPlayerRow"><div id="paused"></div><div id="shuffled"></div></div><div id="statusPlayerRow"><div id="repeating"></div><div id="muted"></div></div></div><div id="remainPlayer"><div id="remaining">Remaing:</div><div id="plTotal">Playlist Total:</div></div>' +
-              '<div id="controller"></div></div>' +
+                '<div id="controller"></div></div>' +
               '</div>' +
               '<div id="messageLog"></div></div>'
               );
@@ -1541,9 +1548,13 @@
 
       $('#footer #simple_controls').simcontrols();
       $('#displayoverlaybot .menucon').topcontrols();
-      $('#controls').extraControls();
+      $('#controlsPlayer32').controlsPlayer32();
+      $('#controlsInput32').controlsInput32();
+      $('#controlsPlayer24').controlsPlayer24();
+      $('#controlsInput24').controlsInput24();
+      $('#artwork a.artclose').click(function() { $('#artwork').hide(); return false; } );
       $('#infoContainer').uniFooterStatus();
-      $('#controller').on('click', function() { $('#displayoverlay').toggle() } );
+      $('#controller').on('click', function() { $('#displayoverlayleft').toggle(); $('#displayoverlaytop').toggle(); $('#displayoverlaybot').toggle(); $('#content').toggleClass('controls'); $('#artwork').show(); } );
       //$('#currentlyPlaying').defaultCurrentlyPlaying({effect:'fade'});
       $('#volumeSlider').defaultVolumeControl({vertical: true});
 
@@ -1553,7 +1564,9 @@
       $sysMenu.find('a.settings').prepend('<span class="icon settings"></span>');
       $sysMenu.find('a.exit').prepend('<span class="icon exit"></span>');
 
-      $('#displayoverlay').hide();
+      $('#displayoverlaybot').hide();
+      $('#displayoverlaytop').hide();
+      $('#displayoverlayleft').hide();
       $('#statusPlayer #statusPlayerRow').children().hide()
       //$('#statusPlayer').hide();
 

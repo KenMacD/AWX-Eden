@@ -1,6 +1,7 @@
 0.6.1
   - Extra fan art support for random playing background.
   - Ability to disable functions via js/settings.json.
+  - Browse addons VFS in the file menu. This is unsupported by XBMC and thus the same by AWXi.
   - Read cookies once and set variable. Read variable for views, limits and sorting: no need for browser page refresh on changes.
   - Single views use proper limiting.
   - Changed sorting 'none' to 'date added' which retains the old/expected behaviour.
