@@ -60,7 +60,7 @@ msgid "Files"
 msgstr ""
 
 msgctxt "Page and menu"
-msgid "Playlist"
+msgid "Now Playing"
 msgstr ""
 
 msgctxt "Page and menu"

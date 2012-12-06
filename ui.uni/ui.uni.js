@@ -714,8 +714,8 @@
           }
       });
       this.musicPlaylistPage = musicPage.addPage({
-        title: mkf.lang.get('Playlist', 'Page and menu'),
-        menuButtonText: '&raquo; ' + mkf.lang.get('Playlist', 'Page and menu'),
+        title: mkf.lang.get('Now Playing', 'Page and menu'),
+        menuButtonText: '&raquo; ' + mkf.lang.get('Now Playing', 'Page and menu'),
         content: this.$musicPlaylistContent,
         contextMenu: musicPlaylistContextMenu,
         onShow: $.proxy(this, "onMusicPlaylistShow"),
@@ -1422,9 +1422,9 @@
       });
       
       this.videoPlaylistPage = videosPage.addPage({
-        title: mkf.lang.get('Playlist', 'Page and menu'),
+        title: mkf.lang.get('Now Playing', 'Page and menu'),
         content: this.$videoPlaylistContent,
-        menuButtonText: '&raquo; ' + mkf.lang.get('Playlist', 'Page and menu'),
+        menuButtonText: '&raquo; ' + mkf.lang.get('Now Playing', 'Page and menu'),
         contextMenu: videoPlaylistContextMenu,
         onShow: $.proxy(this, "onVideoPlaylistShow"),
         className: 'videoPlaylist'
