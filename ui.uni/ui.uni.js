@@ -141,7 +141,7 @@
             return false;
           }
       });
-      artistsTitleContextMenu.push({
+      /*artistsTitleContextMenu.push({
         'id':'findArtistsTitleButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findArtistsTitleButton').offset();
@@ -149,7 +149,7 @@
               .defaultFindBox({id:'artistsTitleFindBox', searchItems: xbmc.getSearchTerm('artists'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       artistsTitleContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -181,7 +181,7 @@
             return false;
           }
       });
-      artistsGenresContextMenu.push({
+      /*artistsGenresContextMenu.push({
         'id':'findArtistsGenresButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findArtistsGenresButton').offset();
@@ -189,7 +189,7 @@
               .defaultFindBox({id:'artistsGenresFindBox', searchItems: xbmc.getSearchTerm('agenres'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       artistsGenresContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -257,7 +257,7 @@
             return false;
           }
       });
-      musicAlbumsTitleContextMenu.push({
+      /*musicAlbumsTitleContextMenu.push({
         'id':'findAlbumTitleButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findAlbumTitleButton').offset();
@@ -265,7 +265,7 @@
               .defaultFindBox({id:'albumsTitleFindBox', searchItems: xbmc.getSearchTerm('albums'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       musicAlbumsTitleContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -387,7 +387,7 @@
             return false;
           }
       });
-      albumGenresContextMenu.push({
+      /*albumGenresContextMenu.push({
         'id':'findAlbumGenresButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findAlbumGenresButton').offset();
@@ -395,7 +395,7 @@
               .defaultFindBox({id:'albumGenresFindBox', searchItems: xbmc.getSearchTerm('agenres'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       albumGenresContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -440,7 +440,7 @@
             return false;
           }
       });
-      songsTitleContextMenu.push({
+      /*songsTitleContextMenu.push({
         'id':'findSongsTitlesButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findSongsTitlesButton').offset();
@@ -448,7 +448,7 @@
               .defaultFindBox({id:'songsTitlesFindBox', searchItems: xbmc.getSearchTerm('agenres'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       songsTitleContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -601,7 +601,7 @@
             return false;
           }
       });
-      songGenresContextMenu.push({
+      /*songGenresContextMenu.push({
         'id':'findSongGenresButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findSongGenresButton').offset();
@@ -609,7 +609,7 @@
               .defaultFindBox({id:'songGenresFindBox', searchItems: xbmc.getSearchTerm('agenres'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       songGenresContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -632,7 +632,7 @@
       // PVR radio
       this.$pvrradioContent = $('<div class="pageContentWrapper"></div>');
       var pvrradioContextMenu = $.extend(true, [], standardMusicContextMenu);
-      pvrradioContextMenu.push({
+      /*pvrradioContextMenu.push({
         'id':'findRadioButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findRadioButton').offset();
@@ -640,7 +640,7 @@
               .defaultFindBox({id:'radioFindBox', searchItems: xbmc.getSearchTerm('channels'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       pvrradioContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -704,7 +704,7 @@
             return false;
           }
       });
-      musicPlaylistContextMenu.push({
+     /* musicPlaylistContextMenu.push({
         'id':'findPlaylistButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findPlaylistButton').offset();
@@ -712,7 +712,7 @@
               .defaultFindBox({id:'playlistFindBox', searchItems: xbmc.getSearchTerm('aplaylist'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       this.musicPlaylistPage = musicPage.addPage({
         title: mkf.lang.get('Now Playing', 'Page and menu'),
         menuButtonText: '&raquo; ' + mkf.lang.get('Now Playing', 'Page and menu'),
@@ -791,7 +791,7 @@
             return false;
           }
       });
-      videoMoviesTitleContextMenu.push({
+      /*videoMoviesTitleContextMenu.push({
         'id':'findMovieTitleButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findMovieTitleButton').offset();
@@ -799,7 +799,7 @@
               .defaultFindBox({id:'moviesTitleFindBox', searchItems: xbmc.getSearchTerm('movies'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       videoMoviesTitleContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -832,7 +832,7 @@
             return false;
           }
       });
-      videoMovieSetsContextMenu.push({
+      /*videoMovieSetsContextMenu.push({
         'id':'findMovieSetsButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findMovieSetsButton').offset();
@@ -840,7 +840,7 @@
               .defaultFindBox({id:'moviesetsFindBox', searchItems: xbmc.getSearchTerm('moviesets'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       videoMovieSetsContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -1029,7 +1029,7 @@
             return false;
           }
       });
-      videoTvShowsTitleContextMenu.push({
+      /*videoTvShowsTitleContextMenu.push({
         'id':'findTVShowTitleButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findTVShowTitleButton').offset();
@@ -1037,7 +1037,7 @@
               .defaultFindBox({id:'tvShowFindBox', searchItems: xbmc.getSearchTerm('tvshows'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       videoTvShowsTitleContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
@@ -1349,7 +1349,7 @@
       // PVR TV
       this.$pvrtvContent = $('<div class="pageContentWrapper"></div>');
       var pvrtvContextMenu = $.extend(true, [], standardVideosContextMenu);
-      pvrtvContextMenu.push({
+      /*pvrtvContextMenu.push({
         'id':'findPVRtvButton', 'icon':'find', 'title':mkf.lang.get('Find', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
           function(){
             var pos = $('#findPVRtvButton').offset();
@@ -1357,7 +1357,7 @@
               .defaultFindBox({id:'pvrtvFindBox', searchItems: xbmc.getSearchTerm('channels'), top: pos.top +50, left: pos.left});
             return false;
           }
-      });
+      });*/
       pvrtvContextMenu.push({
         'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
           function(){
