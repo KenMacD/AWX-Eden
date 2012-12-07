@@ -664,6 +664,15 @@
       this.$musicFilesContent = $('<div class="pageContentWrapper"></div>');
       var musicFilesContextMenu = $.extend(true, [], standardMusicContextMenu);
       
+      musicFilesContextMenu.push({
+        'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
+          function(){
+            awxUI.$musicFilesContent.empty();
+            awxUI.onMusicFilesShow();
+            return false;
+          }
+      });
+      
       this.musicFilesPage = musicPage.addPage({
         title: mkf.lang.get('Files', 'Page and menu'),
         menuButtonText: '&raquo; ' + mkf.lang.get('Files', 'Page and menu'),
@@ -1379,11 +1388,22 @@
       
       //Video Files
       this.$videoFilesContent = $('<div class="pageContentWrapper"></div>');
+      var videoFilesContextMenu = $.extend(true, [], standardVideosContextMenu);
+      videoFilesContextMenu.push({
+        'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
+          function(){
+            awxUI.$videoFilesContent.empty();
+            awxUI.onVideoFilesShow();
+
+            return false;
+          }
+      });
+      
       this.videoFilesPage = videosPage.addPage({
         title: mkf.lang.get('Files', 'Page and menu'),
         content: this.$videoFilesContent,
         menuButtonText: '&raquo; ' + mkf.lang.get('Files', 'Page and menu'),
-        contextMenu: standardVideosContextMenu,
+        contextMenu: videoFilesContextMenu,
         onShow: $.proxy(this, "onVideoFilesShow"),
         className: 'videofiles'
       });

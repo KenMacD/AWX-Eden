@@ -889,6 +889,7 @@
       var startPage = mkf.cookieSettings.get('startPage', 'recentTV');
       var showTags = mkf.cookieSettings.get('showTags', 'yes');
       var rotateCDart = mkf.cookieSettings.get('rotateCDart', 'no');
+      var manualPath = mkf.cookieSettings.get('manualPath');
 
       var dialogHandle = mkf.dialog.show(
         {
@@ -912,7 +913,7 @@
         '<legend>' + mkf.lang.get('Language', 'Settings label') + '</legend>' +
         '<select name="lang" id="lang" size="1"></select>' +
         '</fieldset>' +
-        '<fieldset>' +
+        '<fieldset class="ui_settings">' +
         '<legend>' + mkf.lang.get('Start Page', 'Settings label') + '</legend>' +
         '<select id="startPage" name="startPage">' +
         '<option value="recentAlbums" ' + (startPage=='recentAlbums'? 'selected' : '') + '>' + mkf.lang.get('Recently Added Albums', 'Settings option') + '</option>' +
@@ -925,7 +926,10 @@
         '<option value="musicPlaylist"' + (startPage=='musicPlaylist'? 'selected' : '') + '>' + mkf.lang.get('Music Playlists', 'Settings option') + '</option>' +
         '</select>' +
         '</fieldset>' +
-        
+        '<fieldset>' +
+        '<legend>' + mkf.lang.get('Manual File Directory', 'Settings label') + '</legend>' +
+        '<input type="text" name="manual_path" id="manual_path" style="width: 98%">' +
+        '</fieldset>' +
 
         '<fieldset>' +
         '<legend>' + mkf.lang.get('Expert', 'Settings label') + '</legend>' +
@@ -1123,6 +1127,7 @@
       
       
       if (artistsPath) { $('input#artists_path').val(artistsPath) };
+      if (manualPath) { $('input#manual_path').val(manualPath) };
       
       $( "#tabs" ).tabs({ selected: 0 });
       
@@ -1195,6 +1200,12 @@
           'startPage',
           document.settingsForm.startPage.value
         );
+        
+        mkf.cookieSettings.add(
+          'manualPath',
+          document.settingsForm.manual_path.value
+        );
+        awxUI.settings.manualPath = document.settingsForm.manual_path.value;
         
         mkf.cookieSettings.add(
           'albumSort',
@@ -3517,26 +3528,24 @@
           async: false
         });
 
-        var manualMediaDir = '/mnt/itsuka/music/1/';
-        // TODO support Windows/OSX-Folders
-        // /media - Folder may exist (access to usb-sticks etc.)
-        xbmc.getDirectory({
-          //directory: '/media',
-          directory: manualMediaDir,
+        //access to usb-sticks etc.
+        //var manualPath = awxUI.settings.manualPath;
+        if (awxUI.settings.manualPath) {
+          xbmc.getDirectory({
+            //directory: '/media',
+            directory: awxUI.settings.manualPath,
 
-          onSuccess: function(result) {
-            var $file = $('<li' + (globalI%2==0? ' class="even"': '') + '><a href="" class="fileMedia">' + mkf.lang.get('Manual', 'Label') + '</a></li>').appendTo($filelist);
-            $file.bind('click', {folder: {name: mkf.lang.get('Manual', 'Label'), path:manualMediaDir}}, onFolderClick);
-          },
+            onSuccess: function(result) {
+              var $file = $('<li' + (globalI%2==0? ' class="even"': '') + '><a href="" class="fileMedia">' + mkf.lang.get('Manual File Directory', 'Settings label')  + ' (' + awxUI.settings.manualPath + ')' + '</a></li>').appendTo($filelist);
+              $file.bind('click', {folder: {name: mkf.lang.get('Manual File Directory', 'Settings label') + ' (' + awxUI.settings.manualPath + ')', path: awxUI.settings.manualPath}}, onFolderClick);
+            },
 
-          async: false
-        });
+            async: false
+          });
+        };
         
         var addonDir = 'addons://sources/' + (media == 'music'? 'audio' : media);
-        // TODO support Windows/OSX-Folders
-        // /media - Folder may exist (access to usb-sticks etc.)
         xbmc.getDirectory({
-          //directory: '/media',
           directory: addonDir,
 
           onSuccess: function(result) {

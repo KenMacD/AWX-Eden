@@ -1067,6 +1067,7 @@ fieldset.ui_views {
 fieldset.ui_settings {
   float: left;
   margin-right: 10px;
+  width: 50%;
 }
 fieldset.ui_albums {
   width: 45%;

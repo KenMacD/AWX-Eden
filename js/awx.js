@@ -112,6 +112,7 @@ var awx = {};
           awxUI.settings.showTags = mkf.cookieSettings.get('showTags', 'yes')=='yes'? true : false;
           awxUI.settings.rotateCDart = mkf.cookieSettings.get('rotateCDart', 'no')=='yes'? true : false;
           awxUI.settings.artistsPath = mkf.cookieSettings.get('artistsPath');
+          awxUI.settings.manualPath = mkf.cookieSettings.get('manualPath');
       
           /*if (ui == 'light') {
             uiScript = 'ui.light/ui.light.js';
