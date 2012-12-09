@@ -44,7 +44,7 @@ var uiviews = {};
             $('.mkfOverlay').css('background-image', 'url("' + xbmc.getThumbUrl(artistdetails.fanart) + '")');
           };
           
-          var thumb = (artistdetails.thumbnail? xbmc.getThumbUrl(artistdetails.thumbnail) : 'images/thumb.png');
+          var thumb = (artistdetails.thumbnail? xbmc.getThumbUrl(artistdetails.thumbnail) : 'images/empty_cover_artist.png');
           var dialogContent = $('<img src="' + thumb + '" class="thumbAlbums dialogThumb" />' +
             '<h1 class="underline">' + artistdetails.label + '</h1>' +
             //'<div class="test"><img src="' + tvshow.file + 'logo.png' + '" /></div>' +
@@ -85,14 +85,14 @@ var uiviews = {};
             $('.mkfOverlay').css('background-image', 'url("' + xbmc.getThumbUrl(albumdetails.fanart) + '")');
           };
           
-          var thumb = (albumdetails.thumbnail? xbmc.getThumbUrl(albumdetails.thumbnail) : 'images/thumb.png');
+          var thumb = (albumdetails.thumbnail? xbmc.getThumbUrl(albumdetails.thumbnail) : 'images/empty_cover_music.png');
           var dialogContent = $('<img src="' + thumb + '" class="thumbAlbums dialogThumb" />' +
             '<h1 class="underline">' + albumdetails.label + '</h1>' +
             (albumdetails.artist? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Artist:', 'Label') + '</span><span class="labelinfo">' + albumdetails.artist + '</span></div>' : '') +
             (albumdetails.genre? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Genre:').withContext('Label').ifPlural( albumdetails.genre.length, 'Genres:' ).fetch( albumdetails.genre.length ) + '</span><span class="labelinfo">' + albumdetails.genre.join(', ') + '</span></div>' : '') +
             (albumdetails.mood.length > 0 && albumdetails.mood[0] != ''? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Mood:').withContext('Label').ifPlural( albumdetails.mood.length, 'Moods:' ).fetch( albumdetails.mood.length ) + '</span><span class="labelinfo">' + albumdetails.mood.join(', ') + '</span></div>' : '') +
             (albumdetails.style.length > 0 && albumdetails.style[0] != ''? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Style:').withContext('Label').ifPlural( albumdetails.style.length, 'Styles:' ).fetch( albumdetails.style.length ) + '</span><span class="labelinfo">' +  albumdetails.style.join(', ') + '</span></div>' : '') +
-            (albumdetails.rating? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span class="labelinfo">' + albumdetails.rating + '</span></div>' : '') +
+            (albumdetails.rating && albumdetails.rating != -1? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span class="labelinfo">' + albumdetails.rating + '</span></div>' : '') +
             (albumdetails.year? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Year:', 'Label') + '</span><span class="labelinfo">' + albumdetails.year + '</span></div>' : '') +
             '<div class="movieinfo"><span class="label">' + mkf.lang.get('Played:', 'Label') + '</span><span class="labelinfo">' + albumdetails.playcount + '</span></div>' +
             (albumdetails.albumlabel? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Record Label:', 'Label') + '</span><span class="labelinfo">' + albumdetails.albumlabel + '</span></div>' : '') +
@@ -123,14 +123,14 @@ var uiviews = {};
             $('.mkfOverlay').css('background-image', 'url("' + xbmc.getThumbUrl(songdetails.fanart) + '")');
           };
           
-          var thumb = (songdetails.thumbnail? xbmc.getThumbUrl(songdetails.thumbnail) : 'images/thumb.png');
+          var thumb = (songdetails.thumbnail? xbmc.getThumbUrl(songdetails.thumbnail) : 'images/empty_cover_music.png');
           var dialogContent = $('<img src="' + thumb + '" class="thumbAlbums dialogThumb" />' +
             '<h1 class="underline">' + songdetails.label + '</h1>' +
             (songdetails.artist[0]? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Artist:', 'Label') + '</span><span class="labelinfo">' + songdetails.artist[0] + '</span></div>' : '') +
             (songdetails.genre? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Genre:').withContext('Label').ifPlural( songdetails.genre.length, 'Genres:' ).fetch( songdetails.genre.length ) + '</span><span class="labelinfo">' + songdetails.genre.join(', ') + '</span></div>' : '') +
             (songdetails.track > 0? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Track:', 'Label') + '</span><span class="labelinfo">' + songdetails.track + '</span></div>' : '') +
             (songdetails.album? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Album:', 'Label') + '</span><span class="labelinfo">' +  songdetails.album + '</span></div>' : '') +
-            (songdetails.rating? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span class="labelinfo">' + songdetails.rating + '</span></div>' : '') +
+            (songdetails.rating && songdetails.rating != -1? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span class="labelinfo">' + songdetails.rating + '</span></div>' : '') +
             (songdetails.duration? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Duration:', 'Label') + '</span><span class="labelinfo">' + xbmc.formatTime(songdetails.duration) + '</span></div>' : '') +
             (songdetails.year? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Year:', 'Label') + '</span><span class="labelinfo">' + songdetails.year + '</span></div>' : '') +
             (songdetails.lastplayed? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Last Played:', 'Label') + '</span><span class="labelinfo">' + songdetails.lastplayed + '</span></div>' : '') +
@@ -563,17 +563,17 @@ var uiviews = {};
           streamdetails.aCodec = xbmc.getAcodec(mv.streamdetails.audio[0].codec);
           };
           
-          var thumb = (mv.thumbnail? xbmc.getThumbUrl(mv.thumbnail) : 'images/thumb.png');
+          var thumb = (mv.thumbnail? xbmc.getThumbUrl(mv.thumbnail) : 'images/empty_cover_musicvideo.png');
           var dialogContent = $('<div><img src="' + thumb + '" class="thumb dialogThumb" />' +
             '<div><h1 class="underline">' + mv.title + '</h1></div>' +
-            '<div class="movieinfo"><span class="label">' + mkf.lang.get('Run Time:', 'Label') + '</span><span class="value">' + (mv.runtime? mv.runtime : mkf.lang.get('N/A', 'Label')) + '</span></div>' +
+            '<div class="movieinfo"><span class="label">' + mkf.lang.get('Run Time:', 'Label') + '</span><span class="value">' + (mv.runtime? xbmc.formatTime(mv.runtime) : mkf.lang.get('N/A', 'Label')) + '</span></div>' +
             '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Genre:').withContext('Label').ifPlural( mv.genre.length, 'Genres:' ).fetch( mv.genre.length ) + '</span><span class="value">' + (mv.genre? mv.genre : mkf.lang.get('N/A', 'Label')) + '</span></div>' +
             '<div class="movieinfo"><span class="label">' + mkf.lang.get('Years active:', 'Label') + '</span><span class="value">' + (mv.year? mv.year : mkf.lang.get('N/A', 'Label')) + '</span></div>' +
-            (mv.director? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Director:').withContext('Label').ifPlural( mv.director.length, 'Directors:' ).fetch( mv.director.length ) + '</span><span class="value">' + mv.director + '</span></div>' : '') +
-            (mv.writer? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Writer:').withContext('Label').ifPlural( mv.writer.length, 'Writers:' ).fetch( mv.writer.length ) + '</span><span class="value">' + mv.writer + '</span></div>' : '') +
+            (mv.director && mv.director[0] != ''? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Director:').withContext('Label').ifPlural( mv.director.length, 'Directors:' ).fetch( mv.director.length ) + '</span><span class="value">' + mv.director + '</span></div>' : '') +
+            (mv.writer && mv.writer[0] != ''? '<div class="movieinfo"><span class="label">' + mkf.lang.langMsg.translate('Writer:').withContext('Label').ifPlural( mv.writer.length, 'Writers:' ).fetch( mv.writer.length ) + '</span><span class="value">' + mv.writer + '</span></div>' : '') +
             (mv.lastplayed? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Last Played:', 'Label') + '</span><span class="value">' + mv.lastplayed + '</span></div>' : '') +
             (mv.playcount? '<div class="movieinfo"><span class="label">' + mkf.lang.get('Played:', 'Label') + '</span><span class="value">' + mv.playcount + '</span></div>' : '') +
-            '<div class="movieinfo filelink"><span class="label">' + mkf.lang.get('File:', 'Label') + '</span><span class="value">' + '<a href="' + fileDownload + '">' + mv.file + '</a>' + '</span></div></div>' +
+            '<div class="movieinfo filelink"><span class="label">' + mkf.lang.get('File:', 'Label') + '</span><span class="value">' + '<a href="' + fileDownload + '">' + mv.file.slice(mv.file.lastIndexOf('/')+1) + '</a>' + '</span></div></div>' +
             '<br /><div class="movietags">' +
             (awxUI.settings.enqueue? '<span class="infoqueue" title="' + mkf.lang.get('Enqueue', 'Tool tip') + '" />' : '') +
             (awxUI.settings.player? '<span class="infoplay" title="' + mkf.lang.get('Play', 'Tool tip') + '" />' : '') +

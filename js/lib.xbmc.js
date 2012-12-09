@@ -388,7 +388,12 @@ var xbmc = {};
           //Check we aren't swapping to the same image.
           if ('url(' + xbmc.xart[rnd] + ')' != $('#secondBG').css('background-image')) {
             xbmc.$backgroundFanart == xbmc.xart[rnd];
-            $('#firstBG').css('background-image', 'url("' + xbmc.xart[rnd] + '")');
+            //Preload image
+            $('<img/>').attr('src', xbmc.xart[rnd]).load(function() {
+              //Switch image
+              $('#firstBG').css('background-image', 'url("' + xbmc.xart[rnd] + '")');
+            });
+            //$('#firstBG').css('background-image', 'url("' + xbmc.xart[rnd] + '")');
             //Better performance with CSS3 but not available in IE9
             if (BrowserVersion >10) {
               $('#firstBG').toggleClass( 'transparent');
@@ -401,19 +406,30 @@ var xbmc = {};
         } else {
           if ('url(' + xbmc.xart[rnd] + ')' != $('#firstBG').css('background-image')) {
             xbmc.$backgroundFanart2nd == xbmc.xart[rnd];
-            $('#secondBG').css('background-image', 'url("' + xbmc.xart[rnd] + '")');
+            $('<img/>').attr('src', xbmc.xart[rnd]).load(function() {
+              $('#secondBG').css('background-image', 'url("' + xbmc.xart[rnd] + '")');
+            });
             if (BrowserVersion >10) {
               $('#firstBG').toggleClass( 'transparent');
             } else {
               $('#firstBG').toggleClass( 'transparent', 3000, 'easeInCubic');
             };
           } else {
+            //Try again.
             xbmc.switchFanart();
           };
         };
       } else if (xbmc.xart.length == 2) {
-        $('#firstBG').css('background-image', 'url("' + xbmc.xart[1] + '")');
-        $('#secondBG').css('background-image', 'url("' + xbmc.xart[0] + '")');
+        //Preload image
+        $('<img/>').attr('src', xbmc.xart[1]).load(function() {
+          //Switch image
+          $('#firstBG').css('background-image', 'url("' + xbmc.xart[1] + '")');
+        });
+        $('<img/>').attr('src', xbmc.xart[0]).load(function() {
+          $('#secondBG').css('background-image', 'url("' + xbmc.xart[0] + '")');
+        });
+        //$('#firstBG').css('background-image', 'url("' + xbmc.xart[1] + '")');
+        //$('#secondBG').css('background-image', 'url("' + xbmc.xart[0] + '")');
         xbmc.$backgroundFanart == xbmc.xart[1];
         xbmc.$backgroundFanart2nd == xbmc.xart[0];
         if (BrowserVersion >10) {
@@ -423,6 +439,38 @@ var xbmc = {};
         };
       } else {
         return false;
+      };
+    },
+    
+    fullScreen: function(max) {
+      if (max) {
+        if ((xbmc.activePlayerid == 1 || xbmc.activePlayerid == 0) && xbmc.$backgroundFanart != '') {
+          xbmc.fullScreen == true;
+          $('div#fullscreen').show();
+          $('#firstBG').css('z-index', '51');
+          $('#secondBG').css('z-index', '50');
+          $('#fullscreen a.minimise').click(function() { xbmc.fullScreen(false); return false; } );
+          xbmc.nowPlaying(true);
+        } else {
+          //Not playing
+          mkf.messageLog.show(mkf.lang.get('Nothing is playing or no background available!', 'Popup message'), mkf.messageLog.status.error, 5000);
+        }
+      } else {
+        xbmc.fullScreen == false;
+        $('div#fullscreen').hide();
+        $('div#playing').hide();
+        $('#firstBG').css('z-index', '4');
+        $('#secondBG').css('z-index', '3');
+      };
+    },
+    
+    nowPlaying: function(show) {
+      if (show && xbmc.fullScreen) {
+        $('div#playing').fadeIn(800, function() {
+          setTimeout(function() { xbmc.nowPlaying(false) }, 15000);
+        });
+      } else if (!show && xbmc.fullScreen) {
+        $('div#playing').fadeOut(800);
       };
     },
     
@@ -2630,6 +2678,9 @@ var xbmc = {};
         if (typeof xbmc.periodicUpdater.subsenabled === 'undefined') {
           xbmc.periodicUpdater.subsenabled = false;
         }
+        if (typeof xbmc.fullScreen === 'undefined') {
+          xbmc.fullScreen = false;
+        }
         
         var useFanart = awxUI.settings.useFanart;
         var showInfoTags = awxUI.settings.showTags;
@@ -2718,6 +2769,8 @@ var xbmc = {};
               xbmc.clearBackground();
             };
 
+            xbmc.fullScreen(false);
+            
             $('#streamdets .vFormat').removeClass().addClass('vFormat');
             $('#streamdets .aspect').removeClass().addClass('aspect');
             $('#streamdets .channels').removeClass().addClass('channels');
@@ -2876,6 +2929,7 @@ var xbmc = {};
                   $.extend(currentItem, {
                     xbmcMediaType: xbmc.activePlayer
                   });
+                  if (xbmc.fullScreen) { xbmc.nowPlaying(true); };
                   //hack for party mode
                   if (xbmc.playerPartyMode) {
                     $.extend(currentItem, {
@@ -3089,6 +3143,9 @@ var xbmc = {};
         }
         if (typeof xbmc.xart === 'undefined') {
           xbmc.xart = [];
+        }
+        if (typeof xbmc.fullScreen === 'undefined') {
+          xbmc.fullScreen = false;
         }
         
         var useFanart = mkf.cookieSettings.get('usefanart', 'no')=='yes'? true : false;
@@ -3355,7 +3412,7 @@ var xbmc = {};
         };
         ws.onmessage = function (e) {
           var JSONRPCnotification = jQuery.parseJSON(e.data);
-          //console.log(JSONRPCnotification);
+          console.log(JSONRPCnotification);
           switch (JSONRPCnotification.method) {
           case 'Player.OnPlay':
             xbmc.activePlayerid = JSONRPCnotification.params.data.player.playerid;
@@ -3382,8 +3439,7 @@ var xbmc = {};
             //Also activated on item change. Check incase it's slideshow.
             if (xbmc.activePlayer != 'none') {
               var request = '';
-              //var curtime = 0;
-              //var curruntime = 0;
+              if (xbmc.fullScreen) { xbmc.nowPlaying(true); };
 
               if (xbmc.activePlayer == 'audio') {
                 request = '{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["art", "title", "album", "artist", "duration", "thumbnail", "file", "fanart", "streamdetails"], "playerid": 0 }, "id": "OnPlayGetItem"}';
@@ -3567,6 +3623,7 @@ var xbmc = {};
             xbmc.activePlayer = 'none';
             
             xbmc.clearBackground();
+            xbmc.fullScreen(false);
 
             $('#streamdets .vFormat').removeClass().addClass('vFormat');
             $('#streamdets .aspect').removeClass().addClass('aspect');

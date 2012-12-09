@@ -258,6 +258,10 @@ ul.systemMenu > li.mouseover > a .exit, ul.systemMenu > li.activeMenuItem > a .e
   text-shadow: 2px 2px 2px #000;
   margin-left: 2px;
 }
+#footer #now span.seperator  {
+  color: #fff;
+  font-weight: normal;
+}
 #footer #statPlayerContainer {
   font-size: 16px;
   font-weight: bold;
@@ -1878,7 +1882,7 @@ div.movietags  img {
   margin-right: 3px;
 }
 div.movietags {
-  display: table-cell;
+  display: inline-block;
   width: 580px;
 }
 div.mkfOverlay div.dialogSystemControl {
@@ -2669,6 +2673,10 @@ div#controlsInput32 {
   background-position: -160px 0;
   margin-right: 0;  
 }
+#inputcontrols32 a.maximise {
+  background-position: -288px 0;
+  margin-right: 0;  
+}
 
 #inputcontrols a.button {
   background: url("../images/quick_controls.png") no-repeat scroll 0 0 transparent;
@@ -2706,6 +2714,34 @@ div#controlsInput32 {
 #inputcontrols a.contextMenu {
   background-position: -384px 0;
   margin-right: 0;  
+}
+#fullscreen a.minimise {
+  background: url("../images/quick_controls.png") no-repeat scroll -432px 0 transparent;
+  float: left;
+  margin: 10px 0 0 10px;
+  height: 48px;
+  width: 48px;
+  opacity: 0.5;
+}
+#fullscreen #playing {
+  height: 100%;
+}
+#fullscreen #FSartwork {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+#fullscreen #now {
+  background-color: rgba(0,0,0,0.8);
+  padding: 10px 0;
+  font-size: 2em;
+  position: absolute;
+  width: 100%;
+  top: 40%;
+}
+#fullscreen #nowspan {
+  display: block;
+  text-align: center;
 }
 #displayoverlaybot #controls  #quick_con {
   /*background: url("../images/volume.png") no-repeat scroll 20px 10px #EAECE6;

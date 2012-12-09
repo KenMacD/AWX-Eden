@@ -427,6 +427,7 @@
       '<a class="button home" href="" title="' + mkf.lang.get('Home', 'Tool tip') + '"></a><a class="button back" href="" title="' + mkf.lang.get('Back', 'Tool tip') + '"></a><a class="button up" href="" title="' + mkf.lang.get('Up', 'Tool tip') + '"></a>' +
       '<a class="button left" href="" title="' + mkf.lang.get('Left', 'Tool tip') + '"></a><a class="button select" href="" title="' + mkf.lang.get('Select', 'Tool tip') + '"></a><a class="button right" href="" title="' + mkf.lang.get('Right', 'Tool tip') + '"></a>' +
       '<a class="button down" href="" title="' + mkf.lang.get('Down', 'Tool tip') + '"></a><a class="button info" href="" title="' + mkf.lang.get('Information', 'Tool tip') + '"></a><a class="button contextMenu" href="" title="' + mkf.lang.get('Context Menu', 'Tool tip') + '"></a>' +
+      '<a class="button maximise" href="" title="' + mkf.lang.get('Full Screen', 'Tool tip') + '"></a>' +
       '</div>');
       
       $inputcontrols.find('.left').click(function() {
@@ -455,6 +456,9 @@
       });
       $inputcontrols.find('.info').click(function() {
         xbmc.input({type: 'Info', onError: failed}); return false;
+      });
+      $inputcontrols.find('.maximise').click(function() {
+        xbmc.fullScreen(true); return false;
       });
       
       this.each (function() {
@@ -3576,7 +3580,7 @@
       
       var rotateCDart = awxUI.settings.rotateCDart;
 
-      var content = '<div id="now_next"><div id="now">' + mkf.lang.get('Now:', 'Footer label') + ' <span class="label" /><span class="nowArtist artist" /><span class="nowTitle" /></div><div id="next">' + mkf.lang.get('Next:', 'Footer label') + ' <span class="nextTitle" /></div></div>';
+      var content = '<div id="now_next"><div id="now">' + mkf.lang.get('Now:', 'Footer label') + ' <span class="label" /><span class="seperator"></span><span class="nowArtist artist" /><span class="nowTitle" /></div><div id="next">' + mkf.lang.get('Next:', 'Footer label') + ' <span class="nextTitle" /></div></div>';
       //content += '<div id="statPlayerContainer"><div id="statusPlayer"><div id="statusPlayerRow"><div id="paused"></div><div id="shuffled"></div></div><div id="statusPlayerRow"><div id="repeating"></div><div id="muted"></div></div></div><div id="remainPlayer"><div id="remaining">' + mkf.lang.get('label_remaining') + '<span class="timeRemain">00:00</span></div><div id="plTotal">' + mkf.lang.get('label_total') + '<span class="timeRemainTotal">00:00</span></div></div>';
       //content += '<div id="controller"></div>';
       
@@ -3593,12 +3597,13 @@
       var seasonElement = '';
       var episodeElement = '';
       
-      var thumbElement = $('#artwork .artThumb');
-      var thumbDiscElement = $('#artwork .discThumb');
+      var thumbElement = $('.artThumb');
+      var thumbDiscElement = $('.discThumb');
       
-      var nowLabelElement = $footerNowBox.find('span.label');
-      var nowArtistElement = $footerNowBox.find('span.nowArtist');
-      var nowElement = $footerNowBox.find('span.nowTitle');
+      var nowLabelElement = $('div#now span.label');
+      var nowArtistElement = $('div#now span.nowArtist');
+      var nowElement = $('div#now span.nowTitle');
+      var seperator = $('div#now span.seperator');
       var nextElement = $footerNowBox.find('span.nextTitle');
       var timeCurRemain = $footerStatusBox.find('span.timeRemain');
       var timeCurRemainTotal = $footerStatusBox.find('span.timeRemainTotal');
@@ -3634,7 +3639,8 @@
               awxUI.onMusicPlaylistShow();
             };
             nowLabelElement.text(titleElement);
-            nowArtistElement.text(' - ' + artistElement);
+            nowArtistElement.text(artistElement);
+            seperator.text(' - ');
             nowElement.text(' - ' + albumElement);
           };
         } else if (currentFile.xbmcMediaType == 'video') {
@@ -3647,7 +3653,7 @@
             episodeElement = currentFile.episode;
             
             nowLabelElement.text(titleElement);
-            nowElement.text(' - ' + tvshowElement + ' - S' + seasonElement + 'E' + episodeElement);
+            nowElement.text(tvshowElement + ' - S' + seasonElement + 'E' + episodeElement);
 
           } else if (currentFile.type == 'channel') {
             //label = channel, title = program name
@@ -3812,6 +3818,7 @@
           nowLabelElement.text('');
           nowArtistElement.text('');
           nowElement.text('');
+          seperator.text('');
           nextElement.text('');
           timeCurRemain.text('00:00');
           timeCurRemainTotal.text('00:00');

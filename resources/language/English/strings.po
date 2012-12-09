@@ -125,6 +125,14 @@ msgctxt "Tool tip"
 msgid "Refresh"
 msgstr ""
 
+msgctxt "Tool tip"
+msgid "Full Screen"
+msgstr ""
+
+msgctxt "Tool tip"
+msgid "Exit Full Screen"
+msgstr ""
+
 msgctxt "Popup message with addition"
 msgid "Clear Playlist... "
 msgstr ""
@@ -213,6 +221,10 @@ msgstr ""
 
 msgctxt "Popup message"
 msgid "Failed to remove playlist item... "
+msgstr ""
+
+msgctxt "Popup message"
+msgid "Nothing is playing or no background available!"
 msgstr ""
 
 msgctxt "Initial window screen"
