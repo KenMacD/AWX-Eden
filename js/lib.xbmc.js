@@ -467,7 +467,7 @@ var xbmc = {};
     nowPlaying: function(show) {
       if (show && xbmc.fullScreen) {
         $('div#playing').fadeIn(800, function() {
-          setTimeout(function() { xbmc.nowPlaying(false) }, 15000);
+          setTimeout(function() { xbmc.nowPlaying(false) }, 20000);
         });
       } else if (!show && xbmc.fullScreen) {
         $('div#playing').fadeOut(800);
@@ -3469,6 +3469,7 @@ var xbmc = {};
                         xbmc.xart = xart;
                         $('#firstBG').removeClass('transparent');
                         $('#firstBG').css('background-image', 'url(' + xart[0] + ')');
+                        xbmc.$backgroundFanart = xart[0];
                         //xbmc.switchFanart();
                       } else {
                         //No fan xtra art found.
