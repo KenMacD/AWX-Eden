@@ -3412,7 +3412,7 @@ var xbmc = {};
         };
         ws.onmessage = function (e) {
           var JSONRPCnotification = jQuery.parseJSON(e.data);
-          console.log(JSONRPCnotification);
+          //console.log(JSONRPCnotification);
           switch (JSONRPCnotification.method) {
           case 'Player.OnPlay':
             xbmc.activePlayerid = JSONRPCnotification.params.data.player.playerid;
@@ -3719,7 +3719,32 @@ var xbmc = {};
             } else {
               mkf.messageLog.show(mkf.lang.get('Finished Music Library Scan', 'Popup message'), mkf.messageLog.status.success, 3000);
             };
-            
+          break;
+          case 'VideoLibrary.OnCleanStarted':
+            //Set to messageid so we can clear it on finish.
+            xbmc.vidOnCleanStartedMsgId = mkf.messageLog.show(mkf.lang.get('Started Video Library Clean', 'Popup message'), mkf.messageLog.status.loading, 0);
+          break;
+          case 'VideoLibrary.OnCleanFinished':
+            if (xbmc.vidOnCleanStartedMsgId != -1) {
+              mkf.messageLog.replaceTextAndHide(xbmc.vidOnCleanStartedMsgId, mkf.lang.get('Finished Video Library Clean', 'Popup message'), 2000, mkf.messageLog.status.success);
+              //Reset
+              xbmc.vidOnCleanStartedMsgId = -1;
+            } else {
+              mkf.messageLog.show(mkf.lang.get('Finished Video Library Clean', 'Popup message'), mkf.messageLog.status.success, 3000);
+            };
+          break;
+          case 'AudioLibrary.OnCleanStarted':
+            //Set to messageid so we can clear it on finish.
+            xbmc.audOnCleanStartedMsgId = mkf.messageLog.show(mkf.lang.get('Started Music Library Clean', 'Popup message'), mkf.messageLog.status.loading, 0);
+          break;
+          case 'AudioLibrary.OnCleanFinished':
+            if (xbmc.audOnCleanStartedMsgId != -1) {
+              mkf.messageLog.replaceTextAndHide(xbmc.audOnCleanStartedMsgId, mkf.lang.get('Finished Music Library Clean', 'Popup message'), 2000, mkf.messageLog.status.success);
+              //Reset
+              xbmc.audOnCleanStartedMsgId = -1;
+            } else {
+              mkf.messageLog.show(mkf.lang.get('Finished Music Library Clean', 'Popup message'), mkf.messageLog.status.success, 3000);
+            };
           break;
           case 'Input.OnInputRequested':
             //Add masking for passwords

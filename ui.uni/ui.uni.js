@@ -1523,7 +1523,7 @@
               '</div>' +
               '<div id="fullscreen" style="display: none; position: absolute; z-index: 60; width: 100%; height: 100%;"><a class="button minimise" href="" title="' + mkf.lang.get('Exit Full Screen', 'Tool tip') + '"></a>' +
                 '<div id="playing" style="display: none">' +
-                  '<div id="now"><span id="nowspan"><span class="label" /><span class="seperator"> - </span><span class="nowArtist artist" /><span class="nowTitle" /></span></div>' +
+                  '<div id="now"><span id="nowspan"><span class="label" /><span class="seperator"></span><span class="nowArtist artist" /><span class="nowTitle" /></span></div>' +
                   '<div id="FSartwork" ><a href="" class="artclose"></a><img class="discThumb" src="images/blank_cdart.png" style="display: none; width: 194px; height: 194px; position: absolute; z-index: -1;"><img class="artThumb" src="images/empty_poster_overlay.png"></div>' +
                 '</div>' +
               '</div>' +
