@@ -2728,7 +2728,7 @@ div#controlsInput32 {
 }
 #fullscreen #FSartwork {
   position: absolute;
-  bottom: 20px;
+  bottom: 45px;
   right: 20px;
 }
 #fullscreen #now {
@@ -2737,11 +2737,30 @@ div#controlsInput32 {
   font-size: 2em;
   position: absolute;
   width: 100%;
-  top: 40%;
+  bottom: 10px;
 }
 #fullscreen #nowspan {
   display: block;
   text-align: center;
+}
+#fullscreen #lyrics {
+  position: absolute;
+  background-color: rgba(0,0,0,0.8);
+  overflow: auto;
+  left: 60px;
+  right: 50px;
+  top: 60px;
+  bottom: 100px;
+  min-width: 550px;
+  height: 80%;
+  min-height: 50px;
+  text-align: center;
+}
+#lyrics span.lyric {
+  font-size: 1.5em;
+}
+#lyrics span.lyric.current {
+  font-weight: bold;
 }
 #displayoverlaybot #controls  #quick_con {
   /*background: url("../images/volume.png") no-repeat scroll 20px 10px #EAECE6;

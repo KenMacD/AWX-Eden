@@ -1522,6 +1522,7 @@
 
               '</div>' +
               '<div id="fullscreen" style="display: none; position: absolute; z-index: 60; width: 100%; height: 100%;"><a class="button minimise" href="" title="' + mkf.lang.get('Exit Full Screen', 'Tool tip') + '"></a>' +
+                //'<div id="lyrics"></div>' +
                 '<div id="playing" style="display: none">' +
                   '<div id="now"><span id="nowspan"><span class="label" /><span class="seperator"></span><span class="nowArtist artist" /><span class="nowTitle" /></span></div>' +
                   '<div id="FSartwork" ><a href="" class="artclose"></a><img class="discThumb" src="images/blank_cdart.png" style="display: none; width: 194px; height: 194px; position: absolute; z-index: -1;"><img class="artThumb" src="images/empty_poster_overlay.png"></div>' +
@@ -1580,7 +1581,49 @@
       $('#controlsInput24').controlsInput24();
       $('#artwork a.artclose').click(function() { $('#artwork').hide(); return false; } );
       $('#infoContainer').uniFooterStatus();
-      $('#controller').on('click', function() { $('#displayoverlayleft').toggle(); $('#displayoverlaytop').toggle(); $('#displayoverlaybot').toggle(); $('#content').toggleClass('controls'); $('#artwork').show(); } );
+      $('#controller').on('click', function() {
+
+        //awxUI.settings.remoteActive = ( awxUI.settings.remoteActive? false : true );
+        //Duplicate XBMC key functions
+        if (!awxUI.settings.remoteActive) {
+          awxUI.settings.remoteActive = true;
+          $(document).on('keydown', function(e) {
+            if (e.keyCode == 32) { xbmc.input({type: 'play'}) };
+            if (e.keyCode == 88) { xbmc.input({type: 'stop'}) };
+            if (e.keyCode == 37) { xbmc.input({type: 'Left'}) };
+            if (e.keyCode == 39) { xbmc.input({type: 'Right'}) };
+            if (e.keyCode == 38) { xbmc.input({type: 'Up'}) };
+            if (e.keyCode == 40) { xbmc.input({type: 'Down'}) };
+            if (e.keyCode == 13) { xbmc.input({type: 'Select'}) };
+            if (e.keyCode == 73) { xbmc.input({type: 'Info'}) };
+            if (e.keyCode == 67) { xbmc.input({type: 'ContextMenu'}) };
+            if (e.keyCode == 8) { xbmc.input({type: 'Back'}) };
+            if (e.keyCode == 36) { xbmc.input({type: 'Home'}) };
+          });
+          /*$(document).bind('keydown', 'Space', function() { xbmc.control({type: 'play'}); } );
+          $(document).bind('keydown', 'x', function() { xbmc.control({type: 'stop'}); } );
+          $(document).bind('keydown', 'Left', function() { xbmc.input({type: 'Left'}); } );
+          $(document).bind('keydown', 'Right', function() { xbmc.input({type: 'Right'}); } );
+          $(document).bind('keydown', 'Up', function() { xbmc.input({type: 'Up'}); } );
+          $(document).bind('keydown', 'Down', function() { xbmc.input({type: 'Down'}); } );
+          $(document).bind('keydown', 'Return', function() { xbmc.input({type: 'Select'}); } );
+          $(document).bind('keydown', 'i', function() { xbmc.input({type: 'Info'}); } );
+          $(document).bind('keydown', 'c', function() { xbmc.input({type: 'ContextMenu'}); } );
+          $(document).bind('keydown', 'Backspace', function() { xbmc.input({type: 'Back'}); } );
+          $(document).bind('keydown', 'Home', function() { xbmc.input({type: 'Home'}); } );
+          console.log('bind');*/
+        } else {
+          awxUI.settings.remoteActive = false;
+          $(document).off('keydown');
+        };
+        
+        $('#displayoverlayleft').toggle();
+        $('#displayoverlaytop').toggle();
+        $('#displayoverlaybot').toggle();
+        $('#content').toggleClass('controls');
+        $('#artwork').show();
+        
+      });
       //$('#currentlyPlaying').defaultCurrentlyPlaying({effect:'fade'});
       $('#volumeSlider').defaultVolumeControl({vertical: true});
 

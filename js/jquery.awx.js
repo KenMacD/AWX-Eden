@@ -1528,6 +1528,18 @@
       $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastArtistCount > artistResult.limits.total? artistResult.limits.total : lastArtistCount) + '/' + artistResult.limits.total + '</span></div></div>').appendTo($artistsViewerElement);
       $artistsViewerElement.find('a.nextPage').on('click', { Page: 'next'}, awxUI[onPageShow]);
       $artistsViewerElement.find('a.prevPage').on('click', { Page: 'prev'}, awxUI[onPageShow]);
+      $(document).bind('keydown', 'Ctrl+Left', function() { $artistsViewerElement.find('a.prevPage').click(); } );
+      $(document).bind('keydown', 'Ctrl+Right', function() { $artistsViewerElement.find('a.nextPage').click(); } );
+      //$artistsViewerElement.keydown(function(event) {
+        //console.log(event);
+        
+        /*if (event.keyCode == 0x0D) {
+          onInputContentChanged();
+        }
+        if (event.keyCode == 0x1B || event.keyCode == 0x0D) {
+          $(this).parent().hide();
+        }*/
+      //})
     };
       
   }; // END defaultArtistsViewer
@@ -3651,6 +3663,7 @@
             tvshowElement = currentFile.showtitle;
             seasonElement = currentFile.season;
             episodeElement = currentFile.episode;
+            seperator.text(' - ');
             
             nowLabelElement.text(titleElement);
             nowElement.text(tvshowElement + ' - S' + seasonElement + 'E' + episodeElement);

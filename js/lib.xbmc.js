@@ -552,7 +552,7 @@ var xbmc = {};
       $.extend(settings, options);
       
       var bools = '';
-      for (i=0; i<settings.bool.length; i++) {
+      for (var i=0; i<settings.bool.length; i++) {
         if (i == settings.bool.length -1) {
           bools += '"' + settings.bool[i] + '"';
         } else {
@@ -571,38 +571,31 @@ var xbmc = {};
       );
     },
     
-    getAddons: function(options) {
+    getInfoLabels: function(options) {
       var settings = {
-        enabled: true,
-        content: 'unknown',
+        labels: ['System.HasPVR'],
         onSuccess: null,
         onError: null
       };
       $.extend(settings, options);
       
+      var labels = '';
+      for (var i=0; i<settings.labels.length; i++) {
+        if (i == settings.labels.length -1) {
+          labels += '"' + settings.labels[i] + '"';
+        } else {
+          labels += '"' + settings.labels[i] + '",';
+        };
+      };
+      
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": { "enabled": ' + settings.enabled + ', "content": "' + settings.content + '", "properties": [ "name", "thumbnail", "version", "author" ] }, "id": "libAddons"}',
+        '{"jsonrpc": "2.0", "method": "XBMC.GetInfoLabels", "params": { "labels": [ ' + labels + ' ] }, "id": "libLabels"}',
         function(reponse) {
           settings.onSuccess(reponse.result);
         },
-        settings.onError
-      );
-    },
-    
-    exeAddon: function(options) {
-      var settings = {
-        addonid: true,
-        wait: true,
-        params: '', //"mediatype=tvshow", "medianame=Last Resort"
-        onSuccess: null,
-        onError: null
-      };
-      $.extend(settings, options);
-      
-      xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "Addons.ExecuteAddon", "params": { "wait": ' + settings.wait + ', "addonid": "' + settings.addonid + '", "params": [ ' + settings.params + ' ] },  "id": "libExeAddon"}',
-        settings.onSuccess,
-        settings.onError
+        function(response) {
+          settings.onError(mkf.lang.get('Failed to send command!', 'Popup message'));
+        }
       );
     },
     
@@ -928,7 +921,7 @@ var xbmc = {};
     
     playerOpen: function(options) {
       var settings = {
-        item: 'albumid',
+        item: '',
         itemId: -1,
         itemStr: '',
         position: -1,
@@ -1813,7 +1806,9 @@ var xbmc = {};
             file: settings.file,
 
             onSuccess: function() {
-              xbmc.playAudio({
+              xbmc.playerOpen({
+                position: 0,
+                playlistid: 0,
                 onSuccess: settings.onSuccess,
                 onError: function(errorText) {
                   settings.onError(errorText);
@@ -1848,7 +1843,10 @@ var xbmc = {};
             folder: settings.folder,
 
             onSuccess: function() {
-              xbmc.playAudio({
+              xbmc.playerOpen({
+                position: 0,
+                item: 'playlistid',
+                itemId: 0,
                 onSuccess: settings.onSuccess,
                 onError: function(errorText) {
                   settings.onError(errorText);
@@ -2004,7 +2002,9 @@ var xbmc = {};
             folder: settings.folder,
 
             onSuccess: function() {
-              xbmc.playVideo({
+              xbmc.playerOpen({
+                position: 0,
+                playlistid: 1,
                 onSuccess: settings.onSuccess,
                 onError: function(errorText) {
                   settings.onError(errorText);
