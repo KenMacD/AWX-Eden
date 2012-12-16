@@ -133,6 +133,10 @@ msgctxt "Tool tip"
 msgid "Exit Full Screen"
 msgstr ""
 
+msgctxt "Tool tip"
+msgid "Show Lyrics"
+msgstr ""
+
 msgctxt "Popup message with addition"
 msgid "Clear Playlist... "
 msgstr ""
@@ -357,6 +361,10 @@ msgstr ""
 
 msgctxt "Label"
 msgid "Years"
+msgstr ""
+
+msgctxt "Label"
+msgid "Source"
 msgstr ""
 
 msgctxt "Tool tip"

@@ -2723,6 +2723,14 @@ div#controlsInput32 {
   width: 48px;
   opacity: 0.5;
 }
+#fullscreen a.lyrics {
+  background: url("../images/quick_controls.png") no-repeat scroll -480px 0 transparent;
+  float: left;
+  margin: 10px 0 0 10px;
+  height: 48px;
+  width: 48px;
+  opacity: 0.5;
+}
 #fullscreen #playing {
   height: 100%;
 }
@@ -2730,6 +2738,7 @@ div#controlsInput32 {
   position: absolute;
   bottom: 45px;
   right: 20px;
+  z-index: 5;
 }
 #fullscreen #now {
   background-color: rgba(0,0,0,0.8);
@@ -2738,29 +2747,50 @@ div#controlsInput32 {
   position: absolute;
   width: 100%;
   bottom: 10px;
+  z-index: 5;
 }
 #fullscreen #nowspan {
   display: block;
   text-align: center;
 }
-#fullscreen #lyrics {
+#fullscreen #lyricContent {
+  display: none;
   position: absolute;
   background-color: rgba(0,0,0,0.8);
   overflow: auto;
   left: 60px;
   right: 50px;
-  top: 60px;
+  top: 70px;
   bottom: 100px;
   min-width: 550px;
-  height: 80%;
+  height: 75%;
   min-height: 50px;
   text-align: center;
+  z-index: 1;
+}
+#lyrics div.lyricline {
+  margin: 3px;
 }
 #lyrics span.lyric {
   font-size: 1.5em;
 }
-#lyrics span.lyric.current {
+#lyrics div.current {
+  color: #599CFF;
   font-weight: bold;
+}
+#fullscreen #lyricInfo {
+  background-color: rgba(0,0,0,0.8);
+  vertical-align: middle;
+  min-height: 1.7em;
+  font-size: 1.5em;
+}
+#fullscreen #lyricInfo span.label {
+  vertical-align: middle;
+  color: #fff;
+}
+#fullscreen #lyricInfo span.info {
+  vertical-align: middle;
+  color: #599CFF;
 }
 #displayoverlaybot #controls  #quick_con {
   /*background: url("../images/volume.png") no-repeat scroll 20px 10px #EAECE6;

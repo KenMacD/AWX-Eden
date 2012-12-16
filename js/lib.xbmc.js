@@ -449,7 +449,11 @@ var xbmc = {};
           $('div#fullscreen').show();
           $('#firstBG').css('z-index', '51');
           $('#secondBG').css('z-index', '50');
-          $('#fullscreen a.minimise').click(function() { xbmc.fullScreen(false); return false; } );
+          $('#fullscreen a.minimise').click(function() {
+            xbmc.fullScreen(false);
+            return false; 
+          });
+          
           xbmc.nowPlaying(true);
         } else {
           //Not playing
@@ -457,10 +461,12 @@ var xbmc = {};
         }
       } else {
         xbmc.fullScreen == false;
+        $('div#lyricContent').hide();
         $('div#fullscreen').hide();
         $('div#playing').hide();
         $('#firstBG').css('z-index', '4');
         $('#secondBG').css('z-index', '3');
+        xbmc.lyrics = false;
       };
     },
     
@@ -2681,6 +2687,9 @@ var xbmc = {};
         if (typeof xbmc.fullScreen === 'undefined') {
           xbmc.fullScreen = false;
         }
+        if (typeof xbmc.lyrics === 'undefined') {
+          xbmc.lyrics = false;
+        }
         
         var useFanart = awxUI.settings.useFanart;
         var showInfoTags = awxUI.settings.showTags;
@@ -3023,6 +3032,13 @@ var xbmc = {};
       if ((xbmc.periodicUpdater.loopCount % 15) == 0 && xbmc.periodicUpdater.loopCount > 14 && awxUI.settings.useXtraFanart && xbmc.xart.length > 0) {
         xbmc.switchFanart();
       }
+      
+      //Look for lyric time
+      //console.log($('div#lyrics div:contains(' + xbmc.periodicUpdater.progress + ')'))
+      if (xbmc.activePlayer == 'audio' && xbmc.lyrics && $('div#lyrics div:contains(#' + xbmc.periodicUpdater.progress + ')').length > 0) {
+        $('div#lyrics div').removeClass('current');
+        $('div#lyrics div:contains(#' + xbmc.periodicUpdater.progress + '- )').addClass('current');
+      }
       //Initial time grab and checking for time slip every 10%.
       if (xbmc.periodicUpdater.progressEnd != 0) {
         var proEnd10per = Math.floor((xbmc.periodicUpdater.progressEnd / 100) * 10);
@@ -3146,6 +3162,9 @@ var xbmc = {};
         }
         if (typeof xbmc.fullScreen === 'undefined') {
           xbmc.fullScreen = false;
+        }
+        if (typeof xbmc.lyrics === 'undefined') {
+          xbmc.lyrics = false;
         }
         
         var useFanart = mkf.cookieSettings.get('usefanart', 'no')=='yes'? true : false;
@@ -3436,6 +3455,7 @@ var xbmc = {};
             
             if (pollTimeRunning === false) { xbmc.pollTimeStart() };
             
+            if (xbmc.lyrics) { addons.culrcLyrics() };
             //Also activated on item change. Check incase it's slideshow.
             if (xbmc.activePlayer != 'none') {
               var request = '';
@@ -3625,6 +3645,7 @@ var xbmc = {};
             
             xbmc.clearBackground();
             xbmc.fullScreen(false);
+            xbmc.lyrics = false;
 
             $('#streamdets .vFormat').removeClass().addClass('vFormat');
             $('#streamdets .aspect').removeClass().addClass('aspect');
