@@ -3038,6 +3038,8 @@ var xbmc = {};
       if (xbmc.activePlayer == 'audio' && xbmc.lyrics && $('div#lyrics div:contains(#' + xbmc.periodicUpdater.progress + ')').length > 0) {
         $('div#lyrics div').removeClass('current');
         $('div#lyrics div:contains(#' + xbmc.periodicUpdater.progress + '- )').addClass('current');
+        $('div#lyrics .current').ScrollTo({offsetTop: $('div#lyricContent').height()/2 });
+        //$('div#lyrics .current')[0].scrollIntoView( true );
       }
       //Initial time grab and checking for time slip every 10%.
       if (xbmc.periodicUpdater.progressEnd != 0) {
