@@ -931,6 +931,10 @@ msgid "Track:"
 msgstr ""
 
 msgctxt "Label"
+msgid "Lyrics:"
+msgstr ""
+
+msgctxt "Label"
 msgid "Record Label:"
 msgstr ""
 

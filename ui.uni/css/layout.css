@@ -2755,18 +2755,25 @@ div#controlsInput32 {
 }
 #fullscreen #lyricContent {
   display: none;
-  position: absolute;
+  float: left;
+  margin: 70px auto;
+  height: 80%;
+  width: 80%;
+  /*position: absolute;
   background-color: rgba(0,0,0,0.8);
-  overflow: auto;
   left: 60px;
   right: 50px;
   top: 70px;
-  bottom: 100px;
+  bottom: 100px;*/
   min-width: 550px;
-  height: 75%;
   min-height: 50px;
   text-align: center;
   z-index: 1;
+}
+#lyrics {
+  background-color: rgba(0,0,0,0.8);
+  overflow: auto;
+  height: 90%;
 }
 #lyrics div.lyricline {
   margin: 3px;
@@ -2779,6 +2786,7 @@ div#controlsInput32 {
   font-weight: bold;
 }
 #fullscreen #lyricInfo {
+  position: relative;
   background-color: rgba(0,0,0,0.8);
   vertical-align: middle;
   min-height: 1.7em;

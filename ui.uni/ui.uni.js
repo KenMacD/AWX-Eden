@@ -1588,17 +1588,17 @@
         if (!awxUI.settings.remoteActive) {
           awxUI.settings.remoteActive = true;
           $(document).on('keydown', function(e) {
-            if (e.keyCode == 32) { xbmc.input({type: 'play'}) };
-            if (e.keyCode == 88) { xbmc.input({type: 'stop'}) };
-            if (e.keyCode == 37) { xbmc.input({type: 'Left'}) };
-            if (e.keyCode == 39) { xbmc.input({type: 'Right'}) };
-            if (e.keyCode == 38) { xbmc.input({type: 'Up'}) };
-            if (e.keyCode == 40) { xbmc.input({type: 'Down'}) };
-            if (e.keyCode == 13) { xbmc.input({type: 'Select'}) };
-            if (e.keyCode == 73) { xbmc.input({type: 'Info'}) };
-            if (e.keyCode == 67) { xbmc.input({type: 'ContextMenu'}) };
-            if (e.keyCode == 8) { xbmc.input({type: 'Back'}) };
-            if (e.keyCode == 36) { xbmc.input({type: 'Home'}) };
+            if (e.keyCode == 32) { xbmc.input({type: 'play'}); return false; };
+            if (e.keyCode == 88) { xbmc.input({type: 'stop'}); return false; };
+            if (e.keyCode == 37) { xbmc.input({type: 'Left'}); return false; };
+            if (e.keyCode == 39) { xbmc.input({type: 'Right'}); return false; };
+            if (e.keyCode == 38) { xbmc.input({type: 'Up'}); return false; };
+            if (e.keyCode == 40) { xbmc.input({type: 'Down'}); return false; };
+            if (e.keyCode == 13) { xbmc.input({type: 'Select'}); return false; };
+            if (e.keyCode == 73) { xbmc.input({type: 'Info'}); return false; };
+            if (e.keyCode == 67) { xbmc.input({type: 'ContextMenu'}); return false; };
+            if (e.keyCode == 8) { xbmc.input({type: 'Back'}); return false; };
+            if (e.keyCode == 36) { xbmc.input({type: 'Home'}); return false; };
           });
           /*$(document).bind('keydown', 'Space', function() { xbmc.control({type: 'play'}); } );
           $(document).bind('keydown', 'x', function() { xbmc.control({type: 'stop'}); } );

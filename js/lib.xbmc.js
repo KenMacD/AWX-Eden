@@ -467,6 +467,8 @@ var xbmc = {};
         $('#firstBG').css('z-index', '4');
         $('#secondBG').css('z-index', '3');
         xbmc.lyrics = false;
+        $('#lyrics').empty();
+        $('#lyricInfo').empty();
       };
     },
     
@@ -3034,10 +3036,12 @@ var xbmc = {};
       }
       
       //Look for lyric time
-      //console.log($('div#lyrics div:contains(' + xbmc.periodicUpdater.progress + ')'))
-      if (xbmc.activePlayer == 'audio' && xbmc.lyrics && $('div#lyrics div:contains(#' + xbmc.periodicUpdater.progress + ')').length > 0) {
+      //console.log($('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).length)
+      //if (xbmc.activePlayer == 'audio' && xbmc.lyrics && $('div#lyrics span.time:contains(#' + xbmc.periodicUpdater.progress + ')').length > 0) {
+      if (xbmc.activePlayer == 'audio' && xbmc.lyrics && $('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).length > 0) {
         $('div#lyrics div').removeClass('current');
-        $('div#lyrics div:contains(#' + xbmc.periodicUpdater.progress + '- )').addClass('current');
+        $('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).parent().addClass('current');
+        //$('div#lyrics span.time:contains(#' + xbmc.periodicUpdater.progress + ')').parent().addClass('current');
         $('div#lyrics .current').ScrollTo({offsetTop: $('div#lyricContent').height()/2 });
         //$('div#lyrics .current')[0].scrollIntoView( true );
       }
@@ -3506,6 +3510,7 @@ var xbmc = {};
                           $('#firstBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
                           $('#secondBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
                           $('#firstBG').removeClass('transparent');
+                          xbmc.$backgroundFanart = '';
                         }
                       }
                     });
@@ -3648,6 +3653,7 @@ var xbmc = {};
             xbmc.clearBackground();
             xbmc.fullScreen(false);
             xbmc.lyrics = false;
+            xbmc.$backgroundFanart = '';
 
             $('#streamdets .vFormat').removeClass().addClass('vFormat');
             $('#streamdets .aspect').removeClass().addClass('aspect');
