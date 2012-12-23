@@ -1588,8 +1588,8 @@
         if (!awxUI.settings.remoteActive) {
           awxUI.settings.remoteActive = true;
           $(document).on('keydown', function(e) {
-            if (e.keyCode == 32) { xbmc.input({type: 'play'}); return false; };
-            if (e.keyCode == 88) { xbmc.input({type: 'stop'}); return false; };
+            if (e.keyCode == 32) { xbmc.control({type: 'play'}); return false; };
+            if (e.keyCode == 88) { xbmc.control({type: 'stop'}); return false; };
             if (e.keyCode == 37) { xbmc.input({type: 'Left'}); return false; };
             if (e.keyCode == 39) { xbmc.input({type: 'Right'}); return false; };
             if (e.keyCode == 38) { xbmc.input({type: 'Up'}); return false; };
