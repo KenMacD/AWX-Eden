@@ -109,36 +109,6 @@ ul.systemMenu > li {
   white-space: nowrap;
 }
 /* sub menus */
-/*nav li       {
-    display:inline-block;
-    padding:0 0.4em;
-    height:1.4em; line-height:1.4em;
-    position:relative;
-}
-
-nav li.sub:after    { content:'\25ba'; float:right; vertical-align:middle; font-size:50% }
-
-nav > ul > li     { cursor:default }
-#navigation li ul         { display:none }
-#navigation li li         { display:block; width:8em }
-#navigation li:hover > ul { display:block; position:absolute; top:1.4em; left:-1px; width:8em; z-index:10 }
-#navigation li li:hover ul{ left:8em; top:-1px }
-
-nav li       { color:black; background:#fee; border:1px solid #966; }
-nav li li    { color:black; background:#efe; border-color:#696 }
-nav li li li { color:black; background:#eef; border-color:#669 }
-
-nav li:hover       { background:#933; color:#fee }
-nav li li:hover    { background:#393; color:#efe }
-nav li li li:hover { background:#339; color:#eef }
-
-nav li li { border-top-width:0 }
-nav li li:first-child { border-top-width:1px }
-
-#navigation li:hover > ul { display:block; position:absolute; top:1.4em; left:-1px; width:8em; z-index:10 }
-#navigation li li:hover ul{ left:8em; top:-1px }
-#navigation li.mkfSubMenu1:after    { content:'\25ba'; float:right; vertical-align:middle; font-size:50% }
-*/
 #navigation li.mkfSubMenu1:hover > ul { display:block; position:absolute; top:0em; left:0px; z-index:10 }
 #navigation li.mkfSubMenu1 li:hover ul{ left:8em; top:-1px }
 
@@ -985,6 +955,27 @@ div.playtime {
 #contextMenu ul a.refresh:hover {
   background-position: -192px -48px;
 }
+
+div.mkfOverlay div.dialog {
+  float: left;
+  border-radius: 0px;
+  border: 0px none;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 0px;
+  margin: 0;
+  min-height: 42px;
+  height: 100%;
+  width: 100%;
+  min-width: 580px;
+  font-size: 12px;
+  color: #fff;
+}
+div.mkfOverlay div.dialogContent {
+  padding: 10px;
+}
+div.mkfOverlay div.dialog h1 {
+  font-size: 14px;
+}
 div.mkfOverlay div.dialog a.close {
   background: url("../images/context_buttons_small.png") no-repeat scroll left top transparent;
   float: right;
@@ -1025,9 +1016,9 @@ div.mkfOverlay div.dialog p.artistdesc {
   overflow-y: auto;
 }
 div.mkfOverlay div.dialog span.value, div.mkfOverlay div.dialog span.valuePoster, div.mkfOverlay div.dialog span.valueBanner {
-  float: right;
+  float: left;
   overflow: hidden;
-  width: 250px;
+  /*width: 250px;*/
 }
 div.mkfOverlay div.dialog span.value a {
   color: #aaa;
@@ -1255,7 +1246,8 @@ div.smallRating10 {
   background-position: 0 -160px;
 }
 div.channels0, div.channels1, div.channels2, div.channels3, div.channels4, div.channels5, div.channels6, div.channels7, div.channels8, div.channels9, div.channels10 {
-  float: left;
+  /*float: left;*/
+  display: inline-block;
   margin-right: 3px;
   background: url("../images/flagging/channels.png") no-repeat scroll 0 0 transparent;
   height: 48px;
@@ -1295,7 +1287,8 @@ div.channels10 {
   background-position: -640px 0;
 }
 div.aspect133, div.aspect166, div.aspect178, div.aspect185, div.aspect220, div.aspect235  {
-  float: left;
+  /*float: left;*/
+  display: inline-block;
   margin-right: 3px;
   background: url("../images/flagging/aspects.png") no-repeat scroll 0 0 transparent;
   height: 48px;
@@ -1320,7 +1313,8 @@ div.aspect235 {
   background-position: -320px 0;
 }
 div.vFormatSD, div.vFormatHD720, div.vFormatHD1080 {
-  float: left;
+  /*float: left;*/
+  display: inline-block;
   margin-right: 3px;
   background: url("../images/flagging/vFormat.png") no-repeat scroll 0 0 transparent;
   height: 48px;
@@ -1336,7 +1330,8 @@ div.vFormatHD1080 {
   background-position: -128px 0;
 }
 div.vCodecH264, div.vCodecXVID, div.vCodecDivX3, div.vCodecDivX5, div.vCodecAVC1, div.vCodecVP8, div.vCodecMPEG1, div.vCodecMPEG2, div.vCodecDVD, div.vCodecBluRay, div.vCodecVC1, div.vCodecFLV, div.vCodecUnknown {
-  float: left;
+  /*float: left;*/
+  display: inline-block;
   margin-right: 3px;
   background: url("../images/flagging/vCodecs.png") no-repeat scroll 0 0 transparent;
   height: 48px;
@@ -1384,7 +1379,8 @@ div.vCodecUnknown {
 
 div.aCodecAAC, div.aCodecAC3, div.aCodecAIF, div.aCodecAIFC, div.aCodecAPE, div.aCodecAVC, div.aCodecCDDA, div.aCodecDCA, div.aCodecDTS, div.aCodecDTSHD, div.aCodecDTSMA, div.aCodecEAC3, div.aCodecFLAC, 
 div.aCodecMP1, div.aCodecMP2, div.aCodecMP3, div.aCodecOGG, div.aCodecDDTrueHD, div.aCodecwav, div.aCodecwavpack, div.aCodecWMA, div.aCodecWMAPro, div.aCodecWMA2, div.aCodecPCM, div.aCodecALAC, div.aCodecUnknown {
-  float: left;
+  /*float: left;*/
+  display: inline-block;
   margin-right: 3px;
   background: url("../images/flagging/aCodecs.png") no-repeat scroll 0 0 transparent;
   height: 48px;
@@ -1469,15 +1465,16 @@ div.aCodecUnknown {
   background-position: -2500px 0;
 }
 div.vSubtitles {
-  float: left;
+  /*float: left;*/
+  display: inline-block;
   margin-right: 3px;
   background: url("../images/flagging/cc.png") no-repeat scroll 0 0 transparent;
   height: 48px;
   width: 64px;
 }
-div.vSubtitles {
+/*div.vSubtitles {
   background-position: 0 0;
-}
+}*/
 span.infoplay {
   background: url("../images/play.png") no-repeat scroll 0 0 transparent;
   float: right;
@@ -1882,10 +1879,33 @@ div.movietags  img {
   margin-right: 3px;
 }
 div.movietags {
+  width: auto;
+}
+div.movietags span.infoplay {
+  background: url("../images/play.png") no-repeat scroll 0 0 transparent;
+  float: none;
   display: inline-block;
-  width: 580px;
+  margin-right: 2px;
+  width: 50px;
+  height: 48px;
+}
+div.movietags span.infoqueue {
+  background: url("../images/play.png") no-repeat scroll -50px 0 transparent;
+  float: none;
+  display: inline-block;
+  width: 50px;
+  height: 48px;
+}
+div.movietags span.infotools {
+  background: url("../images/play.png") no-repeat scroll -150px 0 transparent;
+  float: none;
+  display: inline-block;
+  width: 50px;
+  height: 48px;
 }
 div.mkfOverlay div.dialogSystemControl {
+  float: none;
+  margin: 10px auto;
   width: 535px;
   height: 460px;
 }
@@ -2756,7 +2776,7 @@ div#controlsInput32 {
 #fullscreen #lyricContent {
   display: none;
   float: left;
-  margin: 70px auto;
+  margin: 70px 0 auto;
   height: 80%;
   width: 80%;
   /*position: absolute;

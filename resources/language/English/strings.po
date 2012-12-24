@@ -524,6 +524,10 @@ msgid "Enqueue"
 msgstr ""
 
 msgctxt "Tool tip"
+msgid "Tools and Addons"
+msgstr ""
+
+msgctxt "Tool tip"
 msgid "Swap"
 msgstr ""
 
@@ -852,6 +856,10 @@ msgstr ""
 
 msgctxt "Settings option"
 msgid "Rotate CD art"
+msgstr ""
+
+msgctxt "Settings option"
+msgid "Prefer Logos"
 msgstr ""
 
 msgctxt "Settings option"
@@ -1236,6 +1244,8 @@ msgstr "LazyLoad: \n"
 "If you activate LazyLoad, thumbnails will not be loaded until they become visible. This will save the server from many image-requests.\n"
 "But if you have many items (movies, albums,...) the webinterface can be laggy on scrolling if many thumbs are not loaded.\n"
 "If you deactivate LazyLoad, all thumbs will be loaded when the page is shown (movies page, albums page,...). It can take a short time until all thumbs are loaded.\n"
+"\nPrefer Logos:\n"
+"If a logo for an item is available use it instead of the title in information screens.\n"
 "\nTimeOut:\n"
 "If you have lots of movies (or albums...) it can take some time to get the complete movie list. You can increase the TimeOut-value to prevent errors when trying to show the movie list.\n"
 "\nManual File Directory:\n"

@@ -785,7 +785,10 @@ var mkf = {};
 
       setContent: function(dialogHandle, html, loading) {
         this.setLoading(dialogHandle, loading);
-        $('#mkfDialog' + dialogHandle + ' .dialogContent').html(html);
+        $('#mkfDialog' + dialogHandle + ' .dialogContent').html(html).animate({ height: 'show', opacity: 1 }, 100, function() {
+          //console.log($(this).height())
+          if ( $('.mkfOverlay').height() < $(this).height() ) { $('.mkfOverlay').height( $(this).height() +20 ) };
+        });
       },
 
       appendContent: function(dialogHandle, html, loading) {

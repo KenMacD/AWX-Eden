@@ -113,6 +113,7 @@ var awx = {};
           awxUI.settings.rotateCDart = mkf.cookieSettings.get('rotateCDart', 'no')=='yes'? true : false;
           awxUI.settings.artistsPath = mkf.cookieSettings.get('artistsPath');
           awxUI.settings.manualPath = mkf.cookieSettings.get('manualPath');
+          awxUI.settings.preferLogos = mkf.cookieSettings.get('preferLogos')=='yes'? true : false;
 
           awxUI.settings.remoteActive = false;
           

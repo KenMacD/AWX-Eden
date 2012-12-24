@@ -316,30 +316,35 @@ var xbmc = {};
           media: 'files',
           async: true,
           onSuccess: function(result) {
-            for (n=0; n<result.files.length; n++) {
-              var file = result.files[n];
-              if (file.file.split('.').pop().toLowerCase() == 'jpg') { xart.push(file.file) };
-              
-              if (n == result.files.length-1) {
-                var count = 0;
-                for(i=0; i<xart.length; i++) {
-                  var filename = xart[i];
-                  xbmc.getPrepDownload({
-                    path: filename,
-                    async: true,
-                    onSuccess: function(full) {
-                      count++;
-                      xartFull.push((location.protocol + '//' + location.host + '/' + full.details.path));
-                      if (count == xart.length) { callback(xartFull) };
-                    },
-                    onError: function(errorText) {
-                      count++;
-                      if (count == xart.length && xart.length >0) { console.log('getPrep failed'); console.log(errorText); callback() };
-                    },
-                  });
+            if (result.files) {
+              for (n=0; n<result.files.length; n++) {
+                var file = result.files[n];
+                if (file.file.split('.').pop().toLowerCase() == 'jpg') { xart.push(file.file) };
+                
+                if (n == result.files.length-1) {
+                  var count = 0;
+                  for(i=0; i<xart.length; i++) {
+                    var filename = xart[i];
+                    xbmc.getPrepDownload({
+                      path: filename,
+                      async: true,
+                      onSuccess: function(full) {
+                        count++;
+                        xartFull.push((location.protocol + '//' + location.host + '/' + full.details.path));
+                        if (count == xart.length) { callback(xartFull) };
+                      },
+                      onError: function(errorText) {
+                        count++;
+                        if (count == xart.length && xart.length >0) { console.log('getPrep failed'); console.log(errorText); callback() };
+                      },
+                    });
+                  };
                 };
               };
-            };
+            } else {
+              //file: null
+              callback('');
+            }
           },
           onError: function(errorText) {
             callback('');
@@ -2214,7 +2219,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodeDetails", "params": { "episodeid": ' + settings.episodeid + ', "properties": ["season", "episode", "firstaired", "plot", "title", "runtime", "rating", "thumbnail", "playcount", "file", "fanart", "streamdetails", "resume"] }, "id": 2}',
+        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodeDetails", "params": { "episodeid": ' + settings.episodeid + ', "properties": ["art", "season", "episode", "firstaired", "plot", "title", "runtime", "rating", "thumbnail", "playcount", "file", "fanart", "streamdetails", "resume"] }, "id": 2}',
         function(response) {
           settings.onSuccess(response.result.episodedetails);
         },
@@ -3042,7 +3047,7 @@ var xbmc = {};
         $('div#lyrics div').removeClass('current');
         $('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).parent().addClass('current');
         //$('div#lyrics span.time:contains(#' + xbmc.periodicUpdater.progress + ')').parent().addClass('current');
-        $('div#lyrics .current').ScrollTo({offsetTop: $('div#lyricContent').height()/2 });
+        //$('div#lyrics .current').ScrollTo({offsetTop: $('div#lyricContent').height()/2 });
         //$('div#lyrics .current')[0].scrollIntoView( true );
       }
       //Initial time grab and checking for time slip every 10%.
