@@ -451,6 +451,8 @@ var xbmc = {};
       if (max) {
         if ((xbmc.activePlayerid == 1 || xbmc.activePlayerid == 0) && xbmc.$backgroundFanart != '') {
           xbmc.fullScreen == true;
+          //Stop flashing with FF
+          $('#background').hide();
           $('div#fullscreen').show();
           $('#firstBG').css('z-index', '51');
           $('#secondBG').css('z-index', '50');
@@ -466,6 +468,7 @@ var xbmc = {};
         }
       } else {
         xbmc.fullScreen == false;
+        $('#background').show();
         $('div#lyricContent').hide();
         $('div#fullscreen').hide();
         $('div#playing').hide();
@@ -3047,7 +3050,7 @@ var xbmc = {};
         $('div#lyrics div').removeClass('current');
         $('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).parent().addClass('current');
         //$('div#lyrics span.time:contains(#' + xbmc.periodicUpdater.progress + ')').parent().addClass('current');
-        //$('div#lyrics .current').ScrollTo({offsetTop: $('div#lyricContent').height()/2 });
+        $('div#lyrics .current').ScrollTo({offsetTop: $('div#lyricContent').height()/2 });
         //$('div#lyrics .current')[0].scrollIntoView( true );
       }
       //Initial time grab and checking for time slip every 10%.

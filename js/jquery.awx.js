@@ -3511,7 +3511,7 @@
                   if (!file.file.startsWith('script://') && file.filetype == 'file') {
                     var $file = $('<li' + (globalI%2==0? ' class="even"': '') + '><div class="folderLinkWrapper file' + i + '">' +
                     (awxUI.settings.enqueue? '<a href="" class="button playlist" title="' + mkf.lang.get('Enqueue', 'Tool tip') + '"><span class="miniIcon enqueue" /></a>' : '') +
-                    (awxUI.settings.player? '<a href="" class="file play">' + file.file.slice(file.file.lastIndexOf('/')+1) + '</a>' : '<span class="label">' + file.file.slice(file.file.lastIndexOf('/')+1) + '</span>') +
+                    (awxUI.settings.player? '<a href="" class="file play">' + (file.label != ''? file.label : file.file.slice(file.file.lastIndexOf('/')+1)) + '</a>' : '<span class="label">' + (file.label != ''? file.label : file.file.slice(file.file.lastIndexOf('/')+1)) + '</span>') +
                     '</div></li>').appendTo($filelist);
                     $file.find('.play').bind('click', {file: file.file}, onFilePlayClick);
                     $file.find('.playlist').bind('click', {file: file.file}, onAddFileToPlaylistClick);
