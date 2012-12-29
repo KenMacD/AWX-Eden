@@ -130,9 +130,9 @@ var addons = {};
                   addons.exeAddon({
                     addonid: 'script.cu.lrclyrics',
                     onError: function() {
-                      return false;
+                      setTimeout(function() { addons.culrcLyrics() }, 10000);
                     },
-                    onSuccess: function() { setTimeout(function() { addons.culrcLyrics() }, 3000) }
+                    onSuccess: function() { setTimeout(function() { addons.culrcLyrics() }, 5000) }
                   });
                 } else if (response['Window(Home).Property(culrc.lyrics)'] == '') {
                   //console.log('empty lyrics');

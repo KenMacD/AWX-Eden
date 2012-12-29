@@ -1588,6 +1588,7 @@
         if (!awxUI.settings.remoteActive) {
           awxUI.settings.remoteActive = true;
           $(document).on('keydown', function(e) {
+            //console.log(e.keyCode)
             if (e.keyCode == 32) { xbmc.control({type: 'play'}); return false; };
             if (e.keyCode == 88) { xbmc.control({type: 'stop'}); return false; };
             if (e.keyCode == 37) { xbmc.input({type: 'Left'}); return false; };
@@ -1599,19 +1600,20 @@
             if (e.keyCode == 67) { xbmc.input({type: 'ContextMenu'}); return false; };
             if (e.keyCode == 8) { xbmc.input({type: 'Back'}); return false; };
             if (e.keyCode == 36) { xbmc.input({type: 'Home'}); return false; };
+            if (e.keyCode == 109 || e.keyCode == 189) { xbmc.setVolumeInc({volume: 'decrement'}); return false; };
+            if (e.keyCode == 107 || e.keyCode == 187) { xbmc.setVolumeInc({volume: 'increment'}); return false; };
+            if (e.keyCode == 70) { xbmc.controlSpeed({type: 'increment'}); return false; };
+            if (e.keyCode == 82) { xbmc.controlSpeed({type: 'decrement'}); return false; };
+            if (e.keyCode == 76) { xbmc.setSubtitles({command: 'next'}); return false; };
+            if (e.keyCode == 84) { xbmc.setSubtitles({command: (xbmc.periodicUpdater.subsenabled? 'off' : 'on')}); return false; };
+            if (e.keyCode == 219) { xbmc.executeAction({action: 'bigstepback'}); return false; };
+            if (e.keyCode == 221) { xbmc.executeAction({action: 'bigstepforward'}); return false; };
+            if (e.keyCode == 65) { xbmc.executeAction({action: 'audiodelay'}); return false; };
+            if (e.keyCode == 192) { xbmc.executeAction({action: 'smallstepback'}); return false; };
+            if (e.keyCode == 188) { xbmc.executeAction({action: 'skipprevious'}); return false; };
+            if (e.keyCode == 190) { xbmc.executeAction({action: 'skipnext'}); return false; };
+            if (e.keyCode == 9 || e.keyCode == 27) { xbmc.executeAction({action: 'togglefullscreen'}); return false; };
           });
-          /*$(document).bind('keydown', 'Space', function() { xbmc.control({type: 'play'}); } );
-          $(document).bind('keydown', 'x', function() { xbmc.control({type: 'stop'}); } );
-          $(document).bind('keydown', 'Left', function() { xbmc.input({type: 'Left'}); } );
-          $(document).bind('keydown', 'Right', function() { xbmc.input({type: 'Right'}); } );
-          $(document).bind('keydown', 'Up', function() { xbmc.input({type: 'Up'}); } );
-          $(document).bind('keydown', 'Down', function() { xbmc.input({type: 'Down'}); } );
-          $(document).bind('keydown', 'Return', function() { xbmc.input({type: 'Select'}); } );
-          $(document).bind('keydown', 'i', function() { xbmc.input({type: 'Info'}); } );
-          $(document).bind('keydown', 'c', function() { xbmc.input({type: 'ContextMenu'}); } );
-          $(document).bind('keydown', 'Backspace', function() { xbmc.input({type: 'Back'}); } );
-          $(document).bind('keydown', 'Home', function() { xbmc.input({type: 'Home'}); } );
-          console.log('bind');*/
         } else {
           awxUI.settings.remoteActive = false;
           $(document).off('keydown');
@@ -1622,14 +1624,15 @@
         $('#displayoverlaybot').toggle();
         $('#content').toggleClass('controls');
         $('#artwork').show();
-        $('#fullscreen a.lyrics').click(function() {
-          $('div#lyricContent').toggle();
-          xbmc.lyrics = (xbmc.lyrics? false : true);
-          if (xbmc.lyrics) { addons.culrcLyrics(); };
-          return false;
-        });
-          
       });
+      
+      $('#fullscreen a.lyrics').click(function() {
+        $('div#lyricContent').toggle();
+        xbmc.lyrics = (xbmc.lyrics? false : true);
+        if (xbmc.lyrics) { addons.culrcLyrics(); };
+        return false;
+      });
+        
       //$('#currentlyPlaying').defaultCurrentlyPlaying({effect:'fade'});
       $('#volumeSlider').defaultVolumeControl({vertical: true});
 

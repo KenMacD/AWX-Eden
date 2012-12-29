@@ -682,7 +682,7 @@ var uiviews = {};
 
     /*------*/
     MoviePlay: function(event) {
-      var dialogHandle = mkf.dialog.show();
+      //var dialogHandle = mkf.dialog.show();
       
       //Check for resume point
       xbmc.getMovieInfo({
@@ -698,7 +698,7 @@ var uiviews = {};
               itemId: movieID,
               onSuccess: function() {
                 mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('OK', 'Popup message addition'), 2000, mkf.messageLog.status.success);
-                $('div#mkfDialog' + dialogHandle).find('a.close').click();
+                //$('div#mkfDialog' + dialogHandle).find('a.close').click();
               },
               onError: function(errorText) {
                 mkf.messageLog.appendTextAndHide(messageHandle, errorText, 8000, mkf.messageLog.status.error);
@@ -710,6 +710,7 @@ var uiviews = {};
           
           //Play from resume point
           var playResume = function() {
+            var dialogHandle = mkf.dialog.show();
             var messageHandle = mkf.messageLog.show(mkf.lang.get('Playing...', 'Popup message with addition'));
 
             xbmc.playerOpen({
@@ -898,10 +899,10 @@ var uiviews = {};
             onSuccess: function(result) {
               fileDownload = xbmc.getUrl(result.details.path);
               // no better way?
-              dialogContent.find('a').attr('href',fileDownload);
+              dialogContent.find('div.filelink a').attr('href',fileDownload);
             },
             onError: function(errorText) {
-              dialogContent.find('a').replaceWith(movie.file);
+              dialogContent.find('div.filelink a').replaceWith(movie.file);
             },
           });
           
