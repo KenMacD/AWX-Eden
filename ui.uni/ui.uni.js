@@ -1724,6 +1724,8 @@
       xbmc.musicPlaylist = $('div.musicPlaylist');
       xbmc.videoPlaylist = $('div.videoPlaylist');
 
+      //Where to put this?
+      addons.regAddons();
     },
     
      /**************************************

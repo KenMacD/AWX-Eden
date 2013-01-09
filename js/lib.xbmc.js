@@ -2700,6 +2700,9 @@ var xbmc = {};
         if (typeof xbmc.lyrics === 'undefined') {
           xbmc.lyrics = false;
         }
+        if (typeof xbmc.addons === 'undefined') {
+          xbmc.addons = [];
+        }
         
         var useFanart = awxUI.settings.useFanart;
         var showInfoTags = awxUI.settings.showTags;
@@ -3179,6 +3182,9 @@ var xbmc = {};
         }
         if (typeof xbmc.lyrics === 'undefined') {
           xbmc.lyrics = false;
+        }
+        if (typeof xbmc.addons === 'undefined') {
+          xbmc.addons = [];
         }
         
         var useFanart = mkf.cookieSettings.get('usefanart', 'no')=='yes'? true : false;

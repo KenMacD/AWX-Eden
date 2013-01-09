@@ -923,6 +923,62 @@ msgid "* Not recommended for a large amount of items."
 msgstr ""
 
 msgctxt "Label"
+msgid "Poster"
+msgstr ""
+
+msgctxt "Label"
+msgid "Fan Art"
+msgstr ""
+
+msgctxt "Label"
+msgid "Extra Fan Art"
+msgstr ""
+
+msgctxt "Label"
+msgid "Extra Thumbnails"
+msgstr ""
+
+msgctxt "Label"
+msgid "Clear Logo"
+msgstr ""
+
+msgctxt "Label"
+msgid "Clear Art"
+msgstr ""
+
+msgctxt "Label"
+msgid "Disc Art"
+msgstr ""
+
+msgctxt "Label"
+msgid "Thumbnail"
+msgstr ""
+
+msgctxt "Label"
+msgid "Banner"
+msgstr ""
+
+msgctxt "Label"
+msgid "Season Posters"
+msgstr ""
+
+msgctxt "Label"
+msgid "Season Thumbnails"
+msgstr ""
+
+msgctxt "Label"
+msgid "Season Banners"
+msgstr ""
+
+msgctxt "Label"
+msgid "Character Art"
+msgstr ""
+
+msgctxt "Label"
+msgid "All"
+msgstr ""
+
+msgctxt "Label"
 msgid "N/A"
 msgstr ""
 

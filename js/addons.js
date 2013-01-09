@@ -43,6 +43,35 @@ var addons = {};
       );
     },
     
+    regAddons: function(options) {
+      //addons we can use
+      xbmc.addons.cdart = false;
+      xbmc.addons.iplayer = false;
+      xbmc.addons.youtube = false;
+      xbmc.addons.artwork = false;
+      xbmc.addons.culrclyrics = false;
+      xbmc.addons.cinex = false;
+      
+      this.getAddons({
+        onError: function() {
+          return false;
+        },
+        onSuccess: function(response) {
+          $.each(response.addons, function(i, addon) {
+            //console.log(addon)
+            if (addon.addonid == 'script.cdartmanager') { xbmc.addons.cdart = {addonid: addon.addonid, name: addon.name, author: addon.author, thumb: addon.thumbnail} };
+            if (addon.addonid == 'plugin.video.iplayer') { xbmc.addons.iplayer = {addonid: addon.addonid, name: addon.name, author: addon.author, thumb: addon.thumbnail} };
+            if (addon.addonid == 'plugin.video.youtube') { xbmc.addons.youtube = {addonid: addon.addonid, name: addon.name, author: addon.author, thumb: addon.thumbnail} };
+            if (addon.addonid == 'script.artwork.downloader') { xbmc.addons.artwork = {addonid: addon.addonid, name: addon.name, author: addon.author, thumb: addon.thumbnail} };
+            if (addon.addonid == 'script.cu.lrclyrics') { xbmc.addons.culrclyrics = {addonid: addon.addonid, name: addon.name, author: addon.author, thumb: addon.thumbnail} };
+            if (addon.addonid == 'script.cinema.experience') { xbmc.addons.cinex = {addonid: addon.addonid, name: addon.name, author: addon.author, thumb: addon.thumbnail} };
+            //if (addon.addonid == 'script.cdartmanager') { xbmc.addons.cdart = true };
+          });
+          //console.log(xbmc.addons)
+        }
+      });
+    },
+    
     getAddonDetails: function(options) {
       var settings = {
         addonid: '',
@@ -64,7 +93,7 @@ var addons = {};
       var settings = {
         addonid: true,
         wait: true,
-        params: '', //"mediatype=tvshow", "medianame=Last Resort"
+        params: '',
         onSuccess: null,
         onError: null
       };
@@ -75,6 +104,30 @@ var addons = {};
         settings.onSuccess,
         settings.onError
       );
+    },
+    
+    /*-----------------------------*/
+    // script.cu.lrclyrics support //
+    /*-----------------------------*/
+    
+    artworkDownloader: function(options) {
+      var params = '';
+
+      $.each(options, function(name, val) {
+        
+        if (name == 'art') {
+          if (val != 'all') { params += '"' + val + '", ' };
+        } else {
+          params += '"' + name + '=' + val +'", ';
+        };
+      });
+
+      addons.exeAddon({
+        addonid: 'script.artwork.downloader',
+        params: params.substring(0, params.length-2),
+        onError: function() { return false },
+        onSuccess: function() { return true }
+      });
     },
     
     /*-----------------------------*/

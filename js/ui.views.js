@@ -881,7 +881,7 @@ var uiviews = {};
             '<div class="movieinfo"><div class="movietags">' +
             (awxUI.settings.enqueue? '<span class="infoqueue" title="' + mkf.lang.get('Enqueue', 'Tool tip') + '" />' : '') +
             (awxUI.settings.player? '<span class="infoplay" title="' + mkf.lang.get('Play', 'Tool tip') + '" />' : '')  +
-            //(awxUI.settings.player? '<span class="infotools" title="' + mkf.lang.get('Tools and Addons', 'Tool tip') + '" />' : '')  +
+            (awxUI.settings.player? '<span class="infotools" title="' + mkf.lang.get('Tools and Addons', 'Tool tip') + '" />' : '')  +
             '</div></div>' +
             '</div>');
 
@@ -923,7 +923,8 @@ var uiviews = {};
 
           $(dialogContent).find('.infoplay').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.MoviePlay);
           $(dialogContent).find('.infoqueue').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.AddMovieToPlaylist);
-          $(dialogContent).find('.cinexplay').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.CinExPlay);
+          $(dialogContent).find('.infotools').on('click', {dbid: movie.movieid, media: 'video', mediatype: 'movie'}, uiviews.ToolsAddons);
+          //$(dialogContent).find('.cinexplay').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.CinExPlay);
           $(dialogContent).find('.trailerplay').on('click', {file: movie.trailer}, uiviews.FilePlay);
           
           callback(dialogContent);
@@ -1210,6 +1211,10 @@ var uiviews = {};
               '<div class="movieinfo"><span class="label">' + mkf.lang.get('Played:', 'Label') + '</span><span class="'+valueClass+'">' + tvshow.playcount + '</span></div>' +
               '<div class="movieinfo"><span class="label">' + mkf.lang.get('File:', 'Label') + '</span><span class="'+valueClass+'">' + tvshow.file + '</span></div>' +
               '<p>' + tvshow.plot + '</p>' +
+              (awxUI.settings.player? '<div class="movietags">' + 
+                '<div class="movieinfo"><span class="infotools" title="' + mkf.lang.get('Tools and Addons', 'Tool tip') + '" /></div>' +
+                '<div class="addons"></div>' + 
+              '</div>' : '')  +
             '</div>');
 
           banner.onload = function() { dialogContent.filter('img.thumb').attr('src', banner.src) };
@@ -1222,6 +1227,8 @@ var uiviews = {};
             logo.src = xbmc.getThumbUrl(tvshow.art.clearlogo);
             logo.onload = function() { dialogContent.find('.underline').empty().append('<img src="' + logo.src + '" class="thumbLogo">') };
           };
+          
+          $(dialogContent).find('.infotools').on('click', {dbid: e.data.tvshow.tvshowid, media: 'video', mediatype: 'tvshow'}, uiviews.ToolsAddons);
           
           mkf.dialog.setContent(dialogHandle, dialogContent);
           
@@ -1872,6 +1879,28 @@ var uiviews = {};
       });
 
       return false;
+    },
+    
+    ToolsAddons: function(e) {
+    
+      var addonContent = $(this).parentsUntil('.movietags').parent().find('div.addons');
+      console.log(addonContent);
+      addonContent.show();
+      
+      if (e.data.media == 'video' && xbmc.addons.artwork) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.artwork.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="artwork">' + xbmc.addons.artwork.name + '</a></div>').appendTo(addonContent) };
+      if (e.data.media == 'audio' && xbmc.addons.cdart) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="cdart">' + xbmc.addons.cdart.name + '</a></div>').appendTo(addonContent) };
+      
+      addonContent.find('a.artwork').on('click', {dbid: e.data.dbid, mediatype: e.data.mediatype}, uiviews.addonAD);
+      
+      /*var dialogContent = $('<div class="addons"></div>');
+
+      if (e.data.media == 'video' && xbmc.addons.artwork) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.artwork.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="artwork">' + xbmc.addons.artwork.name + '</a></div>').appendTo(dialogContent) };
+      if (e.data.media == 'audio' && xbmc.addons.cdart) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="cdart">' + xbmc.addons.cdart.name + '</a></div>').appendTo(dialogContent) };
+      
+      dialogContent.find('a.artwork').on('click', {dbid: e.data.dbid, mediatype: e.data.mediatype}, uiviews.addonAD);
+      
+      var dialogHandle = mkf.dialog.show({content: dialogContent});*/
+      
     },
     
 /*----------*/
@@ -3286,6 +3315,51 @@ var uiviews = {};
       return page;    
     },
     
+/*--------*/
+/* Addons */
+/*--------*/  
+    /*----Artwork downloader----*/
+    addonAD: function(e) {
+      var dialogHandle = mkf.dialog.show();
+      var options = {
+        mode: 'custom',
+        silent: true,
+        mediatype: e.data.mediatype,
+        dbid: e.data.dbid
+      };
+      
+      //mediatype = tvshow, movie or musicvideo
+      // http://wiki.xbmc.org/index.php?title=Add-on:Artwork_Downloader#Script_options
+      var item = $('<ul class="fileList">' +
+        '<li class="tworow"><a href="" class="poster">' + mkf.lang.get('Poster', 'Label') + '</a></li>' +
+        '<li class="tworow"><a href="" class="fanart">' + mkf.lang.get('Fan Art', 'Label') + '</a></li>' +
+        '<li class="tworow"><a href="" class="extrafanart">' + mkf.lang.get('Extra Fan Art', 'Label') + '</a></li>' +
+        '<li class="tworow"><a href="" class="extrathumbs">' + mkf.lang.get('Extra Thumbnails', 'Label') + '</a></li>' +
+        '<li class="tworow"><a href="" class="clearlogo">' + mkf.lang.get('Clear Logo', 'Label') + '</a></li>' +
+        '<li class="tworow"><a href="" class="clearart">' + mkf.lang.get('Clear Art', 'Label') + '</a></li>' +
+        (e.data.mediatype == 'tvshow'? '' : '<li class="tworow"><a href="" class="discart">' + mkf.lang.get('Disc Art', 'Label') + '</a></li>') +
+        (e.data.mediatype == 'musicvideo'? '' : '<li class="tworow"><a href="" class="thumb">' + mkf.lang.get('Thumbnail', 'Label') + '</a></li>') +
+        (e.data.mediatype == 'musicvideo'? '' : '<li class="tworow"><a href="" class="banner">' + mkf.lang.get('Banner', 'Label') + '</a></li>') +
+        (e.data.mediatype == 'tvshow'? '<li class="tworow"><a href="" class="seasonposter">' + mkf.lang.get('Season Posters', 'Label') + '</a></li>' : '') +
+        (e.data.mediatype == 'tvshow'? '<li class="tworow"><a href="" class="seasonthumb">' + mkf.lang.get('Season Thumbnails', 'Label') + '</a></li>' : '') +
+        (e.data.mediatype == 'tvshow'? '<li class="tworow"><a href="" class="seasonbanner">' + mkf.lang.get('Season Banners', 'Label') + '</a></li>' : '') +
+        (e.data.mediatype == 'tvshow'? '<li class="tworow"><a href="" class="characterart">' + mkf.lang.get('Character Art', 'Label') + '</a></li>' : '') +
+        '<li><a href="" class="all">' + mkf.lang.get('All', 'Label') + '</a></li>' +
+      '</ul>');
+      
+      item.find('a').click(function() {
+        options.art = $(this)[0].className;
+        if (options.art == 'all') { options.mode = '' };
+        addons.artworkDownloader(options);
+        $('#mkfDialog' + dialogHandle + ' a.close').click();
+        return false;
+      });
+      
+      mkf.dialog.setContent(dialogHandle, item);
+      
+      return false;
+    },
+
 /*------------*/
 /* Misc views */
 /*------------*/  
