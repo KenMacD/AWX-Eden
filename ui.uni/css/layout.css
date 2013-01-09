@@ -841,7 +841,7 @@ div.addons  div.addon {
   float: left;
 }
 div.addons  div.addon  img {
-  padding: 0 3px;
+  padding: 3px;
 }
 div.addons a {
   background-color: #343434;

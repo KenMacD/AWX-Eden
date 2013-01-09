@@ -106,9 +106,9 @@ var addons = {};
       );
     },
     
-    /*-----------------------------*/
-    // script.cu.lrclyrics support //
-    /*-----------------------------*/
+    /*-----------------------------------*/
+    // script.artwork.downloader support //
+    /*-----------------------------------*/
     
     artworkDownloader: function(options) {
       var params = '';
@@ -125,6 +125,21 @@ var addons = {};
       addons.exeAddon({
         addonid: 'script.artwork.downloader',
         params: params.substring(0, params.length-2),
+        onError: function() { return false },
+        onSuccess: function() { return true }
+      });
+    },
+    
+    /*----------------------------------*/
+    // script.cinema.experience support //
+    /*----------------------------------*/
+    
+    cineEx: function(film) {
+      //command<li>movie_title=' + settings.film + '
+      var params = 'command<li>movie_title=' + film
+      addons.exeAddon({
+        addonid: 'script.cinema.experience',
+        params: params,
         onError: function() { return false },
         onSuccess: function() { return true }
       });

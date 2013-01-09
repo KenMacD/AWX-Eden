@@ -879,9 +879,9 @@ var uiviews = {};
               '<div class="movieinfo"><p class="plot">' + movie.plot + '</p></div>' +
             '</div>' +
             '<div class="movieinfo"><div class="movietags">' +
-            (awxUI.settings.enqueue? '<span class="infoqueue" title="' + mkf.lang.get('Enqueue', 'Tool tip') + '" />' : '') +
-            (awxUI.settings.player? '<span class="infoplay" title="' + mkf.lang.get('Play', 'Tool tip') + '" />' : '')  +
-            (awxUI.settings.player? '<span class="infotools" title="' + mkf.lang.get('Tools and Addons', 'Tool tip') + '" />' : '')  +
+              (awxUI.settings.enqueue? '<span class="infoqueue" title="' + mkf.lang.get('Enqueue', 'Tool tip') + '" />' : '') +
+              (awxUI.settings.player? '<span class="infoplay" title="' + mkf.lang.get('Play', 'Tool tip') + '" />' : '')  +
+              (awxUI.settings.player? '<span class="infotools" title="' + mkf.lang.get('Tools and Addons', 'Tool tip') + '" /><div class="addons"></div>' : '')  +
             '</div></div>' +
             '</div>');
 
@@ -923,7 +923,7 @@ var uiviews = {};
 
           $(dialogContent).find('.infoplay').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.MoviePlay);
           $(dialogContent).find('.infoqueue').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.AddMovieToPlaylist);
-          $(dialogContent).find('.infotools').on('click', {dbid: movie.movieid, media: 'video', mediatype: 'movie'}, uiviews.ToolsAddons);
+          $(dialogContent).find('.infotools').on('click', {dbid: movie.movieid, media: 'video', mediatype: 'movie', movie: movie.label}, uiviews.ToolsAddons);
           //$(dialogContent).find('.cinexplay').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.CinExPlay);
           $(dialogContent).find('.trailerplay').on('click', {file: movie.trailer}, uiviews.FilePlay);
           
@@ -1211,10 +1211,9 @@ var uiviews = {};
               '<div class="movieinfo"><span class="label">' + mkf.lang.get('Played:', 'Label') + '</span><span class="'+valueClass+'">' + tvshow.playcount + '</span></div>' +
               '<div class="movieinfo"><span class="label">' + mkf.lang.get('File:', 'Label') + '</span><span class="'+valueClass+'">' + tvshow.file + '</span></div>' +
               '<p>' + tvshow.plot + '</p>' +
-              (awxUI.settings.player? '<div class="movietags">' + 
-                '<div class="movieinfo"><span class="infotools" title="' + mkf.lang.get('Tools and Addons', 'Tool tip') + '" /></div>' +
-                '<div class="addons"></div>' + 
-              '</div>' : '')  +
+              (awxUI.settings.player? '<div class="movieinfo"><div class="movietags">' + 
+                '<span class="infotools" title="' + mkf.lang.get('Tools and Addons', 'Tool tip') + '" /><div class="addons"></div>' +
+              '</div></div>' : '')  +
             '</div>');
 
           banner.onload = function() { dialogContent.filter('img.thumb').attr('src', banner.src) };
@@ -1883,14 +1882,16 @@ var uiviews = {};
     
     ToolsAddons: function(e) {
     
-      var addonContent = $(this).parentsUntil('.movietags').parent().find('div.addons');
+      var addonContent = $(this).parentsUntil('.movieinfo').find('div.addons'); // for tv $(this).parentsUntil('.movietags').parent().find('div.addons');
       console.log(addonContent);
       addonContent.show();
       
       if (e.data.media == 'video' && xbmc.addons.artwork) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.artwork.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="artwork">' + xbmc.addons.artwork.name + '</a></div>').appendTo(addonContent) };
+      if (e.data.media == 'video' && e.data.mediatype == 'movie' && xbmc.addons.cinex) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.cinex.thumb) +'" alt="' + xbmc.addons.cinex.name + '" class="thumb addon" /><a href="" class="cinex">' + xbmc.addons.cinex.name + '</a></div>').appendTo(addonContent) };
       if (e.data.media == 'audio' && xbmc.addons.cdart) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="cdart">' + xbmc.addons.cdart.name + '</a></div>').appendTo(addonContent) };
       
       addonContent.find('a.artwork').on('click', {dbid: e.data.dbid, mediatype: e.data.mediatype}, uiviews.addonAD);
+      addonContent.find('a.cinex').on('click', addons.cineEx(e.data.movie));
       
       /*var dialogContent = $('<div class="addons"></div>');
 

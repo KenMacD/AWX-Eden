@@ -1295,6 +1295,10 @@ msgctxt "Popup message"
 msgid "No matches found!"
 msgstr ""
 
+msgctxt "Popup message"
+msgid "Command sent to addon."
+msgstr ""
+
 msgid "LazyLoad info"
 msgstr "LazyLoad: \n"
 "If you activate LazyLoad, thumbnails will not be loaded until they become visible. This will save the server from many image-requests.\n"
