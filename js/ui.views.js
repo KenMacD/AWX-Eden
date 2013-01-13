@@ -2663,17 +2663,28 @@ var uiviews = {};
     var contentHeight = ($('#content').height());
     
     var getSingleMovie = function(callback) {
-      xbmc.getMovies({
-        filter: filter,
-        start: currentNum,
-        end: currentNum +1,
-        onError: function() {
-          mkf.messageLog.show(mkf.lang.get('Failed to retrieve list!', 'Popup message'), mkf.messageLog.status.error, 5000);
-        },
-        onSuccess: function(result) {
-          callback(result.movies[0]);
-        }
-      });
+      if (parentPage.className == 'recentMovies') {
+        xbmc.getRecentlyAddedMovies({
+          onError: function() {
+            mkf.messageLog.show(mkf.lang.get('Failed to retrieve list!', 'Popup message'), mkf.messageLog.status.error, 5000);
+          },
+          onSuccess: function(result) {
+            callback(result.movies[currentNum]);
+          }
+        });
+      } else {
+        xbmc.getMovies({
+          filter: filter,
+          start: currentNum,
+          end: currentNum +1,
+          onError: function() {
+            mkf.messageLog.show(mkf.lang.get('Failed to retrieve list!', 'Popup message'), mkf.messageLog.status.error, 5000);
+          },
+          onSuccess: function(result) {
+            callback(result.movies[0]);
+          }
+        });
+      };
     };
     
     //Hide watched, filter out watched titles.

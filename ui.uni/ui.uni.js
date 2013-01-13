@@ -2627,6 +2627,7 @@
      *********************************************/
     onMoviesRecentShow: function() {
       if (this.$moviesRecentContent.html() == '') {
+        var moviesRecentPage = this.moviesRecentPage;
         var $contentBox = this.$moviesRecentContent;
         $contentBox.addClass('loading');
 
@@ -2637,7 +2638,7 @@
           },
 
           onSuccess: function(result) {
-            $contentBox.defaultMovieRecentViewer(result);
+            $contentBox.defaultMovieRecentViewer(result, moviesRecentPage);
             $contentBox.removeClass('loading');
           }
         });
