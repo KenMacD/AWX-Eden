@@ -756,7 +756,7 @@ var uiviews = {};
     },
 
     /*------*/
-    FilePlay: function(event) {
+    FilePlay: function(e) {
       var messageHandle = mkf.messageLog.show(mkf.lang.get('Playing...', 'Popup message with addition'));
 
       xbmc.playerOpen({
@@ -2632,7 +2632,7 @@ var uiviews = {};
               '<img src="images/empty_poster_film.png" alt="' + movie.label + '" class="thumb thumbPoster" data-original="' + thumb.src + '" />':
               '<img src="images/empty_poster_film.png" alt="' + movie.label + '" class="thumb thumbPoster" />'
             ) +
-            '<div class="movieTitle"><span class="label">' + movie.label + (watched? '<img src="images/OverlayWatched_Small.png" />' : '') + '</span></div>' +
+            '<div class="movieTitle"><span class="label">' + movie.label + (watched? '<img src="images/OverlayWatched_Small.png" class="watchedPoster">' : '') + '</span></div>' +
             '<div class="findKeywords">' + movie.label.toLowerCase() + '</div>' +
           '</div>').appendTo($moviesList);
           
@@ -3112,7 +3112,7 @@ var uiviews = {};
           
         });
 
-      $episodeList.find('.episodeThumb').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });          
+      $episodeList.find('.episodeThumb').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
       $episodeList.find('.episodeThumb').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
           
       return $episodeList;
@@ -3451,6 +3451,179 @@ var uiviews = {};
         $tagsList.find('.tag' + tag.id).on('click', {strTag: tag.label, lib: lib, objParentPage: parentPage}, uiviews.TagsItems);
       });
       return $tagsList;
+    },
+    
+    /*----Addons list view----*/
+    AddonsViewList: function(type, parentPage) {
+      
+      var $addonsList = $('<div class="addons" style="padding: 5px"></div>');
+      
+      if (type == 'video' && xbmc.addons.artwork) {
+        $('<div class="addon artwork">' +
+            '<div class="thumbWrapper"><div class="linkWrapper">' + 
+              '<a href="" class="run">' + mkf.lang.get('Run Addon', 'Label') + '</a>' +
+              '<a href="" class="adcustomrun">' + mkf.lang.get('Custom Run', 'Label') + '</a>' +
+            '</div>' +
+            '<img src="' + xbmc.getThumbUrl(xbmc.addons.artwork.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" />' +
+            '<span class="label">' + xbmc.addons.artwork.name + '</span>' +
+          '</div></div>').appendTo($addonsList);
+          
+        $addonsList.find('a.run').on('click', function() { addons.exeAddon({addonid: 'script.artwork.downloader'}); return false; });
+        $addonsList.find('a.adcustomrun').on('click', function() {
+          var dialogContent = $('<div><ul class="fileList">' +
+            '<li class="tworow"><a href="" class="poster">' + mkf.lang.get('Poster', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="fanart">' + mkf.lang.get('Fan Art', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="extrafanart">' + mkf.lang.get('Extra Fan Art', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="extrathumbs">' + mkf.lang.get('Extra Thumbnails', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="clearlogo">' + mkf.lang.get('Clear Logo', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="clearart">' + mkf.lang.get('Clear Art', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="discart">' + mkf.lang.get('Disc Art', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="thumb">' + mkf.lang.get('Thumbnail', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="banner">' + mkf.lang.get('Banner', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="seasonposter">' + mkf.lang.get('Season Posters', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="seasonthumb">' + mkf.lang.get('Season Thumbnails', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="seasonbanner">' + mkf.lang.get('Season Banners', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="characterart">' + mkf.lang.get('Character Art', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="all">' + mkf.lang.get('All', 'Label') + '</a></li>' +
+          '</ul></div>');
+          
+          dialogContent.find('a').click(function() {
+            var options = {
+              mode: 'custom',
+              silent: true,
+            };
+            options.art = $(this)[0].className;
+            if (options.art == 'all') { options.mode = '' };
+            addons.artworkDownloader(options);
+            $('#mkfDialog' + dialogHandle + ' a.close').click();
+            return false;
+          });
+          var dialogHandle = mkf.dialog.show({content: dialogContent});
+          
+          return false;
+        });
+      };
+      
+      if (type == 'video' && xbmc.addons.youtube) {
+        $('<div class="addon youtube">' +
+            '<div class="thumbWrapper">' +
+              '<div class="linkWrapper">' + 
+              '<a href="" class="run">' + mkf.lang.get('Run Addon', 'Label') + '</a>' +
+              '<a href="" class="playurl">' + mkf.lang.get('Play URL', 'Label') + '</a>' +
+              '<a href="" class="enqurl">' + mkf.lang.get('Enqueue URL', 'Label') + '</a>' +
+              '</div>' +
+            '<img src="' + xbmc.getThumbUrl(xbmc.addons.youtube.thumb) +'" alt="' + xbmc.addons.youtube.name + '" class="thumb addon" />' +
+            
+            '<span class="label">' + xbmc.addons.youtube.name + '</span>' +
+          '</div>' +
+        '<div class="youtubeurlplay" style="display: none; position: absolute; top: 80px; left: 155px;"><form name="youtubeplay" id="youtubeplay"><input id="ytplay" type="text" style="width: 300px"><input type="submit" value="' + mkf.lang.get('Play', 'Tool tip') + '"><a href="" class="close"></a></form></div>' +
+        '<div class="youtubeurlenq" style="display: none; position: absolute; top: 115px; left: 155px;"><form name="youtubeenq" id="youtubeenq"><input id="ytenq" type="text" style="width: 300px"><input type="submit" value="' + mkf.lang.get('Enqueue', 'Tool tip') + '"><a href="" class="close"></a></form></div>' +
+        '</div>').appendTo($addonsList);
+        
+        $addonsList.find('a.close').on('click', function() {
+          if ($(this).parent()[0].id =='youtubeplay') {
+            $addonsList.find('div.youtubeurlplay').hide();
+          } else {
+            $addonsList.find('div.youtubeurlenq').hide();
+          }
+          return false;
+        });
+        $addonsList.find('a.run').on('click', function() { addons.exeAddon({addonid: 'plugin.video.youtube'}); return false; });
+        $addonsList.find('a.playurl').on('click', function() {
+          //Show input box
+          $addonsList.find('div.youtubeurlplay').show();
+          $addonsList.find('form#youtubeplay').on('submit', function() {
+            var messageHandle = mkf.messageLog.show(mkf.lang.get('Playing...', 'Popup message with addition'));
+            //Grab you tube id and make playable uri.
+            var ytid = $('input#ytplay').val().substr($('input#ytplay').val().lastIndexOf("=") + 1);
+            var fullURL = 'plugin://plugin.video.youtube/?action=play_video&videoid=' + ytid;
+            
+            xbmc.playerOpen({
+              item: 'file',
+              itemStr: fullURL,
+              onSuccess: function() {
+                mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('OK', 'Popup message addition'), 2000, mkf.messageLog.status.success);
+                $addonsList.find('div.youtubeurlplay').hide();
+              },
+              onError: function(errorText) {
+                mkf.messageLog.appendTextAndHide(messageHandle, errorText, 8000, mkf.messageLog.status.error);
+              }
+            });
+            return false;
+          });
+          
+          return false;
+        });
+        
+        $addonsList.find('a.enqurl').on('click', function() {
+          $addonsList.find('div.youtubeurlenq').show();
+          $addonsList.find('form#youtubeenq').on('submit', function() {
+            var messageHandle = mkf.messageLog.show(mkf.lang.get('Adding to playlist...', 'Popup message with addition'));
+            console.log($('input#ytenq').val().substr($('input#ytenq').val().lastIndexOf("=") + 1))
+            var ytid = $('input#ytenq').val().substr($('input#ytenq').val().lastIndexOf("=") + 1);
+            var fullURL = 'plugin://plugin.video.youtube/?action=play_video&videoid=' + ytid;
+            
+            xbmc.addVideoFileToPlaylist({
+              file: fullURL,
+              onSuccess: function() {
+                mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('OK', 'Popup message addition'), 2000, mkf.messageLog.status.success);
+                $addonsList.find('div.youtubeurlenq').hide();
+              },
+              onError: function(errorText) {
+                mkf.messageLog.appendTextAndHide(messageHandle, errorText, 8000, mkf.messageLog.status.error);
+              }
+            });
+            return false;
+          });
+          
+          return false;
+        });
+      };
+      
+      if (type == 'audio' && xbmc.addons.cdart) {
+        $('<div class="addon cdart">' +
+          '<div class="thumbWrapper"><div class="linkWrapper">' + 
+              '<a href="" class="run">' + mkf.lang.get('Run Addon', 'Label') + '</a>' +
+              '<a href="" class="cdcustomrun">' + mkf.lang.get('Custom Run', 'Label') + '</a>' +
+            '</div>' +
+            '<img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" />' +
+            '<span class="label">' + xbmc.addons.cdart.name + '</span>' +
+        '</div></div>').appendTo($addonsList);
+        
+        $addonsList.find('a.run').on('click', function() { addons.exeAddon({addonid: 'script.cdartmanager'}); return false; });
+        $addonsList.find('a.cdcustomrun').on('click', function() {
+          var dialogContent = $('<div><ul class="fileList">' +
+            '<li class="tworow"><a href="" class="autocdart">' + mkf.lang.get('CD Arts', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="autocover">' + mkf.lang.get('Covers', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="autofanart">' + mkf.lang.get('Fan Arts', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="autologo">' + mkf.lang.get('Logos', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="autothumb">' + mkf.lang.get('Thumbnails', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="autoall">' + mkf.lang.get('All Arts', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="update">' + mkf.lang.get('Update Database', 'Label') + '</a></li>' +
+            '<li class="tworow"><a href="" class="database">' + mkf.lang.get('(Re)build Database', 'Label') + '</a></li>' +
+          '</ul></div>');
+          
+          dialogContent.find('a').click(function() {
+            var mode = '"' + $(this)[0].className + '"';
+            //if (options.art == 'all') { options.mode = '' };
+            addons.cdart(mode);
+            $('#mkfDialog' + dialogHandle + ' a.close').click();
+            return false;
+          });
+          var dialogHandle = mkf.dialog.show({content: dialogContent});
+          
+          return false;
+        });
+      };
+      
+      $('<div class="addon">' +
+        '<div style="font-size: 1.2em; margin-left: 10px; margin-top: 50px">' + mkf.lang.get('Playable content') + '</div>' +
+      '</div>').appendTo($addonsList);
+      
+      $addonsList.find('.thumbWrapper').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkWrapper').show() });
+      $addonsList.find('.thumbWrapper').on('mouseleave', function() { $(this).children('.linkWrapper').hide() });
+      
+      return $addonsList;
     },
     
     /*-----------*/

@@ -2228,6 +2228,18 @@
     
   }; // END defaultTagsViewer
   
+    /* ########################### *\
+   |  Tags.
+   |
+   |  
+   |  @param parentPage    Page which is used as parent for new sub pages.
+   \* ########################### */
+  $.fn.defaultAddonsViewer = function(type, parentPage) {
+  
+    uiviews.AddonsViewList(type, parentPage).appendTo($(this));
+    
+  }; // END defaultTagsViewer
+  
   /* ########################### *\
    |  Movie root page
    |

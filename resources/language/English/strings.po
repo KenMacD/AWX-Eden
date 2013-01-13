@@ -100,6 +100,10 @@ msgid "Library Tools"
 msgstr ""
 
 msgctxt "Page and menu"
+msgid "Addons"
+msgstr ""
+
+msgctxt "Page and menu"
 msgid "Advanced Search"
 msgstr ""
 
@@ -365,6 +369,54 @@ msgstr ""
 
 msgctxt "Label"
 msgid "Source"
+msgstr ""
+
+msgctxt "Label"
+msgid "Play URL"
+msgstr ""
+
+msgctxt "Label"
+msgid "Enqueue URL"
+msgstr ""
+
+msgctxt "Label"
+msgid "Custom Run"
+msgstr ""
+
+msgctxt "Label"
+msgid "Run Addon"
+msgstr ""
+
+msgctxt "Label"
+msgid "CD Arts"
+msgstr ""
+
+msgctxt "Label"
+msgid "Covers"
+msgstr ""
+
+msgctxt "Label"
+msgid "Fan Arts"
+msgstr ""
+
+msgctxt "Label"
+msgid "Logos"
+msgstr ""
+
+msgctxt "Label"
+msgid "Thumbnails"
+msgstr ""
+
+msgctxt "Label"
+msgid "All Arts"
+msgstr ""
+
+msgctxt "Label"
+msgid "Update Database"
+msgstr ""
+
+msgctxt "Label"
+msgid "(Re)build Database"
 msgstr ""
 
 msgctxt "Tool tip"
@@ -1283,6 +1335,10 @@ msgctxt "Popup message"
 msgid "Running advanced search..."
 msgstr ""
 
+msgctxt "Popup message with addition"
+msgid "Running addon..."
+msgstr ""
+
 msgctxt "Popup message"
 msgid "Failed! Check your query."
 msgstr ""
@@ -1310,6 +1366,9 @@ msgstr "LazyLoad: \n"
 "If you have lots of movies (or albums...) it can take some time to get the complete movie list. You can increase the TimeOut-value to prevent errors when trying to show the movie list.\n"
 "\nManual File Directory:\n"
 "Enter a directory location on your system that will be accessable via the "Files" menu. Invalid directories will not be shown.\n"
+
+msgid "Playable content"
+msgstr "See Files->Addons for playable content."
 
 msgid "Order By"
 msgstr ""

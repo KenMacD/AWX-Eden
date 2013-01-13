@@ -42,6 +42,7 @@
     videoFilesPage: null,
     videoPlaylistPage: null,
     videoScanPage: null,
+    videoAddonsPage: null,
     videoAdFilterPage: null,
 
     // --- Page Content ---
@@ -55,6 +56,7 @@
     $musicFilesContent: null,
     $musicPlaylistContent: null,
     $musicScanContent: null,
+    $musicAddonsContent: null,
 
     $videosContent: null,
     $moviesContent: null,
@@ -742,6 +744,19 @@
         contextMenu: musicScanContextMenu,
         onShow: $.proxy(this, "onMusicScanShow"),
         className: 'scanMusic'
+      });
+      
+      //Audio Addons
+      this.$audioAddonsContent = $('<div class="pageContentWrapper"></div>');
+      var musicScanContextMenu = $.extend(true, [], standardVideosContextMenu);
+      
+      this.audioAddonsPage = musicPage.addPage({
+        title: mkf.lang.get('Addons', 'Page and menu'),
+        content: this.$audioAddonsContent,
+        menuButtonText: '&raquo; ' + mkf.lang.get('Addons', 'Page and menu'),
+        contextMenu: musicScanContextMenu,
+        onShow: $.proxy(this, "onAudioAddonsShow"),
+        className: 'audioAddons'
       });
       
       //Audio Advanced Filter
@@ -1463,6 +1478,19 @@
         className: 'videoscan'
       });
 
+      //Video Addons
+      this.$videoAddonsContent = $('<div class="pageContentWrapper"></div>');
+      var videoAddonsContextMenu = $.extend(true, [], standardVideosContextMenu);
+      
+      this.videoAddonsPage = videosPage.addPage({
+        title: mkf.lang.get('Addons', 'Page and menu'),
+        content: this.$videoAddonsContent,
+        menuButtonText: '&raquo; ' + mkf.lang.get('Addons', 'Page and menu'),
+        contextMenu: videoAddonsContextMenu,
+        onShow: $.proxy(this, "onVideoAddonsShow"),
+        className: 'videoAddons'
+      });
+      
       //Video Advanced Filter
       this.$videoAdFilterContent = $('<div class="pageContentWrapper"></div>');
       var videoAdFilterContextMenu = $.extend(true, [], standardVideosContextMenu);
@@ -2840,6 +2868,24 @@
       var $contentBox = this.$videoScanContent;
       $contentBox.empty();
       $contentBox.defaultVideoScanViewer('Video');
+    },
+    
+    /*********************************************
+     * Called when Video-Addons-Page is shown. *
+     *********************************************/
+    onVideoAddonsShow: function() {
+      var $contentBox = this.$videoAddonsContent;
+      $contentBox.empty();
+      $contentBox.defaultAddonsViewer('video');
+    },
+    
+    /*********************************************
+     * Called when Audio-Addons-Page is shown. *
+     *********************************************/
+    onAudioAddonsShow: function() {
+      var $contentBox = this.$audioAddonsContent;
+      $contentBox.empty();
+      $contentBox.defaultAddonsViewer('audio');
     },
     
     /*********************************************

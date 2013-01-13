@@ -122,6 +122,7 @@ var addons = {};
         };
       });
 
+      var messageHandle = mkf.messageLog.show(mkf.lang.get('Running addon...', 'Popup message with addition'));
       addons.exeAddon({
         addonid: 'script.artwork.downloader',
         params: params.substring(0, params.length-2),
@@ -140,8 +141,24 @@ var addons = {};
       addons.exeAddon({
         addonid: 'script.cinema.experience',
         params: params,
-        onError: function() { return false },
-        onSuccess: function() { return true }
+        onError: function() { mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('Failed!', 'Popup message addition'), 5000, mkf.messageLog.status.error); },
+        onSuccess: function() { mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('OK', 'Popup message addition'), 2000, mkf.messageLog.status.success); }
+      });
+    },
+    
+    /*----------------------------------*/
+    // script.cdartmanager support //
+    /*----------------------------------*/
+    
+    cdart: function(mode) {
+      var params = mode;
+      var messageHandle = mkf.messageLog.show(mkf.lang.get('Running addon...', 'Popup message with addition'));
+      
+      addons.exeAddon({
+        addonid: 'script.cdartmanager',
+        params: params,
+        onError: function() { mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('Failed!', 'Popup message addition'), 5000, mkf.messageLog.status.error); },
+        onSuccess: function() { mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('OK', 'Popup message addition'), 2000, mkf.messageLog.status.success); }
       });
     },
     
