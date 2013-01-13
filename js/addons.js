@@ -137,7 +137,8 @@ var addons = {};
     
     cineEx: function(film) {
       //command<li>movie_title=' + settings.film + '
-      var params = 'command<li>movie_title=' + film
+      var params = '"command<li>movie_title=' + film + '"';
+      var messageHandle = mkf.messageLog.show(mkf.lang.get('Running addon...', 'Popup message with addition'));
       addons.exeAddon({
         addonid: 'script.cinema.experience',
         params: params,
@@ -152,7 +153,7 @@ var addons = {};
     
     cdart: function(mode) {
       var params = mode;
-      var messageHandle = mkf.messageLog.show(mkf.lang.get('Running addon...', 'Popup message with addition'));
+      
       
       addons.exeAddon({
         addonid: 'script.cdartmanager',

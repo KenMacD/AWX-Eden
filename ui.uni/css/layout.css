@@ -2850,18 +2850,18 @@ div#controlsInput32 {
   color: #599CFF;
   font-weight: bold;
 }
-#fullscreen #lyricInfo {
+#lyricInfo {
   position: relative;
   background-color: rgba(0,0,0,0.8);
   vertical-align: middle;
   min-height: 1.7em;
   font-size: 1.5em;
 }
-#fullscreen #lyricInfo span.label {
+#lyricInfo span.label {
   vertical-align: middle;
   color: #fff;
 }
-#fullscreen #lyricInfo span.info {
+#lyricInfo span.info {
   vertical-align: middle;
   color: #599CFF;
 }

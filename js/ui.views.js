@@ -1883,7 +1883,6 @@ var uiviews = {};
     ToolsAddons: function(e) {
     
       var addonContent = $(this).parentsUntil('.movieinfo').find('div.addons'); // for tv $(this).parentsUntil('.movietags').parent().find('div.addons');
-      console.log(addonContent);
       addonContent.show();
       
       if (e.data.media == 'video' && xbmc.addons.artwork) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.artwork.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="artwork">' + xbmc.addons.artwork.name + '</a></div>').appendTo(addonContent) };
@@ -1891,7 +1890,7 @@ var uiviews = {};
       if (e.data.media == 'audio' && xbmc.addons.cdart) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="cdart">' + xbmc.addons.cdart.name + '</a></div>').appendTo(addonContent) };
       
       addonContent.find('a.artwork').on('click', {dbid: e.data.dbid, mediatype: e.data.mediatype}, uiviews.addonAD);
-      addonContent.find('a.cinex').on('click', addons.cineEx(e.data.movie));
+      addonContent.find('a.cinex').on('click', function() { addons.cineEx(e.data.movie) });
       
       /*var dialogContent = $('<div class="addons"></div>');
 
@@ -3597,7 +3596,7 @@ var uiviews = {};
               '<a href="" class="run">' + mkf.lang.get('Run Addon', 'Label') + '</a>' +
               '<a href="" class="cdcustomrun">' + mkf.lang.get('Custom Run', 'Label') + '</a>' +
             '</div>' +
-            '<img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" />' +
+            '<img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.cdart.name + '" class="thumb addon" />' +
             '<span class="label">' + xbmc.addons.cdart.name + '</span>' +
         '</div></div>').appendTo($addonsList);
         
@@ -3623,6 +3622,29 @@ var uiviews = {};
           });
           var dialogHandle = mkf.dialog.show({content: dialogContent});
           
+          return false;
+        });
+      };
+      
+      if (type == 'audio' && xbmc.addons.culrclyrics) {
+        $('<div class="addon culrclyrics">' +
+          '<div class="thumbWrapper"><div class="linkWrapper">' + 
+              '<a href="" class="run">' + mkf.lang.get('Run Addon', 'Label') + '</a>' +
+            '</div>' +
+            '<img src="' + xbmc.getThumbUrl(xbmc.addons.culrclyrics.thumb) +'" alt="' + xbmc.addons.culrclyrics.name + '" class="thumb addon" />' +
+            '<span class="label">' + xbmc.addons.culrclyrics.name + '</span>' +
+        '</div></div>').appendTo($addonsList);
+        
+        $addonsList.find('a.run').on('click', function() {
+          /*var dialogContent = $('<div id="lyricContent"><div id="lyricInfo"></div><div id="lyrics"></div></div>');
+          xbmc.lyrics = (xbmc.lyrics? false : true);
+          if (xbmc.lyrics) { addons.culrcLyrics(); };
+          
+          var dialogHandle = mkf.dialog.show({content: dialogContent});*/
+          xbmc.lyrics = (xbmc.lyrics? false : true);
+          if (xbmc.lyrics) { addons.culrcLyrics(); };
+          xbmc.fullScreen(true);
+          $('div#lyricContent').show();
           return false;
         });
       };
