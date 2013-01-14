@@ -1814,9 +1814,18 @@ var xbmc = {};
         onError: null
       };
       $.extend(settings, options);
-
+      
+      xbmc.playerOpen({
+        item: 'file',
+        itemStr: settings.file,
+        playlistid: 0,
+        onSuccess: settings.onSuccess,
+        onError: function(errorText) {
+          settings.onError(errorText);
+        }
+      })
       //Fix: change to use player.open
-      this.clearAudioPlaylist({
+      /*this.clearAudioPlaylist({
         onSuccess: function() {
           xbmc.addAudioFileToPlaylist({
             file: settings.file,
@@ -1841,7 +1850,7 @@ var xbmc = {};
         onError: function() {
           settings.onError();
         }
-      });
+      });*/
     },
 
     playAudioFolder: function(options) {
