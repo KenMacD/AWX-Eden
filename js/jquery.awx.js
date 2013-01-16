@@ -3919,15 +3919,197 @@
   }; // END uniFooterStatus
   
   /* ########################### *\
-   |  FindBox
+   |  FindBox whole library
   \* ########################### */
-  $.fn.defaultFindBox = function(options) {
+  $.fn.defaultFindBox = function(options, params, parentPage) {
+    //library: 'video', [open: 'continue', searchAndOr: '', searchFields: 'title', searchOps: 'contains', searchTerms: ''],
     var settings = {
       id: 'defaultFindBox',
       searchItems: '.findable',
       top: 0,
-      left: 0/*,
-      delay: 500*/
+      left: 0,
+    };
+    var searchParams = {
+      fields: [{
+        open: 'continue',
+        searchAndOr: '',
+        searchFields: 'title',
+        searchOps: 'contains',
+        searchTerms: ''
+      }],
+      searchType: 'tvshow',
+      library: 'video'
+    };
+    
+    if(options) {
+      $.extend(settings, options);
+    }
+    $.extend(searchParams, params);
+    var self = this;
+    //var timeout;
+    
+    var $searchItems = $(self).find(settings.searchItems);
+    var $box = $('#' + settings.id);
+
+    // Always create box
+    var $div = $('<div id="' + settings.id + '" class="findBox"><input type="text" /></div>')
+      .appendTo($('body'))
+      .css({'left': settings.left, 'top': settings.top});
+
+    if ($div.width() + $div.position().left > $(window).width()) {
+      $div.css({'left': settings.left-$div.width()});
+    }
+    var input = $div.find('input');
+
+    function onInputContentChanged() {
+      searchParams.fields[0].searchTerms = input.val();
+      if (searchParams.field) { searchParams.fields[0].searchFields = searchParams.field };
+      var messageHandle = mkf.messageLog.show(mkf.lang.get('Running advanced search...', 'Popup message'));
+      
+      xbmc.getAdFilter({
+        options: searchParams,
+        onSuccess: function(result) {
+          result.Type = searchParams.searchType;
+          if (result.limits.total > 0) {
+            mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('OK', 'Popup message addition'), 2000, mkf.messageLog.status.success);
+            
+            //make sub page for result
+            var $vadFilterRContent = $('<div class="pageContentWrapper"></div>');
+            var vadFilterRPage = mkf.pages.createTempPage(parentPage, {
+              title: mkf.lang.langMsg.translate('Result').withContext('Page').ifPlural( result.limits.total, 'Results' ).fetch( result.limits.total ), //mkf.lang.get('page_title_results'),
+              content: $vadFilterRContent
+            });
+            var fillPage = function() {
+              $vadFilterRContent.addClass('loading');
+              switch (result.Type) {
+                case 'movies':
+                  result.isFilter = true; //result.isFilter = true; <- change to
+                  $vadFilterRContent.defaultMovieTitleViewer(result, vadFilterRPage);
+                  $vadFilterRContent.removeClass('loading');
+                break;
+                case 'tvshows':
+                  result.isFilter = true;
+                  $vadFilterRContent.defaultTvShowTitleViewer(result, vadFilterRPage);
+                  $vadFilterRContent.removeClass('loading');
+                break;
+                case 'episodes':
+                  result.isFilter = true;
+                  $vadFilterRContent.defaultEpisodesViewer(result, vadFilterRPage);
+                  $vadFilterRContent.removeClass('loading');
+                break;
+                case 'musicvideos':
+                  result.isFilter = true;
+                  $vadFilterRContent.defaultMusicVideosTitleViewer(result, vadFilterRPage);
+                  $vadFilterRContent.removeClass('loading');
+                break;
+                case 'artists':
+                  result.isFilter = true;
+                  $vadFilterRContent.defaultArtistsTitleViewer(result, vadFilterRPage);
+                  $vadFilterRContent.removeClass('loading');
+                break;
+                case 'albums':
+                  result.isFilter = true;
+                  $vadFilterRContent.defaultAlbumTitleViewer(result, vadFilterRPage);
+                  $vadFilterRContent.removeClass('loading');
+                break;
+                case 'songs':
+                  result.isFilter = true;
+                  result.showDetails = true;
+                  $vadFilterRContent.defaultSonglistViewer(result, vadFilterRPage);
+                  $vadFilterRContent.removeClass('loading');
+                break;
+              }
+              
+              
+
+            }
+            vadFilterRPage.setContextMenu(
+              [
+                {
+                  'icon':'close', 'title':mkf.lang.get('Close', 'Tool tip'), 'shortcut':'Ctrl+1', 'onClick':
+                  function() {
+                    mkf.pages.closeTempPage(vadFilterRPage);
+                    return false;
+                  }
+                },
+                {
+                  'icon':'refresh', 'title':mkf.lang.get('Refresh', 'Tool tip'), 'onClick':
+                    function(){
+                      $vadFilterRContent.empty();
+                      fillPage();
+                      return false;
+                    }
+                }
+              ]
+            );
+            
+            mkf.pages.showTempPage(vadFilterRPage);
+            fillPage();
+            $vadFilterRContent.removeClass('loading');
+
+            return false;
+          } else {
+            //No results
+            mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('No matches found!', 'Popup message'), 6000, mkf.messageLog.status.error);
+          };
+        },
+        onError: function(error) {
+          mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('Failed! Check your query.', 'Popup message'), 6000, mkf.messageLog.status.error);
+        }          
+      });
+     /* $(self).find('.findBoxTitle').remove();
+      if (input.val()) {
+        $(self).prepend('<div class="findBoxTitle"><span>' + mkf.lang.get('Search result within this page for', 'Label') + ' : ' + [input.val()] + '</span></div>');
+      }
+      if (settings.searchItems == '.folderLinkWrapper' || settings.searchItems == 'a' ){
+      $searchItems.parent().removeAttr("style");
+      } else {
+      $searchItems.removeAttr("style");
+      }
+      if (settings.searchItems == '.folderLinkWrapper' || settings.searchItems == 'a' ){
+      $searchItems.not(":contains('" + input.val().toLowerCase() + "')").parent().hide();
+      } else {
+      $searchItems.not(":contains('" + input.val().toLowerCase() + "')").hide();
+      }*/
+      $(window).trigger('resize'); // ugly but best performance: trigger 'resize' because lazy-load-images may be visible now and should be loaded.
+    };
+
+    input
+      .blur(function() {
+        $(this).parent().hide();
+      })
+      .keydown(function(event) {
+        if (event.keyCode == 0x0D) {
+          onInputContentChanged();
+        }
+        if (event.keyCode == 0x1B || event.keyCode == 0x0D) {
+          $(this).parent().hide();
+        }
+      })
+      /*.keyup(function() {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        timeout = setTimeout(onInputContentChanged, settings.delay);
+      })*/
+      .focus(function() {
+        this.select();
+      })
+      .focus();
+
+    return false;
+  };
+  
+  /* ########################### *\
+   |  FindBox
+  \* ########################### */
+  /*$.fn.defaultFindBox = function(options) {
+    var settings = {
+      id: 'defaultFindBox',
+      searchItems: '.findable',
+      top: 0,
+      left: 0,
+      delay: 500
     };
 
     if(options) {
@@ -3980,17 +4162,12 @@
           $(this).parent().hide();
         }
       })
-      /*.keyup(function() {
-        if (timeout) {
-          clearTimeout(timeout);
-        }
-        timeout = setTimeout(onInputContentChanged, settings.delay);
-      })*/
       .focus(function() {
         this.select();
       })
       .focus();
 
     return false;
-  }; // END defaultFindBox
+  }; */ 
+  // END defaultFindBox
 })(jQuery);

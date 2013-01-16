@@ -153,7 +153,7 @@ var addons = {};
     
     cdart: function(mode) {
       var params = mode;
-      
+      var messageHandle = mkf.messageLog.show(mkf.lang.get('Running addon...', 'Popup message with addition'));
       
       addons.exeAddon({
         addonid: 'script.cdartmanager',

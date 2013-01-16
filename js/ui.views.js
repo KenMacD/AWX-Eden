@@ -3869,6 +3869,7 @@ var uiviews = {};
           } else {
             var messageHandle = mkf.messageLog.show(mkf.lang.get('Running advanced search...', 'Popup message'));
 
+            console.log(searchParams)
             xbmc.getAdFilter({
               options: searchParams,
               onSuccess: function(result) {
