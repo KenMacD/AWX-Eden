@@ -220,7 +220,7 @@ var addons = {};
                     },
                     onSuccess: function() { setTimeout(function() { addons.culrcLyrics() }, 5000) }
                   });
-                } else if (response['Window(Home).Property(culrc.lyrics)'] == '') {
+                } else if (response['Window(Home).Property(culrc.running)'] == 'true' && response['Window(Home).Property(culrc.lyrics)'] == '') {
                   //console.log('empty lyrics');
                   $('div#lyrics').append('...');
                   setTimeout(function() { console.log('empty lyrics'); addons.culrcLyrics() }, 5000);
