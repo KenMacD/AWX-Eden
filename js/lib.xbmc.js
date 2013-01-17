@@ -449,7 +449,7 @@ var xbmc = {};
     
     fullScreen: function(max) {
       if (max) {
-        if ((xbmc.activePlayerid == 1 || xbmc.activePlayerid == 0) && xbmc.$backgroundFanart != '') {
+        if (xbmc.activePlayerid == 1 || xbmc.activePlayerid == 0) {
           xbmc.fullScreen == true;
           //Stop flashing with FF
           $('#background').hide();
@@ -464,7 +464,7 @@ var xbmc = {};
           xbmc.nowPlaying(true);
         } else {
           //Not playing
-          mkf.messageLog.show(mkf.lang.get('Nothing is playing or no background available!', 'Popup message'), mkf.messageLog.status.error, 5000);
+          mkf.messageLog.show(mkf.lang.get('Nothing is playing!', 'Popup message'), mkf.messageLog.status.error, 5000);
         }
       } else {
         xbmc.fullScreen == false;
@@ -2953,6 +2953,9 @@ var xbmc = {};
                     $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
                   };
                   xbmc.getExtraArt({path: currentItem.file, type: 'extrafanart', tvid: currentItem.tvshowid, library: currentItem.type}, function(xart) { xbmc.xart = xart; xbmc.switchFanart() } );
+                } else if (useFanart && currentItem.fanart == '') {
+                    xbmc.$backgroundFanart = xbmc.getThumbUrl('images/black.gif');
+                    $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
                 };
 
                 if (xbmc.periodicUpdater.currentlyPlayingFile != currentItem.file) {
@@ -3341,6 +3344,9 @@ var xbmc = {};
                           if ( xbmc.$backgroundFanart != xbmc.getThumbUrl(currentItem.fanart) && useFanart && currentItem.fanart != '' ) {
                             xbmc.$backgroundFanart = xbmc.getThumbUrl(currentItem.fanart);
                             $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
+                          } else if (useFanart && currentItem.fanart == '') {
+                            xbmc.$backgroundFanart = xbmc.getThumbUrl('images/black.gif');
+                            $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
                           };
                           
                           if (xbmc.periodicUpdater.currentlyPlayingFile != currentItem.file) {
@@ -3531,10 +3537,10 @@ var xbmc = {};
                           $('#firstBG').css('background-image', 'url(' + xbmc.$backgroundFanart + ')');
                         } else {
                           //No fan art at all, set a 1x1px transparent base64 gif.
-                          $('#firstBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
+                          $('#firstBG').css('background-image', 'images/black.gif');
                           $('#secondBG').css('background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==)');
                           $('#firstBG').removeClass('transparent');
-                          xbmc.$backgroundFanart = '';
+                          xbmc.$backgroundFanart = xbmc.getThumbUrl('images/black.gif');
                         }
                       }
                     });

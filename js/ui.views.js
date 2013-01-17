@@ -3478,7 +3478,7 @@ var uiviews = {};
             '<span class="label">' + xbmc.addons.artwork.name + '</span>' +
           '</div></div>').appendTo($addonsList);
           
-        $addonsList.find('a.run').on('click', function() { addons.exeAddon({addonid: 'script.artwork.downloader'}); return false; });
+        $addonsList.find('.artwork a.run').on('click', function() { addons.exeAddon({addonid: 'script.artwork.downloader'}); return false; });
         $addonsList.find('a.adcustomrun').on('click', function() {
           var dialogContent = $('<div><ul class="fileList">' +
             '<li class="tworow"><a href="" class="poster">' + mkf.lang.get('Poster', 'Label') + '</a></li>' +
@@ -3538,7 +3538,7 @@ var uiviews = {};
           }
           return false;
         });
-        $addonsList.find('a.run').on('click', function() { addons.exeAddon({addonid: 'plugin.video.youtube'}); return false; });
+        $addonsList.find('.youtube a.run').on('click', function() { addons.exeAddon({addonid: 'plugin.video.youtube'}); return false; });
         $addonsList.find('a.playurl').on('click', function() {
           //Show input box
           $addonsList.find('div.youtubeurlplay').show();
@@ -3600,7 +3600,7 @@ var uiviews = {};
             '<span class="label">' + xbmc.addons.cdart.name + '</span>' +
         '</div></div>').appendTo($addonsList);
         
-        $addonsList.find('a.run').on('click', function() { addons.exeAddon({addonid: 'script.cdartmanager'}); return false; });
+        $addonsList.find('.cdart a.run').on('click', function() { addons.exeAddon({addonid: 'script.cdartmanager'}); return false; });
         $addonsList.find('a.cdcustomrun').on('click', function() {
           var dialogContent = $('<div><ul class="fileList">' +
             '<li class="tworow"><a href="" class="autocdart">' + mkf.lang.get('CD Arts', 'Label') + '</a></li>' +
@@ -3635,7 +3635,7 @@ var uiviews = {};
             '<span class="label">' + xbmc.addons.culrclyrics.name + '</span>' +
         '</div></div>').appendTo($addonsList);
         
-        $addonsList.find('a.run').on('click', function() {
+        $addonsList.find('.culrclyrics a.run').on('click', function() {
           /*var dialogContent = $('<div id="lyricContent"><div id="lyricInfo"></div><div id="lyrics"></div></div>');
           xbmc.lyrics = (xbmc.lyrics? false : true);
           if (xbmc.lyrics) { addons.culrcLyrics(); };

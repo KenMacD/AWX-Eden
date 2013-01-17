@@ -232,7 +232,7 @@ msgid "Failed to remove playlist item... "
 msgstr ""
 
 msgctxt "Popup message"
-msgid "Nothing is playing or no background available!"
+msgid "Nothing is playing!"
 msgstr ""
 
 msgctxt "Initial window screen"
