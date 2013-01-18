@@ -737,9 +737,13 @@ img.thumbFanart {
   height: 113px;
   width: 200px;
 }
-img.episode:hover{
-  border: 1px solid #A0E312;
+img.thumbFanartLarge {
+  height: 155px;
+  width: 275px;
 }
+/*img.episode:hover{
+  border: 1px solid #A0E312;
+}*/
 img.epWatched {
   position:relative; 
   top:0px; 
@@ -2058,6 +2062,15 @@ div.episodeThumb {
   margin: 5px 5px 0 5px;
   float: left;
   position: relative; 
+  z-index:3;
+}
+div.episodeThumbLarge {
+  width: 275px;
+  height: 230px;
+  margin: 5px 5px 0 5px;
+  float: left;
+  position: relative;
+  text-align: center;
   z-index:3;
 }
 div.episodeTitle {

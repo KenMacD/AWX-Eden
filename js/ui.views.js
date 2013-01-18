@@ -1460,7 +1460,9 @@ var uiviews = {};
               mkf.messageLog.show(mkf.lang.get('No unwatched episodes!', 'Popup message'), mkf.messageLog.status.error, 5000);
               return false;
             } else {
-              $unwatchedEpsContent.defaultunwatchedEpsViewer(result, e.data.idTvShow, unwatchedEpsPage);
+              var eps = {};
+              eps.episodes = result;
+              $unwatchedEpsContent.defaultunwatchedEpsViewer(eps, e.data.idTvShow, unwatchedEpsPage);
               $unwatchedEpsContent.removeClass('loading');
               mkf.pages.showTempPage(unwatchedEpsPage);
             };
@@ -3081,7 +3083,7 @@ var uiviews = {};
     TVEpThumbnailList: function(eps, options) {
       var genlist = eps.episodes;
       
-      if (options) genlist = eps;
+      //if (options) genlist = eps;
       
       var $episodeList = $('<ul class="RecentfileList"></ul>');
 
@@ -3124,6 +3126,59 @@ var uiviews = {};
 
       $episodeList.find('.episodeThumb').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
       $episodeList.find('.episodeThumb').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
+          
+      return $episodeList;
+    },
+    
+    /*----Ep thumb no plot view----*/
+    TVEpThumbnail: function(eps, options) {
+      
+      var genlist = eps.episodes;
+      
+      //if (options) genlist = eps;
+      //console.log(genlist)
+      var $episodeList = $('<div></div>');
+
+        $.each(genlist, function(i, episode)  {
+          var watched = false;  
+          if (episode.playcount > 0 && !awxUI.settings.hideWatchedMark) { watched = true; }
+          
+          var thumb = new Image();
+          if (episode.thumbnail) { thumb.src = xbmc.getThumbUrl(episode.thumbnail) };
+          
+          var $episode = $('<div class="thumbEpWrapper" style="display: inline">' + 
+            '<div class="episodeThumbLarge">' +
+              '<div class="linkEpWrapper">' + 
+                (awxUI.settings.player? '<a href="" class="play">' + mkf.lang.get('Play', 'Tool tip') + '</a>' : '') +
+                (awxUI.settings.enqueue? '<a href="" class="playlist">' + mkf.lang.get('Enqueue', 'Tool tip') + '</a>' : '') +
+                '<a href="" class="info">' + mkf.lang.get('Information',  'Tool tip') + '</a>' +
+              '</div>' +
+            (awxUI.settings.lazyload?
+            '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumb thumbFanartLarge episode" data-original="' + thumb.src + '" />' :
+            '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumbFanartLarge episode" />'
+            ) +
+            '' +
+            '<div class="movieTitle"><span class="label">' + episode.label + (watched? '<img src="images/OverlayWatched_Small.png" />' : '') + '</span>' +
+            '<div class="recentTVtitle"><span>' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</span></div></div>' +
+            //'<div class="label">' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</div>' +
+            //'<div class="episodeRating"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span><div class="smallRating' + Math.round(episode.rating) + '"></div></span></div>' +
+          '</div>' +
+          '</div>').appendTo($episodeList);
+          
+          $episode.find('.play').bind('click', {idEpisode: episode.episodeid}, uiviews.EpisodePlay);
+          $episode.find('.playlist').bind('click', {idEpisode: episode.episodeid}, uiviews.AddEpisodeToPlaylist);
+          $episode.find('.info').bind('click', {idEpisode: episode.episodeid}, uiviews.EpisodeInfo);
+          
+          if (!awxUI.settings.lazyload) {
+            thumb.onload = function() { $episode.find('img.episode').attr('src', thumb.src) };
+          } else {
+            thumb.onload = function() { $episode.find('img.episode').attr('data-original', thumb.src) };
+          };
+          
+        });
+
+      $episodeList.find('.episodeThumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
+      $episodeList.find('.episodeThumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
           
       return $episodeList;
     },
@@ -3177,6 +3232,57 @@ var uiviews = {};
       return $episodeList;
     },
     
+    /*----Ep recent thumb no plot view----*/
+    TVRecentThumbnail: function(eps, parentPage, options) {
+      
+      var $episodeList = $('<div></div>');
+
+        $.each(eps.episodes, function(i, episode)  {
+          var watched = false;  
+          if (episode.playcount > 0 && !awxUI.settings.hideWatchedMark) { watched = true; }
+          
+          var thumb = new Image();
+          if (episode.thumbnail) { thumb.src = xbmc.getThumbUrl(episode.thumbnail) };
+          
+          var $episode = $('<div class="thumbEpWrapper" style="display: inline">' + 
+            '<div class="episodeThumbLarge">' +
+              '<div class="linkEpWrapper">' + 
+                (awxUI.settings.player? '<a href="" class="play">' + mkf.lang.get('Play', 'Tool tip') + '</a>' : '') +
+                (awxUI.settings.enqueue? '<a href="" class="playlist">' + mkf.lang.get('Enqueue', 'Tool tip') + '</a>' : '') +
+                '<a href="" class="unwatchedEps">' + mkf.lang.get('Unwatched',  'Tool tip') + '</a>' +
+              '</div>' +
+            (awxUI.settings.lazyload?
+            '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumb thumbFanartLarge episode" data-original="' + thumb.src + '" />' :
+            '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumbFanartLarge episode" />'
+            ) +
+            '' +
+            '<div class="movieTitle">' +
+              '<div class="recentTVshowName">' + episode.showtitle + '</div>' +
+              '<span class="label">' + episode.label + (watched? '<img src="images/OverlayWatched_Small.png" />' : '') + '</span>' +
+              '<div class="recentTVtitle"><span>' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</span></div>' +
+            '</div>' +
+            //'<div class="label">' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</div>' +
+            //'<div class="episodeRating"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span><div class="smallRating' + Math.round(episode.rating) + '"></div></span></div>' +
+          '</div>' +
+          '</div>').appendTo($episodeList);
+          
+          $episode.find('.play').bind('click', {idEpisode: episode.episodeid}, uiviews.EpisodePlay);
+          $episode.find('.playlist').bind('click', {idEpisode: episode.episodeid}, uiviews.AddEpisodeToPlaylist);
+          $episode.find('.unwatchedEps').bind('click', {idTvShow: episode.tvshowid, strTvShow: episode.showtitle, objParentPage: parentPage}, uiviews.Unwatched);
+          
+          if (!awxUI.settings.lazyload) {
+            thumb.onload = function() { $episode.find('img.episode').attr('src', thumb.src) };
+          } else {
+            thumb.onload = function() { $episode.find('img.episode').attr('data-original', thumb.src) };
+          };
+          
+        });
+
+      $episodeList.find('.episodeThumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
+      $episodeList.find('.episodeThumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
+          
+      return $episodeList;
+    },
     
 /*----------------*/
 /* Playlist views */

@@ -995,14 +995,17 @@
         
         '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Recently Added TV Episodes', 'Settings label') + '</legend>' +
-        '<select name="TVViewRec"><option value="infolist" ' + (TVViewRec=='infolist'? 'selected' : '') + '>' + mkf.lang.get('Information List', 'Settings option') + '</option>' +
+        '<select name="TVViewRec">' +
+        '<option value="infolist" ' + (TVViewRec=='infolist'? 'selected' : '') + '>' + mkf.lang.get('Information List', 'Settings option') + '</option>' +
+        '<option value="thumbnail" ' + (TVViewRec=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails (Details overlay)', 'Settings option') + '</option>' +
         '</select>' +
         '</fieldset>' +
 
         '<fieldset>' +
         '<legend>' + mkf.lang.get('Episodes', 'Settings label') + '</legend>' +
         '<select name="EpView"><option value="listover" ' + (EpView=='listover'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') + '</option>' +
-        '<option value="thumbnail" ' + (EpView=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails (Details overlay)', 'Settings option') + '</option>' +
+        '<option value="thumbnail" ' + (EpView=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Information List', 'Settings option') + '</option>' +
+        '<option value="thumbnailnoplot" ' + (EpView=='thumbnailnoplot'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails (Details overlay)', 'Settings option') + '</option>' +
         '</select>' +
         '</fieldset>' +
         
@@ -2698,6 +2701,9 @@
       case 'listover':
         uiviews.TVEpisodesViewList(episodesResult).appendTo(epsContainer);
         break;
+      case 'thumbnailnoplot':
+        uiviews.TVEpThumbnail(episodesResult).appendTo(epsContainer);
+        break;
     };
     
     if (useLazyLoad) {
@@ -2736,6 +2742,9 @@
         break;
       case 'listover':
         uiviews.TVEpisodesViewList(episodesResult, unwatched).appendTo(epsContainer);
+        break;
+      case 'thumbnailnoplot':
+        uiviews.TVEpThumbnail(episodesResult).appendTo(epsContainer);
         break;
     };
     
@@ -2776,6 +2785,9 @@
     switch (view) {
       case 'infolist':
         uiviews.TVRecentViewInfoList(episodesResult, parentPage, options).appendTo(epsContainer);
+        break;
+      case 'thumbnail':
+        uiviews.TVRecentThumbnail(episodesResult, parentPage, options).appendTo(epsContainer);
         break;
     };
     
