@@ -962,6 +962,9 @@
         '</option><option value="listin" ' + (filmView=='listin'? 'selected' : '') + '>' + mkf.lang.get('List (Details inline)', 'Settings option') +'</option><option value="accordion"' + (filmView=='accordion'? 'selected' : '') + '>' + mkf.lang.get('Accordion (Details inline)', 'Settings option') + '</option>' +
         '<option value="singlePoster" ' + (filmView=='singlePoster'? 'selected' : '') + '>' + mkf.lang.get('Single Posters', 'Settings option') +'</option>' +
         '<option value="logo" ' + (filmView=='logo'? 'selected' : '') + '>' + mkf.lang.get('Logos', 'Settings option') +'</option>' +
+        '<option value="poster" ' + (filmView=='poster'? 'selected' : '') + '>' + mkf.lang.get('Posters', 'Settings option') +'</option>' +
+        '<option value="thumbnail" ' + (filmView=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails (Details overlay)', 'Settings option') +'</option>' +
+        '<option value="clearart" ' + (filmView=='clearart'? 'selected' : '') + '>' + mkf.lang.get('Clear Art', 'Settings option') +'</option>' +
         '</select>' +
         '</fieldset>' +
         
@@ -2305,7 +2308,13 @@
 
     switch (view) {
       case 'poster':
+        uiviews.MovieViewPosters(movieResult, parentPage, settings).appendTo($movieContainer);        
+        break;
+      case 'thumbnail':
         uiviews.MovieViewThumbnails(movieResult, parentPage, settings).appendTo($movieContainer);        
+        break;
+      case 'clearart':
+        uiviews.MovieViewClearArt(movieResult, parentPage, settings).appendTo($movieContainer);        
         break;
       case 'listover':
         uiviews.MovieViewList(movieResult, parentPage, settings).appendTo($movieContainer);
@@ -2416,7 +2425,7 @@
     
     switch (view) {
       case 'poster':
-        uiviews.MovieViewThumbnails(movieResult, parentPage, settings).appendTo($movieContainer);
+        uiviews.MovieViewPosters(movieResult, parentPage, settings).appendTo($movieContainer);
         break;
       case 'listover':
         uiviews.MovieViewList(movieResult, parentPage, settings).appendTo($movieContainer);

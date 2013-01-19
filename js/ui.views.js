@@ -2611,8 +2611,97 @@ var uiviews = {};
       return $moviesList;
     },
       
-    /*----Movie poster thumbnail view----*/
+    /*----Movie thumbnail view----*/
     MovieViewThumbnails: function(movies, parentPage, options) {
+      var $moviesList = $('<div></div>');
+      $.each(movies.movies, function(i, movie) {
+        var watched = false;
+        if (movie.playcount > 0 && !awxUI.settings.hideWatchedMark) { watched = true; };
+        
+        var thumb = new Image();
+        if (movie.art.landscape) { thumb.src = xbmc.getThumbUrl(movie.art.landscape) };
+        
+        var $movie = $(
+          '<div class="movie'+movie.movieid+' thumbEpWrapper" style="display: inline">' +
+            '<div class="thumbLarge">' +
+            '<div class="linkEpWrapper">' + 
+              (awxUI.settings.player? '<a href="" class="play">' + mkf.lang.get('Play', 'Tool tip') + '</a>' : '') +
+              (awxUI.settings.enqueue? '<a href="" class="playlist">' + mkf.lang.get('Enqueue', 'Tool tip') + '</a>' : '') +
+              '<a href="" class="info">' + mkf.lang.get('Information',  'Tool tip') + '</a>' +
+            '</div>' +
+            (awxUI.settings.lazyload?
+              '<img src="images/empty_poster_film.png" alt="' + movie.label + '" class="thumb thumbFanartLarge" data-original="' + thumb.src + '" />':
+              '<img src="images/empty_poster_film.png" alt="' + movie.label + '" class="thumb thumbFanartLarge" />'
+            ) +
+            '<div class="movieTitle"><span class="label">' + movie.label + (watched? '<img src="images/OverlayWatched_Small.png" class="watchedLandscape">' : '') + '</span></div>' +
+            '</div>' +
+          '</div>').appendTo($moviesList);
+          
+        $movie.find('.play').bind('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.MoviePlay);
+        $movie.find('.playlist').bind('click', {idMovie: movie.movieid}, uiviews.AddMovieToPlaylist);
+        $movie.find('.info').bind('click', {idMovie: movie.movieid}, uiviews.MovieInfoOverlay);
+        
+        if (!awxUI.settings.lazyload) {
+          thumb.onload = function() { $movie.find('img.thumbFanartLarge').attr('src', thumb.src) };
+        } else {
+          thumb.onload = function() { $movie.find('img.thumbFanartLarge').attr('data-original', thumb.src) };
+        };
+        
+      });
+      
+      $moviesList.find('.thumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });          
+      $moviesList.find('.thumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
+      
+      return $moviesList;
+    },
+    
+    /*----Movie clear art view----*/
+    MovieViewClearArt: function(movies, parentPage, options) {
+      var $moviesList = $('<div></div>');
+      $.each(movies.movies, function(i, movie) {
+        var watched = false;
+        if (movie.playcount > 0 && !awxUI.settings.hideWatchedMark) { watched = true; };
+        
+        var thumb = new Image();
+        if (movie.art.clearart) { thumb.src = xbmc.getThumbUrl(movie.art.clearart) };
+        
+        var $movie = $(
+          '<div class="movie'+movie.movieid+' clearartWrapper">' +
+            '<div class="clearartLarge">' +
+            '<div class="linkEpWrapper">' + 
+              (awxUI.settings.player? '<a href="" class="play">' + mkf.lang.get('Play', 'Tool tip') + '</a>' : '') +
+              (awxUI.settings.enqueue? '<a href="" class="playlist">' + mkf.lang.get('Enqueue', 'Tool tip') + '</a>' : '') +
+              '<a href="" class="info">' + mkf.lang.get('Information',  'Tool tip') + '</a>' +
+            '</div>' +
+            (awxUI.settings.lazyload?
+              '<img src="images/empty_poster_film.png" alt="' + movie.label + '" class="thumb thumbFanartLarge" data-original="' + thumb.src + '" />':
+              '<img src="images/empty_poster_film.png" alt="' + movie.label + '" class="thumb thumbFanartLarge" />'
+            ) +
+            '</div>' +
+            '<div class="movieTitle"><span class="label">' + movie.label + (watched? '<img src="images/OverlayWatched_Small.png" class="watchedClearart">' : '') + '</span></div>' +
+            
+          '</div>').appendTo($moviesList);
+          
+        $movie.find('.play').bind('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.MoviePlay);
+        $movie.find('.playlist').bind('click', {idMovie: movie.movieid}, uiviews.AddMovieToPlaylist);
+        $movie.find('.info').bind('click', {idMovie: movie.movieid}, uiviews.MovieInfoOverlay);
+        
+        if (!awxUI.settings.lazyload) {
+          thumb.onload = function() { $movie.find('img.thumbFanartLarge').attr('src', thumb.src) };
+        } else {
+          thumb.onload = function() { $movie.find('img.thumbFanartLarge').attr('data-original', thumb.src) };
+        };
+        
+      });
+      
+      $moviesList.find('.thumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });          
+      $moviesList.find('.thumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
+      
+      return $moviesList;
+    },
+    
+    /*----Movie poster thumbnail view----*/
+    MovieViewPosters: function(movies, parentPage, options) {
       var $moviesList = $('<div></div>');
       $.each(movies.movies, function(i, movie) {
         var watched = false;
@@ -3147,22 +3236,22 @@ var uiviews = {};
           if (episode.thumbnail) { thumb.src = xbmc.getThumbUrl(episode.thumbnail) };
           
           var $episode = $('<div class="thumbEpWrapper" style="display: inline">' + 
-            '<div class="episodeThumbLarge">' +
+            '<div class="thumbLarge">' +
               '<div class="linkEpWrapper">' + 
                 (awxUI.settings.player? '<a href="" class="play">' + mkf.lang.get('Play', 'Tool tip') + '</a>' : '') +
                 (awxUI.settings.enqueue? '<a href="" class="playlist">' + mkf.lang.get('Enqueue', 'Tool tip') + '</a>' : '') +
                 '<a href="" class="info">' + mkf.lang.get('Information',  'Tool tip') + '</a>' +
               '</div>' +
-            (awxUI.settings.lazyload?
-            '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumb thumbFanartLarge episode" data-original="' + thumb.src + '" />' :
-            '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumbFanartLarge episode" />'
-            ) +
-            '' +
-            '<div class="movieTitle"><span class="label">' + episode.label + (watched? '<img src="images/OverlayWatched_Small.png" />' : '') + '</span>' +
-            '<div class="recentTVtitle"><span>' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</span></div></div>' +
-            //'<div class="label">' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</div>' +
-            //'<div class="episodeRating"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span><div class="smallRating' + Math.round(episode.rating) + '"></div></span></div>' +
-          '</div>' +
+              (awxUI.settings.lazyload?
+              '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumb thumbFanartLarge episode" data-original="' + thumb.src + '" />' :
+              '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumbFanartLarge episode" />'
+              ) +
+              '' +
+              '<div class="movieTitle"><span class="label">' + episode.label + (watched? '<img src="images/OverlayWatched_Small.png" />' : '') + '</span>' +
+              '<div class="recentTVtitle"><span>' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</span></div></div>' +
+              //'<div class="label">' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</div>' +
+              //'<div class="episodeRating"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span><div class="smallRating' + Math.round(episode.rating) + '"></div></span></div>' +
+            '</div>' +
           '</div>').appendTo($episodeList);
           
           $episode.find('.play').bind('click', {idEpisode: episode.episodeid}, uiviews.EpisodePlay);
@@ -3177,8 +3266,8 @@ var uiviews = {};
           
         });
 
-      $episodeList.find('.episodeThumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
-      $episodeList.find('.episodeThumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
+      $episodeList.find('.thumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
+      $episodeList.find('.thumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
           
       return $episodeList;
     },
@@ -3245,7 +3334,7 @@ var uiviews = {};
           if (episode.thumbnail) { thumb.src = xbmc.getThumbUrl(episode.thumbnail) };
           
           var $episode = $('<div class="thumbEpWrapper" style="display: inline">' + 
-            '<div class="episodeThumbLarge">' +
+            '<div class="thumbLarge">' +
               '<div class="linkEpWrapper">' + 
                 (awxUI.settings.player? '<a href="" class="play">' + mkf.lang.get('Play', 'Tool tip') + '</a>' : '') +
                 (awxUI.settings.enqueue? '<a href="" class="playlist">' + mkf.lang.get('Enqueue', 'Tool tip') + '</a>' : '') +
@@ -3278,8 +3367,8 @@ var uiviews = {};
           
         });
 
-      $episodeList.find('.episodeThumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
-      $episodeList.find('.episodeThumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
+      $episodeList.find('.thumbLarge').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkEpWrapper').show() });
+      $episodeList.find('.thumbLarge').on('mouseleave', function() { $(this).children('.linkEpWrapper').hide() });
           
       return $episodeList;
     },

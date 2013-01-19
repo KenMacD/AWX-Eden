@@ -799,6 +799,13 @@ div.thumbFullLogoWrapper {
 div.thumbEpWrapper {
   width: 200px;
 }
+div.clearartWrapper {
+  float: left;
+  margin: 3px;
+  width: 285px;
+  height: 210px;
+  text-align: center;
+}
 div.thumbWrapper div.linkWrapper {
   display: none;
   left: 7px;
@@ -1652,6 +1659,16 @@ img.watchedPoster {
   top: 175px;
   left: 110px;
 }
+img.watchedClearart {
+  position: absolute;
+  top: 140px;
+  left: 255px;
+}
+img.watchedLandscape {
+  position: absolute;
+  top: 140px;
+  left: 255px;
+}
 div.singleMovie div.prev, div.singleView div.prev {
   display: inline-block;
   vertical-align: middle;
@@ -2064,9 +2081,19 @@ div.episodeThumb {
   position: relative; 
   z-index:3;
 }
-div.episodeThumbLarge {
+div.thumbLarge {
   width: 275px;
   height: 230px;
+  margin: 5px 5px 0 5px;
+  float: left;
+  position: relative;
+  text-align: center;
+  z-index:3;
+}
+div.clearartLarge {
+  /*background-color: rgba(0,0,0,0.8);*/
+  width: 275px;
+  height: 155px;
   margin: 5px 5px 0 5px;
   float: left;
   position: relative;
