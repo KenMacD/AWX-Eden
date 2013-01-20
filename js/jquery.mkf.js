@@ -753,6 +753,15 @@ var mkf = {};
             '</div>' +
           '</div>');
 
+        //Scale overlay height to avoid seeing behind the curtain
+        $( window ).resize( xbmc.debouncer( function ( e ) {
+            if ($(document).height() > $('#mkfDialog' + dialogHandle).height()) {
+              $('#mkfDialog' + dialogHandle).css('height', $(document).height());
+            } else {
+              $('#mkfDialog' + dialogHandle).css('height', $(window).height());
+            };
+          } ) );
+          
         if (settings.closeButton) {
           $('#mkfDialog' + dialogHandle + ' .close')
             .click(function () {

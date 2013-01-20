@@ -126,8 +126,8 @@ var addons = {};
       addons.exeAddon({
         addonid: 'script.artwork.downloader',
         params: params.substring(0, params.length-2),
-        onError: function() { return false },
-        onSuccess: function() { return true }
+        onError: function() { mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('Failed!', 'Popup message addition'), 5000, mkf.messageLog.status.error); return false },
+        onSuccess: function() { mkf.messageLog.appendTextAndHide(messageHandle, mkf.lang.get('OK', 'Popup message addition'), 2000, mkf.messageLog.status.success); return true }
       });
     },
     

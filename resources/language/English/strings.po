@@ -887,6 +887,14 @@ msgid "Thumbnails (Details overlay)"
 msgstr ""
 
 msgctxt "Settings option"
+msgid "Thumbnails"
+msgstr ""
+
+msgctxt "Settings option"
+msgid "Clear Art"
+msgstr ""
+
+msgctxt "Settings option"
 msgid "Information List"
 msgstr ""
 

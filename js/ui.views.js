@@ -926,7 +926,7 @@ var uiviews = {};
           $(dialogContent).find('.infotools').on('click', {dbid: movie.movieid, media: 'video', mediatype: 'movie', movie: movie.label}, uiviews.ToolsAddons);
           //$(dialogContent).find('.cinexplay').on('click', {idMovie: movie.movieid, strMovie: movie.label}, uiviews.CinExPlay);
           $(dialogContent).find('.trailerplay').on('click', {file: movie.trailer}, uiviews.FilePlay);
-          
+
           callback(dialogContent);
         },
         onError: function() {
@@ -1884,7 +1884,7 @@ var uiviews = {};
     
     ToolsAddons: function(e) {
     
-      var addonContent = $(this).parentsUntil('.movieinfo').find('div.addons'); // for tv $(this).parentsUntil('.movietags').parent().find('div.addons');
+      var addonContent = $(this).parentsUntil('.movieinfo').find('div.addons');
       addonContent.show();
       
       if (e.data.media == 'video' && xbmc.addons.artwork) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.artwork.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="artwork">' + xbmc.addons.artwork.name + '</a></div>').appendTo(addonContent) };
@@ -1893,15 +1893,6 @@ var uiviews = {};
       
       addonContent.find('a.artwork').on('click', {dbid: e.data.dbid, mediatype: e.data.mediatype}, uiviews.addonAD);
       addonContent.find('a.cinex').on('click', function() { addons.cineEx(e.data.movie) });
-      
-      /*var dialogContent = $('<div class="addons"></div>');
-
-      if (e.data.media == 'video' && xbmc.addons.artwork) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.artwork.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="artwork">' + xbmc.addons.artwork.name + '</a></div>').appendTo(dialogContent) };
-      if (e.data.media == 'audio' && xbmc.addons.cdart) { $('<div class="addon"><img src="' + xbmc.getThumbUrl(xbmc.addons.cdart.thumb) +'" alt="' + xbmc.addons.artwork.name + '" class="thumb addon" /><a href="" class="cdart">' + xbmc.addons.cdart.name + '</a></div>').appendTo(dialogContent) };
-      
-      dialogContent.find('a.artwork').on('click', {dbid: e.data.dbid, mediatype: e.data.mediatype}, uiviews.addonAD);
-      
-      var dialogHandle = mkf.dialog.show({content: dialogContent});*/
       
     },
     
@@ -3247,7 +3238,7 @@ var uiviews = {};
               '<img src="images/empty_thumb_tv.png" alt="' + episode.label + '" class="thumbFanartLarge episode" />'
               ) +
               '' +
-              '<div class="movieTitle"><span class="label">' + episode.label + (watched? '<img src="images/OverlayWatched_Small.png" />' : '') + '</span>' +
+              '<div class="movieTitle"><span class="label">' + episode.title + (watched? '<img src="images/OverlayWatched_Small.png" class="watchedLandscape">' : '') + '</span>' +
               '<div class="recentTVtitle"><span>' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</span></div></div>' +
               //'<div class="label">' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</div>' +
               //'<div class="episodeRating"><span class="label">' + mkf.lang.get('Rating:', 'Label') + '</span><span><div class="smallRating' + Math.round(episode.rating) + '"></div></span></div>' +
@@ -3347,7 +3338,7 @@ var uiviews = {};
             '' +
             '<div class="movieTitle">' +
               '<div class="recentTVshowName">' + episode.showtitle + '</div>' +
-              '<span class="label">' + episode.label + (watched? '<img src="images/OverlayWatched_Small.png" />' : '') + '</span>' +
+              '<span class="label">' + episode.title + (watched? '<img src="images/OverlayWatched_Small.png" class="watchedLandscape">' : '') + '</span>' +
               '<div class="recentTVtitle"><span>' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</span></div>' +
             '</div>' +
             //'<div class="label">' + mkf.lang.get('Season',  'Label') + ' ' + episode.season + ' - ' + mkf.lang.get('Episode',  'Label') + ' ' +episode.episode + '</div>' +

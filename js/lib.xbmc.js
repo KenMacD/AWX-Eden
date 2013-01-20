@@ -2213,7 +2213,7 @@ var xbmc = {};
       $.extend(settings, options);
       
       xbmc.sendCommand(
-        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { ' + (settings.item == ''? (settings.filter != ''? settings.filter : '') : (settings.filter != ''? settings.filter + ', ' : '') + '"' + settings.item + '": ' + (settings.itemId != -1? (settings.season != -1? settings.itemId + ', "season": ' + settings.season : settings.itemId) : (settings.season != -1? '"season": ' + settings.season + ', ' + '"' + settings.itemStr + '"' : '"' + settings.itemStr + '"') ) ) + ', "limits": { "start" : ' + settings.start + ', "end": ' + settings.end + ' }, "properties": ["episode", "playcount", "fanart", "plot", "season", "showtitle", "thumbnail", "rating"], "sort": { "order": "' + settings.order + '", "method": "' + settings.sortby + '" } }, "id": "libEps"}',
+        '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { ' + (settings.item == ''? (settings.filter != ''? settings.filter : '') : (settings.filter != ''? settings.filter + ', ' : '') + '"' + settings.item + '": ' + (settings.itemId != -1? (settings.season != -1? settings.itemId + ', "season": ' + settings.season : settings.itemId) : (settings.season != -1? '"season": ' + settings.season + ', ' + '"' + settings.itemStr + '"' : '"' + settings.itemStr + '"') ) ) + ', "limits": { "start" : ' + settings.start + ', "end": ' + settings.end + ' }, "properties": ["title", "episode", "playcount", "fanart", "plot", "season", "showtitle", "thumbnail", "rating"], "sort": { "order": "' + settings.order + '", "method": "' + settings.sortby + '" } }, "id": "libEps"}',
         function(response) {
           settings.onSuccess(response.result);
         },
@@ -2341,7 +2341,7 @@ var xbmc = {};
       var eps = [];
       
       xbmc.sendCommand(
-        '{"jsonrpc":"2.0","id":2,"method":"VideoLibrary.GetEpisodes","params":{ "tvshowid": ' + settings.tvshowid + ', "properties":["season","playcount","episode","thumbnail","rating","plot"], "sort": { "order": "ascending", "method": "episode" }}}',
+        '{"jsonrpc":"2.0","id":2,"method":"VideoLibrary.GetEpisodes","params":{ "tvshowid": ' + settings.tvshowid + ', "properties":["title","season","playcount","episode","thumbnail","rating","plot"], "sort": { "order": "ascending", "method": "episode" }}}',
 
         function(response) {
           var n = 0;

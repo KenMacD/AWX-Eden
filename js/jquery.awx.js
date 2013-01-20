@@ -963,7 +963,7 @@
         '<option value="singlePoster" ' + (filmView=='singlePoster'? 'selected' : '') + '>' + mkf.lang.get('Single Posters', 'Settings option') +'</option>' +
         '<option value="logo" ' + (filmView=='logo'? 'selected' : '') + '>' + mkf.lang.get('Logos', 'Settings option') +'</option>' +
         '<option value="poster" ' + (filmView=='poster'? 'selected' : '') + '>' + mkf.lang.get('Posters', 'Settings option') +'</option>' +
-        '<option value="thumbnail" ' + (filmView=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails (Details overlay)', 'Settings option') +'</option>' +
+        '<option value="thumbnail" ' + (filmView=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails', 'Settings option') +'</option>' +
         '<option value="clearart" ' + (filmView=='clearart'? 'selected' : '') + '>' + mkf.lang.get('Clear Art', 'Settings option') +'</option>' +
         '</select>' +
         '</fieldset>' +
@@ -1000,7 +1000,7 @@
         '<legend>' + mkf.lang.get('Recently Added TV Episodes', 'Settings label') + '</legend>' +
         '<select name="TVViewRec">' +
         '<option value="infolist" ' + (TVViewRec=='infolist'? 'selected' : '') + '>' + mkf.lang.get('Information List', 'Settings option') + '</option>' +
-        '<option value="thumbnail" ' + (TVViewRec=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails (Details overlay)', 'Settings option') + '</option>' +
+        '<option value="thumbnail" ' + (TVViewRec=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails', 'Settings option') + '</option>' +
         '</select>' +
         '</fieldset>' +
 
@@ -1008,7 +1008,7 @@
         '<legend>' + mkf.lang.get('Episodes', 'Settings label') + '</legend>' +
         '<select name="EpView"><option value="listover" ' + (EpView=='listover'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') + '</option>' +
         '<option value="thumbnail" ' + (EpView=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Information List', 'Settings option') + '</option>' +
-        '<option value="thumbnailnoplot" ' + (EpView=='thumbnailnoplot'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails (Details overlay)', 'Settings option') + '</option>' +
+        '<option value="thumbnailnoplot" ' + (EpView=='thumbnailnoplot'? 'selected' : '') + '>' + mkf.lang.get('Thumbnails', 'Settings option') + '</option>' +
         '</select>' +
         '</fieldset>' +
         
