@@ -858,6 +858,7 @@
       var lazyload = mkf.cookieSettings.get('lazyload', 'no');
       var timeout = mkf.cookieSettings.get('timeout', 20);
       var limitVideo = mkf.cookieSettings.get('limitVideo', 25);
+      var limitMusicVideo = mkf.cookieSettings.get('limitMusicVideo', 25);
       var limitTV = mkf.cookieSettings.get('limitTV', 25);
       var limitArtists = mkf.cookieSettings.get('limitArtists', 25);
       var limitAlbums = mkf.cookieSettings.get('limitAlbums', 25);
@@ -1019,6 +1020,7 @@
         //'<input type="checkbox" id="cinex" name="cinex" ' + (cinex=='yes'? 'checked="checked"' : '') + '><label for="cinex">' + mkf.lang.get('label_cinex') + '</label>' +
         '<br /><label for="limitVideo">' + mkf.lang.get('Number of items to list:', 'Settings label') + ' </label><input type="text" id="limitVideo" name="limitVideo" value="' + limitVideo + '" maxlength="3" style="width: 30px; margin-top: 10px;"> ' + mkf.lang.get('for movie based views.', 'Settings label') +
         '<br /><label for="limitTV">' + mkf.lang.get('Number of items to list:', 'Settings label') + ' </label><input type="text" id="limitTV" name="limitTV" value="' + limitTV + '" maxlength="3" style="width: 30px; margin-top: 10px;"> ' + mkf.lang.get('for TV based views.', 'Settings label') +        
+        '<br /><label for="limitMusicVideo">' + mkf.lang.get('Number of items to list:', 'Settings label') + ' </label><input type="text" id="limitMusicVideo" name="limitMusicVideo" value="' + limitMusicVideo + '" maxlength="3" style="width: 30px; margin-top: 10px;"> ' + mkf.lang.get('for music video based views.', 'Settings label') +
         '</fieldset>' +
         //'<div class="formHint">' + mkf.lang.get('* Not recommended for a large amount of items.') + '</div>' +
         '</form>' +
@@ -1169,6 +1171,11 @@
           limitVideo = 25;
         }
 
+        var limitMusicVideo = parseInt(document.settingsViewsVideo.limitMusicVideo.value);
+        if (isNaN(limitMusicVideo) || limitMusicVideo < 1 ) {
+          limitMusicVideo = 25;
+        }
+        
         var limitTV = parseInt(document.settingsViewsVideo.limitTV.value);
         if (isNaN(limitTV) || limitTV < 1 ) {
           limitTV = 25;
@@ -1400,9 +1407,11 @@
         mkf.cookieSettings.add('limitAlbums', limitAlbums);
         mkf.cookieSettings.add('limitSongs', limitSongs);
         mkf.cookieSettings.add('limitVideo', limitVideo);
+        mkf.cookieSettings.add('limitMusicVideo', limitMusicVideo);
         mkf.cookieSettings.add('limitTV', limitTV);
         awxUI.settings.timeout = timeout;
         awxUI.settings.limitMovies = limitVideo;
+        awxUI.settings.limitMV = limitMusicVideo;
         awxUI.settings.limitTV = limitTV;
         awxUI.settings.limitArtists = limitArtists;
         awxUI.settings.limitAlbums = limitAlbums;
@@ -2114,6 +2123,18 @@
 
     if (!mvResult.limits.total > 0) { return };
     
+    totalMVCount = mvResult.limits.total;
+    //may be passed from set page. No limiting with movie sets.
+    if (!mvResult.isFilter) {
+      //Out of bound checking. Reset to start, really should cycle backwards.
+      if (typeof(lastMVCountStart) === 'undefined' || lastMVCountStart > mvResult.limits.total -1) {
+        lastMVCount = awxUI.settings.limitMV;
+        lastMVCountStart = 0;
+        awxUI.onMusicVideosTitleShow();
+        return
+      };
+    };
+    
     var useLazyLoad = awxUI.settings.lazyload;
     var view = awxUI.settings.musicVideoView;
     
@@ -2136,7 +2157,7 @@
         $mvViewerElement.find('img.thumb').lazyload(
           {
             queuedLoad: true,
-            container: ($('#main').length? $('#main'): $('#content')),  // TODO remove fixed #main
+            container: $('#content'),
             errorImage: 'images/thumb.png'
           }
         );
@@ -2144,6 +2165,13 @@
       setTimeout(loadThumbs, 100);
     }
 
+    if (!mvResult.isFilter) {
+      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastMVCountStart+1) + '/' + mvResult.limits.total + '</span></div></div>').prependTo($mvViewerElement);
+      $('<div class="goNextPrev"><a class="prevPage" href=""></a><a class="nextPage" href=""></a><div class="lastCount"><span class="npCount">' + (lastMVCount > mvResult.limits.total? mvResult.limits.total : lastMVCount)+ '/' + mvResult.limits.total + '</span></div></div>').appendTo($mvViewerElement);
+      $mvViewerElement.find('a.nextPage').on('click', { Page: 'next'}, awxUI.onMusicVideosTitleShow);
+      $mvViewerElement.find('a.prevPage').on('click', { Page: 'prev'}, awxUI.onMusicVideosTitleShow);
+    }
+    
   }; // END defaultMusicVideosTitleViewer
   
   /* ########################### *\

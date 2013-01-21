@@ -2252,24 +2252,46 @@
     /**************************************
      * Called when Music Videos Title-Page is shown. *
      **************************************/
-    onMusicVideosTitleShow: function() {
-      if (this.$musicVideosTitleContent.html() == '') {
-        var musicVideosTitlePage = this.musicVideosTitlePage;
-        var $contentBox = this.$musicVideosTitleContent;
-        $contentBox.addClass('loading');
+    onMusicVideosTitleShow: function(e) {
+      awxUI.$musicVideosTitleContent.empty();
+      if (typeof lastMVCount === 'undefined') { lastMVCount = awxUI.settings.limitMV };
+        if (typeof lastMVCountStart === 'undefined') { lastMVCountStart = 0 };
+        if (typeof e != 'undefined') {
+          if (e.data.Page == 'next') {
+            lastMVCount = parseInt(lastMVCount) + parseInt(awxUI.settings.limitMV);
+            lastMVCountStart += parseInt(awxUI.settings.limitMV);
+            };
+            if (e.data.Page == 'prev') {
+            lastMVCount = parseInt(lastMVCount) - parseInt(awxUI.settings.limitMV);
+            lastMVCountStart -= parseInt(awxUI.settings.limitMV);
+            if (lastMVCount == 0) {
+              lastMVCount = totalMVCount;
+              lastMVCountStart = totalMVCount - parseInt(awxUI.settings.limitMV);
+            } else if (lastMVCount < 1 || lastMVCountStart < 0) {
+              lastMVCount = parseInt(awxUI.settings.limitMV);
+              lastMVCountStart = 0;
+            };
+          };
+        }
+      var musicVideosTitlePage = awxUI.musicVideosTitlePage;
+      var $contentBox = awxUI.$musicVideosTitleContent;
+      $contentBox.addClass('loading');
 
-        xbmc.getMusicVideos({
-          onError: function() {
-            mkf.messageLog.show(mkf.lang.get('Failed to retrieve list!', 'Popup message'), mkf.messageLog.status.error, 5000);
-            $contentBox.removeClass('loading');
-          },
+      xbmc.getMusicVideos({
+        start: lastMVCountStart,
+        end: lastMVCount,
+        onError: function() {
+          mkf.messageLog.show(mkf.lang.get('Failed to retrieve list!', 'Popup message'), mkf.messageLog.status.error, 5000);
+          $contentBox.removeClass('loading');
+        },
 
-          onSuccess: function(result) {
-            $contentBox.defaultMusicVideosTitleViewer(result, musicVideosTitlePage);
-            $contentBox.removeClass('loading');
-          }
-        });
-      }
+        onSuccess: function(result) {
+          $contentBox.defaultMusicVideosTitleViewer(result, musicVideosTitlePage);
+          $contentBox.removeClass('loading');
+        }
+      });
+      
+      return false;
     },
     
     /*********************************************

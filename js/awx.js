@@ -97,6 +97,7 @@ var awx = {};
           awxUI.settings.limitArtists = mkf.cookieSettings.get('limitArtists', 25);
           awxUI.settings.limitAlbums = mkf.cookieSettings.get('limitAlbums', 25);
           awxUI.settings.limitSongs = mkf.cookieSettings.get('limitSongs', 25);
+          awxUI.settings.limitMV = mkf.cookieSettings.get('limitMusicVideo', 25);
           
           //General
           awxUI.settings.lazyload = mkf.cookieSettings.get('lazyload', 'no')=='yes'? true : false;
