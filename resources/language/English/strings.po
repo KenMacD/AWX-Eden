@@ -975,6 +975,10 @@ msgid "for TV based views."
 msgstr ""
 
 msgctxt "Settings label"
+msgid "for music video based views."
+msgstr ""
+
+msgctxt "Settings label"
 msgid "Manual File Directory"
 msgstr ""
 
