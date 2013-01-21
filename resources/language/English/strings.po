@@ -118,6 +118,10 @@ msgid "Find"
 msgstr ""
 
 msgctxt "Tool tip"
+msgid "Locate currently playing"
+msgstr ""
+
+msgctxt "Tool tip"
 msgid "Clear Playlist"
 msgstr ""
 

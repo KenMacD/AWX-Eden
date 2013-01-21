@@ -987,6 +987,9 @@ div.playtime {
 #contextMenu ul a.find {
   background-position: -144px 0;
 }
+#contextMenu ul a.locate {
+  background-position: -240px 0;
+}
 #contextMenu ul a.close:hover {
   background-position: left bottom;
 }
@@ -998,6 +1001,9 @@ div.playtime {
 }
 #contextMenu ul a.find:hover {
   background-position: -144px -48px;
+}
+#contextMenu ul a.locate:hover {
+  background-position: -240px -48px;
 }
 #contextMenu ul a.refresh:hover {
   background-position: -192px -48px;

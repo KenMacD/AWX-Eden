@@ -3062,7 +3062,6 @@ var xbmc = {};
       //console.log($('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).length)
       //if (xbmc.activePlayer == 'audio' && xbmc.lyrics && $('div#lyrics span.time:contains(#' + xbmc.periodicUpdater.progress + ')').length > 0) {
       if (xbmc.activePlayer == 'audio' && xbmc.lyrics && $('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).length > 0) {
-        console.log('lyric loop');
         $('div#lyrics div').removeClass('current');
         $('div#lyrics span.time').filter(function() { return $.text([this]) == '#' + xbmc.periodicUpdater.progress }).parent().addClass('current');
         //$('div#lyrics span.time:contains(#' + xbmc.periodicUpdater.progress + ')').parent().addClass('current');

@@ -211,8 +211,8 @@ var addons = {};
               onSuccess: function(response) {
                 if (response['Window(Home).Property(culrc.running)'] != 'true') {
                   //start culrc
-                  console.log('running');
-                  console.log(response['Window(Home).Property(culrc.running)']);
+                  //console.log('running');
+                  //console.log(response['Window(Home).Property(culrc.running)']);
                   addons.exeAddon({
                     addonid: 'script.cu.lrclyrics',
                     onError: function() {

@@ -727,6 +727,13 @@
             return false;
           }
       });*/
+      musicPlaylistContextMenu.push({
+        'id':'findPlaylistButton', 'icon':'locate', 'title':mkf.lang.get('Locate currently playing', 'Tool tip'), 'shortcut':'Ctrl+2', 'onClick':
+          function(){
+            $('.musicPlaylist .playlistItemCur').ScrollTo()
+            return false;
+          }
+      });
       this.musicPlaylistPage = musicPage.addPage({
         title: mkf.lang.get('Now Playing', 'Page and menu'),
         menuButtonText: '&raquo; ' + mkf.lang.get('Now Playing', 'Page and menu'),
