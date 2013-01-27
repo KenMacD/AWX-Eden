@@ -887,6 +887,8 @@
       var TVSort = mkf.cookieSettings.get('TVSort', 'label');
       var EpSort = mkf.cookieSettings.get('EpSort', 'episode');
       var albumSort = mkf.cookieSettings.get('albumSort', 'album');
+      var mvSort = mkf.cookieSettings.get('mvSort', 'artist');
+      var mvdesc = mkf.cookieSettings.get('mvdesc', 'no');
       var mdesc = mkf.cookieSettings.get('mdesc', 'no');
       var tvdesc = mkf.cookieSettings.get('tvdesc', 'no');
       var epdesc = mkf.cookieSettings.get('epdesc', 'no');
@@ -1080,6 +1082,17 @@
         '</select>' +
         '<input type="checkbox" id="adesc" name="adesc" ' + (adesc=='descending'? 'checked="checked"' : '') + '><label for="adesc">' + mkf.lang.get('Descending', 'Settings option') + '</label>' +
         '</fieldset>' +
+        
+        '<fieldset>' +
+        '<legend>' + mkf.lang.get('Music Videos', 'Settings label') + '</legend>' +
+        '' + mkf.lang.get('Order By:', 'Settings label') +'<select name="mvSort"><option value="album" ' + (mvSort=='album'? 'selected' : '') + '>' + mkf.lang.get('Titles', 'Settings option') +
+        '</option><option value="artist" ' + (mvSort=='artist'? 'selected' : '') + '>' + mkf.lang.get('Artists', 'Settings option') +
+        '</option><option value="year" ' + (mvSort=='year'? 'selected' : '') + '>' + mkf.lang.get('Years', 'Settings option') +'</option><option value="genre"' + (mvSort=='genre'? 'selected' : '') + '>' + mkf.lang.get('Genres', 'Settings option') +'</option>' +
+        '<option value="dateadded" ' + (mvSort=='dateadded'? 'selected' : '') + '>' + mkf.lang.get('Date Added', 'Settings option') +
+        '</select>' +
+        '<input type="checkbox" id="mvdesc" name="mvdesc" ' + (mvdesc=='descending'? 'checked="checked"' : '') + '><label for="mvdesc">' + mkf.lang.get('Descending', 'Settings option') + '</label>' +
+        '</fieldset>' +
+        
         '<fieldset>' +
         '<legend>' + mkf.lang.get('Movies', 'Settings label') + '</legend>' +
         '' + mkf.lang.get('Order By:', 'Settings label') +'<select name="filmSort"><option value="label" ' + (filmSort=='label'? 'selected' : '') + '>' + mkf.lang.get('Titles', 'Settings option') +
@@ -1261,6 +1274,18 @@
           document.settingsViewsMusic.albumsViewRec.value
         );
         awxUI.settings.albumsViewRec = document.settingsViewsMusic.albumsViewRec.value;
+        
+        mkf.cookieSettings.add(
+          'mvdesc',
+          document.settingsSorting.mvdesc.checked? 'descending' : 'ascending'
+        );
+        awxUI.settings.musicVideosdesc = document.settingsSorting.mvdesc.checked? 'descending' : 'ascending';
+        
+        mkf.cookieSettings.add(
+          'mvSort',
+          document.settingsSorting.mvSort.value
+        );
+        awxUI.settings.musicVideosSort = document.settingsSorting.mvSort.value;
         
         mkf.cookieSettings.add(
           'tvdesc',

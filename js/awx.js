@@ -87,9 +87,8 @@ var awx = {};
           awxUI.settings.epdesc = mkf.cookieSettings.get('epdesc', 'ascending');
           awxUI.settings.albumSort = mkf.cookieSettings.get('albumSort', 'album');
           awxUI.settings.adesc = mkf.cookieSettings.get('adesc', 'ascending');
-          //TODO
-          awxUI.settings.musicVideosSort = mkf.cookieSettings.get('musicVideosSort', 'artist');
-          awxUI.settings.musicVideosdesc = mkf.cookieSettings.get('musicVideosdesc', 'ascending');
+          awxUI.settings.musicVideosSort = mkf.cookieSettings.get('mvSort', 'artist');
+          awxUI.settings.musicVideosdesc = mkf.cookieSettings.get('mvdesc', 'ascending');
           
           //Limits
           awxUI.settings.limitMovies = mkf.cookieSettings.get('limitVideo', 25);

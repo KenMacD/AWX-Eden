@@ -211,8 +211,6 @@ var addons = {};
               onSuccess: function(response) {
                 if (response['Window(Home).Property(culrc.running)'] != 'true') {
                   //start culrc
-                  //console.log('running');
-                  //console.log(response['Window(Home).Property(culrc.running)']);
                   addons.exeAddon({
                     addonid: 'script.cu.lrclyrics',
                     onError: function() {
@@ -221,9 +219,8 @@ var addons = {};
                     onSuccess: function() { setTimeout(function() { addons.culrcLyrics() }, 5000) }
                   });
                 } else if (response['Window(Home).Property(culrc.running)'] == 'true' && response['Window(Home).Property(culrc.lyrics)'] == '') {
-                  //console.log('empty lyrics');
                   $('div#lyrics').append('...');
-                  setTimeout(function() { console.log('empty lyrics'); addons.culrcLyrics() }, 5000);
+                  setTimeout(function() { addons.culrcLyrics() }, 5000);
                 } else {
                   var lrc = parse(response['Window(Home).Property(culrc.lyrics)']);
                   $('div#lyricInfo').empty();

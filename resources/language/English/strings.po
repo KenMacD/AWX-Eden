@@ -951,6 +951,10 @@ msgid "View Options"
 msgstr ""
 
 msgctxt "Settings label"
+msgid "Music Videos"
+msgstr ""
+
+msgctxt "Settings label"
 msgid "Number of items to list:"
 msgstr ""
 
