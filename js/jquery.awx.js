@@ -917,11 +917,11 @@
         '<input type="radio" id="lightDarkUI" name="userinterface" value="lightDark" ' + (ui=='lightDark'? 'checked="checked"' : '') + '><label for="lightDarkUI">LightDark UI</label>' +
         '<input type="radio" id="uni" name="userinterface" value="uni" ' + (ui=='uni'? 'checked="checked"' : '') + '><label for="uni">Uni UI</label>' +
         '</fieldset>' +*/
-        '<fieldset>' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Language', 'Settings label') + '</legend>' +
         '<select name="lang" id="lang" size="1"></select>' +
         '</fieldset>' +
-        '<fieldset class="ui_settings">' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Start Page', 'Settings label') + '</legend>' +
         '<select id="startPage" name="startPage">' +
         '<option value="recentAlbums" ' + (startPage=='recentAlbums'? 'selected' : '') + '>' + mkf.lang.get('Recently Added Albums', 'Settings option') + '</option>' +
@@ -934,12 +934,12 @@
         '<option value="musicPlaylist"' + (startPage=='musicPlaylist'? 'selected' : '') + '>' + mkf.lang.get('Music Playlists', 'Settings option') + '</option>' +
         '</select>' +
         '</fieldset>' +
-        '<fieldset>' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Manual File Directory', 'Settings label') + '</legend>' +
         '<input type="text" name="manual_path" id="manual_path" style="width: 98%">' +
         '</fieldset>' +
 
-        '<fieldset>' +
+        '<fieldset style="clear: left">' +
         '<legend>' + mkf.lang.get('Expert', 'Settings label') + '</legend>' +
         '<a href="" class="formButton expertHelp" title="' + mkf.lang.get('Help', 'Settings label') + '">' + mkf.lang.get('Help', 'Settings label') + '</a>' + 
         '<input type="checkbox" id="usefanart" name="usefanart" ' + (usefanart=='yes'? 'checked="checked"' : '') + '><label for="usefanart">' + mkf.lang.get('Use fan art as background', 'Settings option') + '</label>' +
@@ -971,7 +971,7 @@
         '</select>' +
         '</fieldset>' +
         
-        '<fieldset>' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Movie Sets', 'Settings label') + '</legend>' +
         '<select name="filmViewSets"><option value="poster" ' + (filmViewSets=='poster'? 'selected' : '') + '>' + mkf.lang.get('Posters', 'Settings option') +
         '</option><option value="listover" ' + (filmViewSets=='listover'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') + '</option>' +
@@ -989,7 +989,7 @@
         '</select>' +
         '</fieldset>' +
         
-        '<fieldset>' +
+        '<fieldset class="ui_views" style="clear: left">' +
         '<legend>' + mkf.lang.get('TV Shows', 'Settings label') + '</legend>' +
         '<select name="TVView">' +
         '<option value="banner" ' + (TVView=='banner'? 'selected' : '') + '>' + mkf.lang.get('Banners', 'Settings option') + '</option>' +
@@ -1007,7 +1007,7 @@
         '</select>' +
         '</fieldset>' +
 
-        '<fieldset>' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Episodes', 'Settings label') + '</legend>' +
         '<select name="EpView"><option value="listover" ' + (EpView=='listover'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') + '</option>' +
         '<option value="thumbnail" ' + (EpView=='thumbnail'? 'selected' : '') + '>' + mkf.lang.get('Information List', 'Settings option') + '</option>' +
@@ -1033,7 +1033,7 @@
         '<form name="settingsViewsMusic">' +
         
         //Artists
-        '<fieldset>' +
+        '<fieldset class="ui_views" style="min-width: 270px">' +
         '<legend>' + mkf.lang.get('Artists', 'Settings label') + '</legend>' +
         '<select id="artists" name="artistsView"><option value="cover" ' + (artistsView=='cover'? 'selected' : '') + '>' + mkf.lang.get('Covers', 'Settings option') + '</option>' +
         '<option value="list" ' + (artistsView=='list'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') + '</option>' +
@@ -1052,7 +1052,7 @@
         '</select>' +
         '</fieldset>' +
         
-        '<fieldset>' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Recently Added Albums', 'Settings label') + '</legend>' +
         '<select name="albumsViewRec"><option value="cover" ' + (albumsViewRec=='cover'? 'selected' : '') + '>' + mkf.lang.get('Covers', 'Settings option') +
         '</option><option value="list" ' + (albumsViewRec=='list'? 'selected' : '') + '>' + mkf.lang.get('List (Details overlay)', 'Settings option') +
@@ -1073,7 +1073,7 @@
         /*---- Sorting ----*/
         '<div id="tabs-4">' +
         '<form name="settingsSorting">' +
-        '<fieldset class="ui_albums">' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Albums', 'Settings label') + '</legend>' +
         '' + mkf.lang.get('Order By:', 'Settings label') +'<select name="albumSort"><option value="album" ' + (albumSort=='album'? 'selected' : '') + '>' + mkf.lang.get('Titles', 'Settings option') +
         '</option><option value="artist" ' + (albumSort=='artist'? 'selected' : '') + '>' + mkf.lang.get('Artists', 'Settings option') +
@@ -1083,7 +1083,7 @@
         '<input type="checkbox" id="adesc" name="adesc" ' + (adesc=='descending'? 'checked="checked"' : '') + '><label for="adesc">' + mkf.lang.get('Descending', 'Settings option') + '</label>' +
         '</fieldset>' +
         
-        '<fieldset>' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Music Videos', 'Settings label') + '</legend>' +
         '' + mkf.lang.get('Order By:', 'Settings label') +'<select name="mvSort"><option value="album" ' + (mvSort=='album'? 'selected' : '') + '>' + mkf.lang.get('Titles', 'Settings option') +
         '</option><option value="artist" ' + (mvSort=='artist'? 'selected' : '') + '>' + mkf.lang.get('Artists', 'Settings option') +
@@ -1093,7 +1093,7 @@
         '<input type="checkbox" id="mvdesc" name="mvdesc" ' + (mvdesc=='descending'? 'checked="checked"' : '') + '><label for="mvdesc">' + mkf.lang.get('Descending', 'Settings option') + '</label>' +
         '</fieldset>' +
         
-        '<fieldset>' +
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Movies', 'Settings label') + '</legend>' +
         '' + mkf.lang.get('Order By:', 'Settings label') +'<select name="filmSort"><option value="label" ' + (filmSort=='label'? 'selected' : '') + '>' + mkf.lang.get('Titles', 'Settings option') +
         '</option><option value="sorttitle" ' + (filmSort=='sorttitle'? 'selected' : '') + '>' + mkf.lang.get('Sort Titles', 'Settings option') +
@@ -1113,7 +1113,8 @@
         '</option><option value="episode" ' + (TVSort=='episode'? 'selected' : '') + '>' + mkf.lang.get('Episodes', 'Settings option') +'</option></select>' +
         '<input type="checkbox" id="tvdesc" name="tvdesc" ' + (tvdesc=='descending'? 'checked="checked"' : '') + '><label for="mdesc">' + mkf.lang.get('Descending', 'Settings option') + '</label>' +
         '</fieldset>' +
-        '<fieldset>' +
+        
+        '<fieldset class="ui_views">' +
         '<legend>' + mkf.lang.get('Episodes', 'Settings label') + '</legend>' +
         '' + mkf.lang.get('Order By:', 'Settings label') +'<select name="EpSort"><option value="label" ' + (EpSort=='label'? 'selected' : '') + '>' + mkf.lang.get('Titles', 'Settings option') +
         '</option>' +

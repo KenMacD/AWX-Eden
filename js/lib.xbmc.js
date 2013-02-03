@@ -3765,6 +3765,10 @@ var xbmc = {};
             } else {
               mkf.messageLog.show(mkf.lang.get('Finished Video Library Scan', 'Popup message'), mkf.messageLog.status.success, 3000);
             };
+            //Clear recent
+            /*awxUI.$musicVideosRecentContent.empty();
+            awxUI.$tvShowsRecentlyAddedContent.empty();
+            awxUI.$moviesRecentContent.empty();*/
           break;
           case 'AudioLibrary.OnScanStarted':
             //Set to messageid so we can clear it on finish.

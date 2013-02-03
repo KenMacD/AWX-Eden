@@ -1107,9 +1107,10 @@ fieldset {
   margin-bottom: 10px;
 }
 fieldset.ui_views {
-  width: 45%;
+  min-width: 250px;
+  width: 25%;
   float: left;
-  margin-right: 10px;
+  margin: 5px;
 }
 fieldset.ui_settings {
   float: left;
@@ -1124,11 +1125,11 @@ fieldset.ui_albums {
 select {
   width: 99%;
 }
-select#artists {
+/*select#artists {
   width: 46%;
   float: left;
   margin-right: 27px;
-}
+}*/
 input#artists_path {
   width: 264px;
   height: 13px;
@@ -1158,8 +1159,12 @@ a.formButton {
 a.formButton:hover {
   background-position: 0 -25px;
 }
-.expertHelp, .save {
+.expertHelp {
   float: right;
+}
+.save {
+  float: right;
+  clear: left;
 }
 #messageLog {
   padding-right: 20px;
