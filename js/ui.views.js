@@ -3835,7 +3835,7 @@ var uiviews = {};
       };
       
       $('<div class="addon">' +
-        '<div style="font-size: 1.2em; margin-left: 10px; margin-top: 50px">' + mkf.lang.get('Playable content') + '</div>' +
+        '<div style="font-size: 1.2em; margin-left: 10px; margin-top: 50px">' + mkf.lang.get('See Files->Addons for playable content.') + '</div>' +
       '</div>').appendTo($addonsList);
       
       $addonsList.find('.thumbWrapper').on(awxUI.settings.hoverOrClick, function() { $(this).children('.linkWrapper').show() });
@@ -3988,7 +3988,7 @@ var uiviews = {};
         page.find('.advhelp').click(function() {
           var dialogHandle = mkf.dialog.show();
           var content = $('<h2>' + mkf.lang.get('Advanced search help') + '</h2>' +
-            '<p class="advhelp">' + mkf.lang.get('Advanced search help text') + '</p>' +
+            '<p class="advhelp">' + mkf.lang.get('The advanced search provides a multitude of ways to search your library. Because of the complexity available it is possible to create invalid queries. Examples are available on the wiki page:') + '</p>' +
             '<a class="advhelplink" href="http://wiki.xbmc.org/index.php?title=Add-on:AWXi">http://wiki.xbmc.org/index.php?title=Add-on:AWXi</a>');
           mkf.dialog.setContent(dialogHandle, content);
           return false;

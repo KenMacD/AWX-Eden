@@ -1128,7 +1128,7 @@
         '</div>' +
         '</div>' +
         '<a href="" class="formButton save">' + mkf.lang.get('Save', 'Settings label') + '</a>' + 
-        '<div class="formHint">' + mkf.lang.get('Settings are stored in cookies.', 'Settings') + '</div>' +
+        '<div class="formHint">' + mkf.lang.get('(Settings are stored in cookies. You need to enable cookies for this site.)', 'Settings') + '</div>' +
         '</div>'
         }
       );
@@ -1161,7 +1161,7 @@
       
       $('.expertHelp').click(function() {
         //JSON lang \n is escaped, replace \\n with \n.
-        alert(mkf.lang.get('LazyLoad info').replace(/\\n/g,"\n"));
+        alert(mkf.lang.get('LazyLoad: \\nIf you activate LazyLoad, thumbnails will not be loaded until they become visible. This will save the server from many image-requests.\\nBut if you have many items (movies, albums,...) the webinterface can be laggy on scrolling if many thumbs are not loaded.\\nIf you deactivate LazyLoad, all thumbs will be loaded when the page is shown (movies page, albums page,...). It can take a short time until all thumbs are loaded.\\n\\nPrefer Logos:\\nIf a logo for an item is available use it instead of the title in information screens.\\n\\nTimeOut:\\nIf you have lots of movies (or albums...) it can take some time to get the complete movie list. You can increase the TimeOut-value to prevent errors when trying to show the movie list.\\n\\nManual File Directory:\\nEnter a directory location on your system that will be accessable via the \"Files\" menu. Invalid directories will not be shown.\\n').replace(/\\n/g,"\n"));
         return false;
       });
 
@@ -3552,9 +3552,10 @@
 
     this.each(function() {
       var $fileContainer = $(this);
+      $fileContainer.addClass('loading');
       var $filelist = $('<ul class="fileList"></ul>').appendTo($fileContainer);
 
-      $fileContainer.addClass('loading');
+      
 
       /*****************
        * If the root should be displayed:
