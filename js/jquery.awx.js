@@ -712,16 +712,16 @@
         };
 
         $('.exitXBMC').click(function() {
-          xbmc.shutdown({type: 'quit', onSuccess: showQuitMessage, onError: failed}); return false;
+          if (confirm(mkf.lang.get('Are you sure?', 'Alert'))) xbmc.shutdown({type: 'quit', onSuccess: showQuitMessage, onError: failed}); return false;
         });
         $('.shutdown').click(function() {
-          xbmc.shutdown({type: 'shutdown', onSuccess: showQuitMessage, onError: failed}); return false;
+          if (confirm(mkf.lang.get('Are you sure?', 'Alert'))) xbmc.shutdown({type: 'shutdown', onSuccess: showQuitMessage, onError: failed}); return false;
         });
         $('.suspend').click(function() {
-          xbmc.shutdown({type: 'suspend', onSuccess: showQuitMessage, onError: failed}); return false;
+          if (confirm(mkf.lang.get('Are you sure?', 'Alert'))) xbmc.shutdown({type: 'suspend', onSuccess: showQuitMessage, onError: failed}); return false;
         });
         $('.reboot').click(function() {
-          xbmc.shutdown({type: 'reboot', onSuccess: showQuitMessage, onError: failed}); return false;
+          if (confirm(mkf.lang.get('Are you sure?', 'Alert'))) xbmc.shutdown({type: 'reboot', onSuccess: showQuitMessage, onError: failed}); return false;
         });
         $('.bigLeft').click(function() {
           xbmc.input({type: 'Left', onError: failed}); return false;
