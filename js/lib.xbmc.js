@@ -1177,7 +1177,8 @@ var xbmc = {};
     },
 
     getAcodec: function (acodec) {
-      acodec = acodec.toLowerCase();
+
+      if (typeof(acodec) !== 'undefined') { acodec = acodec.toLowerCase() };
       switch (acodec) {
       case 'aac':
         return 'AAC';
@@ -2631,7 +2632,11 @@ var xbmc = {};
             '{"jsonrpc": "2.0", "method": "JSONRPC.Version",  "id": 1}',
 
             function (response) {
-              if (navigator.appVersion.indexOf("MSIE") == -1) {
+              var browserVersion = 999;
+              if (navigator.appVersion.indexOf("MSIE") != -1) {
+                browserVersion = parseFloat(navigator.appVersion.split("MSIE")[1]);
+              }
+              if (browserVersion > 9) {
                 if ("WebSocket" in window) {
                   xbmc.wsListener();
                 }
