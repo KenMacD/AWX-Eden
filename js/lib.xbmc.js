@@ -1636,7 +1636,7 @@ var xbmc = {};
       });
       if (containsfiles) {
         xbmc.sendCommand(
-          '{"jsonrpc": "2.0", "method": "Playlist.Add", "params": {"item": {"directory": "' + settings.folder + '"}, "playlistid": 0}, "id": 1}',
+          '{"jsonrpc": "2.0", "method": "Playlist.Add", "params": {"item": {"directory": "' + settings.folder.replace(/\\/g, "\\\\") + '"}, "playlistid": 0}, "id": 1}',
           
           function(response) {
             settings.onSuccess()
@@ -1650,7 +1650,7 @@ var xbmc = {};
       if (recurseDir.length > 0) {
         $.each(recurseDir, function(i, dir) {
           xbmc.sendCommand(
-            '{"jsonrpc": "2.0", "method": "Playlist.Add", "params": {"item": {"directory": "' + recurseDir[i] + '"}, "playlistid": 0}, "id": 1}',
+            '{"jsonrpc": "2.0", "method": "Playlist.Add", "params": {"item": {"directory": "' + recurseDir[i].replace(/\\/g, "\\\\") + '"}, "playlistid": 0}, "id": 1}',
             
             function(response) {
               settings.onSuccess()
@@ -1818,7 +1818,7 @@ var xbmc = {};
       
       xbmc.playerOpen({
         item: 'file',
-        itemStr: settings.file,
+        itemStr: settings.file.replace(/\\/g, "\\\\"),
         playlistid: 0,
         onSuccess: settings.onSuccess,
         onError: function(errorText) {
@@ -1866,7 +1866,7 @@ var xbmc = {};
       this.clearAudioPlaylist({
         onSuccess: function() {
           xbmc.addAudioFolderToPlaylist({
-            folder: settings.folder,
+            folder: settings.folder.replace(/\\/g, "\\\\"),
 
             onSuccess: function() {
               xbmc.playerOpen({
@@ -2006,7 +2006,7 @@ var xbmc = {};
       $.extend(settings, options);
 
       xbmc.sendCommand(
-          '{"jsonrpc": "2.0", "method": "Player.Open", "params" : { "item" : { "file" : "' + settings.file + '"}, "options": { "resume": ' + settings.resume + ' } }, "id": 1}',
+          '{"jsonrpc": "2.0", "method": "Player.Open", "params" : { "item" : { "file" : "' + settings.file.replace(/\\/g, "\\\\") + '"}, "options": { "resume": ' + settings.resume + ' } }, "id": 1}',
           settings.onSuccess,
           settings.onError
       );
